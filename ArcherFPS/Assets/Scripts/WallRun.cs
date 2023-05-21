@@ -1,0 +1,143 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class WallRun : MonoBehaviour
+{
+    PlayerController playerController;
+    float wallDistance = 1f;
+    float minimumJumpHeight = 2f;
+    float wallRunJumpForce = 15f;
+    Vector3 wallRunJumpDirection;
+    Vector3 jumpAccel;
+    Vector3 wallStick;
+
+    bool wallLeft = false;
+    bool wallRight = false;
+    RaycastHit leftWallHit;
+    RaycastHit rightWallHit;
+    public bool wallHit;
+
+    float camTilt = 30f;
+    float camTiltTime = 3f;
+    public float currentTilt;
+
+    bool CanWallRun() //Can wall run if you're above the minimum jump height
+    {
+        return !Physics.Raycast(transform.position, Vector3.down, minimumJumpHeight);
+    }
+
+    void Start()
+    {
+        playerController = GetComponent<PlayerController>();
+    }
+
+    void Update()
+    {
+        CheckWall();
+
+        if (CanWallRun())
+        {
+            if (wallLeft)
+            {
+                WallRunning();
+            }
+            else if (wallRight)
+            {
+                WallRunning();
+            }
+        }
+        currentTilt = Mathf.Lerp(currentTilt, 0, camTiltTime * Time.deltaTime);
+    }
+
+    void CheckWall()
+    {
+        wallLeft = Physics.Raycast(transform.position, -transform.right, out leftWallHit, wallDistance);  //&& leftWallHit.transform.tag == "WallRun";
+        wallRight = Physics.Raycast(transform.position, transform.right, out rightWallHit, wallDistance);  //&& rightWallHit.transform.tag == "WallRun";
+        if (wallLeft || wallRight)
+        {
+            wallHit = true;
+        }
+        else
+        {
+            wallHit = false;
+        }
+    }
+
+    void WallRunning()
+    {
+        if (playerController.playerVelocity.y < 0)
+        {
+            playerController.playerVelocity = new Vector3(playerController.playerVelocity.x, playerController.playerVelocity.y / 1.5f, playerController.playerVelocity.z);
+        }
+
+        if (wallLeft)
+        {
+            //Calculate and apply camera tilt
+            currentTilt = Mathf.Lerp(currentTilt, -camTilt, camTiltTime * Time.deltaTime);
+
+            //Apply small force to stick to wall
+            wallStick = leftWallHit.normal * 5f * Time.deltaTime;
+            playerController.playerVelocity -= wallStick;
+
+            //Cancel sideways input if there is a wall, to cancel accidental unsticking
+            if (playerController.inputVector.x != 0)
+            {
+                playerController.inputVector.x = 0;
+            }
+
+            //Wall jump
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                wallRunJumpDirection = transform.up + leftWallHit.normal; //Diagonal vector between the up and wall normal
+                jumpAccel = wallRunJumpDirection * wallRunJumpForce;
+
+                //Cancel out velocity from previous wall jumps (cannot be != 0 due to calculation rounding errors)
+                if (Mathf.Sign(playerController.playerVelocity.x) != Mathf.Sign(jumpAccel.x) && (jumpAccel.x > 0.01f || jumpAccel.x < -0.01f))
+                {
+                    playerController.playerVelocity.x = 0;
+                }
+                else if (Mathf.Sign(playerController.playerVelocity.z) != Mathf.Sign(jumpAccel.z) && (jumpAccel.z > 0.01f || jumpAccel.z < -0.01f))
+                {
+                    playerController.playerVelocity.z = 0;
+                }
+                playerController.playerVelocity += jumpAccel;
+            }
+        }
+
+        else if (wallRight)
+        {
+            currentTilt = Mathf.Lerp(currentTilt, camTilt, camTiltTime * Time.deltaTime);
+
+            wallStick = rightWallHit.normal * 1f * Time.deltaTime;
+            playerController.playerVelocity -= wallStick;
+
+            if (playerController.inputVector.x != 0)
+            {
+                playerController.inputVector.x = 0;
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                wallRunJumpDirection = transform.up + rightWallHit.normal;
+                jumpAccel = wallRunJumpDirection * wallRunJumpForce;
+
+                if (Mathf.Sign(playerController.playerVelocity.x) != Mathf.Sign(jumpAccel.x) && (jumpAccel.x > 0.01f || jumpAccel.x < -0.01f))
+                {
+                    playerController.playerVelocity.x = 0;
+                }
+                else if (Mathf.Sign(playerController.playerVelocity.z) != Mathf.Sign(jumpAccel.z) && (jumpAccel.z > 0.01f || jumpAccel.z < -0.01f))
+                {
+                    playerController.playerVelocity.z = 0;
+                }
+                playerController.playerVelocity += jumpAccel;
+            }
+        }
+
+        //Apply friction if there's no movement input
+        if (playerController.wishdir == Vector3.zero)
+        {
+            playerController.ApplyFriction(0.1f);
+        }
+    }
+}
