@@ -14,9 +14,6 @@ public class Bow : MonoBehaviour
     float delay;
 
     [SerializeField]
-    float arrowPower;
-
-    [SerializeField]
     [Range(0, 3)]
     float zoomSpeed;
 
@@ -43,7 +40,8 @@ public class Bow : MonoBehaviour
         }
         else if (fire)
         {
-            FireArrow();
+            float arrowPower = startingFOV - cam.fieldOfView;
+            FireArrow(arrowPower);
         }
         else
         {
@@ -65,7 +63,7 @@ public class Bow : MonoBehaviour
         }
     }
 
-    void FireArrow()
+    void FireArrow(float arrowPower)
     {
         currentArrow = Instantiate(arrowPrefab, arrowSpawnPoint);
         currentArrow.Fly(arrowSpawnPoint.forward * arrowPower);
