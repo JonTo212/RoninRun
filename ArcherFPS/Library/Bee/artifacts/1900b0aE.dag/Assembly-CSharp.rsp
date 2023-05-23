@@ -367,8 +367,6 @@
 "Assets/Scripts/UpdraftCooldown.cs"
 "Assets/Scripts/WallRun.cs"
 "Assets/Scripts/WaypointMover.cs"
-"Assets/UniversalRenderPipelineAssets/Scripts/SimpleCameraController.cs"
-"Assets/UniversalRenderPipelineAssets/TutorialInfo/Scripts/Readme.cs"
 -langversion:9.0
 
 /deterministic
