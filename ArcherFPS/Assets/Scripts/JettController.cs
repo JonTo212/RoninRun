@@ -46,14 +46,12 @@ public class JettController : MonoBehaviour
     [SerializeField] LucioSurf lucioSurf;
     PlayerController playerController;
     CharacterController characterController;
-    JettAnimationController jettAnimationController;
     [SerializeField] GameObject arms;
 
     void Start()
     {
         playerController = GetComponent<PlayerController>();
         characterController = GetComponent<CharacterController>();
-        jettAnimationController = GetComponent<JettAnimationController>();
         defaultGravity = playerController.gravity;
         dashCooldown = dashDelay;
     }
@@ -175,10 +173,6 @@ public class JettController : MonoBehaviour
         {
             //Forward and forward-diagonal dashes play the forward dash particles
             forwardDashParticles.Play();
-            if (jettAnimationController != null)
-            {
-                jettAnimationController.PlayForwardDashAnimation();
-            }
             return;
         }
 
@@ -186,34 +180,21 @@ public class JettController : MonoBehaviour
         {
             //Backward and backward-diagonal dashes play the backward dash particles
             backwardDashParticles.Play();
-            if (jettAnimationController != null)
-            {
-                jettAnimationController.PlayBackwardDashAnimation();
-            }
             return;
         }
 
         if (inputVector.x > 0)
         {
             rightDashParticles.Play();
-            if (jettAnimationController != null)
-            {
-                jettAnimationController.PlayRightDashAnimation();
-            }
             return;
         }
 
         if (inputVector.x < 0)
         {
             leftDashParticles.Play();
-            if (jettAnimationController != null)
-            {
-                jettAnimationController.PlayLeftDashAnimation();
-            }
             return;
         }
 
-        jettAnimationController.PlayForwardDashAnimation();
         forwardDashParticles.Play();
     }
     #endregion

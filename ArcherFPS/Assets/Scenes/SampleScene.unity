@@ -25545,7 +25545,6 @@ GameObject:
   - component: {fileID: 1670364354415673132}
   - component: {fileID: 1670364354415673135}
   - component: {fileID: 1670364354415673129}
-  - component: {fileID: 1670364354415673128}
   - component: {fileID: 1670364354415673131}
   - component: {fileID: 1670364354415673130}
   m_Layer: 8
@@ -25609,19 +25608,6 @@ MonoBehaviour:
   wallRun: {fileID: 1670364354415673135}
   camSwap: {fileID: 0}
   lucioSurf: {fileID: 1670364354415673131}
---- !u!114 &1670364354415673128
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1670364354415673120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48b94dd7eec9a334fb50d532e946968a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  armsAnimator: {fileID: 4050947762219626084}
 --- !u!114 &1670364354415673129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62787,7 +62773,6 @@ MonoBehaviour:
   arrowPrefab: {fileID: 1996437636089589783, guid: 1d86ce5ded6b23d4c92f1cd2a464f10f, type: 3}
   arrowSpawnPoint: {fileID: 1589418596}
   delay: 0
-  arrowPower: 10
   zoomSpeed: 2
 --- !u!4 &6373041037990998467
 Transform:

@@ -35273,7 +35273,6 @@ GameObject:
   - component: {fileID: 1670364354235795172}
   - component: {fileID: 1670364354235795175}
   - component: {fileID: 1670364354235795169}
-  - component: {fileID: 1670364354235795168}
   - component: {fileID: 1670364354235795171}
   - component: {fileID: 1670364354235795170}
   m_Layer: 8
@@ -35424,19 +35423,6 @@ MonoBehaviour:
   ThirdPersonCamera: {fileID: 1670364353643194937}
   FirstPersonCamera: {fileID: 1670364353824574081}
   cam: 0
---- !u!114 &1670364354235795168
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1670364354235795176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48b94dd7eec9a334fb50d532e946968a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  armsAnimator: {fileID: 4050947761084503980}
 --- !u!114 &1670364354235795171
 MonoBehaviour:
   m_ObjectHideFlags: 0
