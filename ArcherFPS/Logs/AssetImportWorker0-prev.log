@@ -15,7 +15,7 @@ C:/Users/jonat/OneDrive/Documents/GitHub/ArcherFPS/ArcherFPS
 -logFile
 Logs/AssetImportWorker0.log
 -srvPort
-64587
+54280
 Successfully changed project path to: C:/Users/jonat/OneDrive/Documents/GitHub/ArcherFPS/ArcherFPS
 C:/Users/jonat/OneDrive/Documents/GitHub/ArcherFPS/ArcherFPS
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -47,11 +47,11 @@ C:/Users/jonat/OneDrive/Documents/GitHub/ArcherFPS/ArcherFPS
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [11368] Host "[IP] 192.168.2.30 [Port] 0 [Flags] 2 [Guid] 3804566348 [EditorId] 3804566348 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-UNMRG0P) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
+Player connection [2076] Host "[IP] 192.168.2.30 [Port] 0 [Flags] 2 [Guid] 2995707637 [EditorId] 2995707637 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-UNMRG0P) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined multi-casting on [225.0.0.222:54997]...
 
-Player connection [11368] Host "[IP] 192.168.2.30 [Port] 0 [Flags] 2 [Guid] 3804566348 [EditorId] 3804566348 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-UNMRG0P) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [2076] Host "[IP] 192.168.2.30 [Port] 0 [Flags] 2 [Guid] 2995707637 [EditorId] 2995707637 [Version] 1048832 [Id] WindowsEditor(7,DESKTOP-UNMRG0P) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" joined alternative multi-casting on [225.0.0.222:34997]...
 
-Refreshing native plugins compatible for Editor in 78.38 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 75.51 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2021.3.23f1 (213b516bf396)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2021.3.23f1/Editor/Data/Resources/UnitySubsystems
@@ -67,89 +67,89 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2021.3.23f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2021.3.23f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2021.3.23f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56940
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56064
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2021.3.23f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.009041 seconds.
+Registered in 0.007006 seconds.
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 82.16 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 72.34 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  0.748 seconds
+- Completed reload, in  0.620 seconds
 Domain Reload Profiling:
-	ReloadAssembly (748ms)
-		BeginReloadAssembly (123ms)
+	ReloadAssembly (620ms)
+		BeginReloadAssembly (88ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (0ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
 			CreateAndSetChildDomain (1ms)
-		EndReloadAssembly (504ms)
-			LoadAssemblies (121ms)
+		EndReloadAssembly (437ms)
+			LoadAssemblies (86ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (120ms)
+			SetupTypeCache (100ms)
 			ReleaseScriptCaches (0ms)
-			RebuildScriptCaches (35ms)
-			SetupLoadedEditorAssemblies (296ms)
+			RebuildScriptCaches (27ms)
+			SetupLoadedEditorAssemblies (261ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (9ms)
+				InitializePlatformSupportModulesInManaged (8ms)
 				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (82ms)
-				BeforeProcessingInitializeOnLoad (2ms)
-				ProcessInitializeOnLoadAttributes (151ms)
-				ProcessInitializeOnLoadMethodAttributes (51ms)
+				RefreshPlugins (72ms)
+				BeforeProcessingInitializeOnLoad (1ms)
+				ProcessInitializeOnLoadAttributes (133ms)
+				ProcessInitializeOnLoadMethodAttributes (47ms)
 				AfterProcessingInitializeOnLoad (0ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
 			AwakeInstancesAfterBackupRestoration (0ms)
 Platform modules already initialized, skipping
 Registering precompiled user dll's ...
-Registered in 0.007404 seconds.
+Registered in 0.007555 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.49 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 0.46 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.260 seconds
+- Completed reload, in  0.963 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1262ms)
-		BeginReloadAssembly (185ms)
+	ReloadAssembly (964ms)
+		BeginReloadAssembly (117ms)
 			ExecutionOrderSort (0ms)
 			DisableScriptedObjects (6ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (21ms)
-		EndReloadAssembly (915ms)
-			LoadAssemblies (174ms)
+			CreateAndSetChildDomain (18ms)
+		EndReloadAssembly (744ms)
+			LoadAssemblies (91ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (312ms)
+			SetupTypeCache (251ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (57ms)
-			SetupLoadedEditorAssemblies (389ms)
+			RebuildScriptCaches (47ms)
+			SetupLoadedEditorAssemblies (329ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (6ms)
+				InitializePlatformSupportModulesInManaged (5ms)
 				SetLoadedEditorAssemblies (0ms)
 				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (93ms)
-				ProcessInitializeOnLoadAttributes (258ms)
-				ProcessInitializeOnLoadMethodAttributes (20ms)
-				AfterProcessingInitializeOnLoad (10ms)
+				BeforeProcessingInitializeOnLoad (80ms)
+				ProcessInitializeOnLoadAttributes (217ms)
+				ProcessInitializeOnLoadMethodAttributes (18ms)
+				AfterProcessingInitializeOnLoad (8ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (10ms)
+			AwakeInstancesAfterBackupRestoration (9ms)
 Platform modules already initialized, skipping
 ========================================================================
 Worker process is ready to serve import requests
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.05 seconds
-Refreshing native plugins compatible for Editor in 0.44 ms, found 3 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
+Refreshing native plugins compatible for Editor in 0.61 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 3067 Unused Serialized files (Serialized files now loaded: 0)
 Unloading 24 unused Assets / (113.5 KB). Loaded Objects now: 3529.
 Memory consumption went from 108.4 MB to 108.3 MB.
-Total: 2.658300 ms (FindLiveObjects: 0.244800 ms CreateObjectMapping: 0.192600 ms MarkObjects: 2.118300 ms  DeleteObjects: 0.101200 ms)
+Total: 2.901000 ms (FindLiveObjects: 0.273500 ms CreateObjectMapping: 0.186600 ms MarkObjects: 2.313900 ms  DeleteObjects: 0.126100 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -163,298 +163,116 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 340948.635273 seconds.
-  path: Assets/Arrow_01 1.prefab
-  artifactKey: Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Arrow_01 1.prefab using Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6830dd00f3b444c88f6da67a5c3f1be3') in 0.179989 seconds 
+  Time since last request: 414029.466396 seconds.
+  path: Assets/Mixamo/standing aim overdraw.fbx
+  artifactKey: Guid(1a243c65e5d9e9c44b61e7623e18032c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/standing aim overdraw.fbx using Guid(1a243c65e5d9e9c44b61e7623e18032c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3407d9d6b4962e2e60e49f099ae3c86c') in 0.090176 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 183.420970 seconds.
+  path: Assets/Mixamo
+  artifactKey: Guid(606d7a7d96b02584dbdd37dac9a7ce09) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo using Guid(606d7a7d96b02584dbdd37dac9a7ce09) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '629989c9ed5f65d9192534175461c199') in 0.008784 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 10.298526 seconds.
+  path: Assets/Mixamo/BowAndArrow.controller
+  artifactKey: Guid(a2abf05a406f414449be95608756970d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/BowAndArrow.controller using Guid(a2abf05a406f414449be95608756970d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '70910c777c6824f15bdcaec2e783b3db') in 0.026884 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 868.186879 seconds.
+  path: Assets/Mixamo/standing aim walk back.fbx
+  artifactKey: Guid(c2daecbda34faaa4299812e14f17302f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/standing aim walk back.fbx using Guid(c2daecbda34faaa4299812e14f17302f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8684327add8270b486fc6c3ca1d6ca92') in 0.013703 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 9.377522 seconds.
+  path: Assets/Mixamo/standing aim walk forward.fbx
+  artifactKey: Guid(90f9061d2ce730e4a94288198ed92e68) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/standing aim walk forward.fbx using Guid(90f9061d2ce730e4a94288198ed92e68) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd01c138ed5844b997f3391e271b554e4') in 0.011757 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 150.029364 seconds.
+  path: Assets/Mixamo/standing aim walk left.fbx
+  artifactKey: Guid(e2bffc11c1434d542ac73088bf604062) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/standing aim walk left.fbx using Guid(e2bffc11c1434d542ac73088bf604062) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '63e2a15060301c6c48e789d42a24fd1f') in 0.012860 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.670580 seconds.
+  path: Assets/Mixamo/standing aim walk right.fbx
+  artifactKey: Guid(2592921f46a6f7741a2c881e141ce75f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/standing aim walk right.fbx using Guid(2592921f46a6f7741a2c881e141ce75f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0af0fdfa2d9797521e909aece5e6daff') in 0.011208 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 14.515593 seconds.
+  path: Assets/Mixamo/standing draw arrow.fbx
+  artifactKey: Guid(53bd33c95bf479e489e09cc06e0870e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/standing draw arrow.fbx using Guid(53bd33c95bf479e489e09cc06e0870e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4732abe6a8b759e8059351ea117f98d7') in 0.012282 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 84.486201 seconds.
+  path: Assets/Mixamo/standing idle 01.fbx
+  artifactKey: Guid(4b5162b5637445349afe969e64419c52) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/standing idle 01.fbx using Guid(4b5162b5637445349afe969e64419c52) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f381353778b6d0b1542afa7dfe82569a') in 0.020922 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 9.159600 seconds.
+  path: Assets/Mixamo/standing run back.fbx
+  artifactKey: Guid(ab12e56b9b013cb4f9078e60ff740413) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/standing run back.fbx using Guid(ab12e56b9b013cb4f9078e60ff740413) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fe2d92d38262fb0263bc2ddab5a8f85a') in 0.014957 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 250.454609 seconds.
+  path: Assets/Mixamo/standing run forward.fbx
+  artifactKey: Guid(965b111784bd6914fbcbdc81392df59f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/standing run forward.fbx using Guid(965b111784bd6914fbcbdc81392df59f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cbd5f8f49104ed86438da391fbaf36ff') in 0.013193 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 8.331724 seconds.
+  path: Assets/Mixamo/standing run left.fbx
+  artifactKey: Guid(7b21b8d34856b8d4d9101708f2c3dd64) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/standing run left.fbx using Guid(7b21b8d34856b8d4d9101708f2c3dd64) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'fd36f548113e0a68c076ae9956868bf9') in 0.025216 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6.071358 seconds.
+  path: Assets/Mixamo/standing run right.fbx
+  artifactKey: Guid(6679e42027063b9459f82133c41a4945) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/standing run right.fbx using Guid(6679e42027063b9459f82133c41a4945) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '42af3e1bfe851af64bd9ac043b94bfaa') in 0.018827 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 18.173492 seconds.
+  path: Assets/Mixamo/standing walk back.fbx
+  artifactKey: Guid(f541a287724e18e4fa7bc4ce297e0ead) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/standing walk back.fbx using Guid(f541a287724e18e4fa7bc4ce297e0ead) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '37e9d4e7c8d19aa9e99ae31494938e14') in 0.014080 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 9.016824 seconds.
+  path: Assets/Mixamo/standing walk forward.fbx
+  artifactKey: Guid(9e04a0047ee67bb499c5aac3be9ce048) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/standing walk forward.fbx using Guid(9e04a0047ee67bb499c5aac3be9ce048) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c7269a037a0d6601eb8fe3e2647eeb04') in 0.019426 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 71.674059 seconds.
+  path: Assets/Mixamo/standing walk left.fbx
+  artifactKey: Guid(48cbf031740dda249955f7b967e4b4f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/standing walk left.fbx using Guid(48cbf031740dda249955f7b967e4b4f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8e2cc8fe9b7d860bc2ca868cf5d8afc5') in 0.012576 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.975364 seconds.
+  path: Assets/Mixamo/standing walk right.fbx
+  artifactKey: Guid(07cf6415442932e45b2b33e9585421b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/standing walk right.fbx using Guid(07cf6415442932e45b2b33e9585421b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8ee3accf8a3b02316d936eb7c3ca6671') in 0.015853 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 133.081030 seconds.
+  path: Assets/Mixamo/BowAndArrow.controller
+  artifactKey: Guid(a2abf05a406f414449be95608756970d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/BowAndArrow.controller using Guid(a2abf05a406f414449be95608756970d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd7d8ed453f05f353dea0e68d83c890bc') in 0.005341 seconds 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.007006 seconds.
-Begin MonoManager ReloadAssembly
-Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
-Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.49 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.260 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1262ms)
-		BeginReloadAssembly (174ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (5ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (38ms)
-		EndReloadAssembly (917ms)
-			LoadAssemblies (129ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (353ms)
-			ReleaseScriptCaches (2ms)
-			RebuildScriptCaches (47ms)
-			SetupLoadedEditorAssemblies (357ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (7ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (76ms)
-				ProcessInitializeOnLoadAttributes (240ms)
-				ProcessInitializeOnLoadMethodAttributes (22ms)
-				AfterProcessingInitializeOnLoad (10ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (12ms)
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.86 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3062 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 17 unused Assets / (80.3 KB). Loaded Objects now: 3540.
-Memory consumption went from 112.7 MB to 112.6 MB.
-Total: 2.701100 ms (FindLiveObjects: 0.219300 ms CreateObjectMapping: 0.175500 ms MarkObjects: 2.204300 ms  DeleteObjects: 0.100700 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Import Request.
-  Time since last request: 61.824962 seconds.
-  path: Assets/Arrow_01 1.prefab
-  artifactKey: Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Arrow_01 1.prefab using Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3fe7e1975ecd80c96ab590739ad3e876') in 0.130008 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.858347 seconds.
-  path: Assets/Arrow_01 1.prefab
-  artifactKey: Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Arrow_01 1.prefab using Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1b8cbb5e5c5d56ed450eed4bb71a07e4') in 0.009859 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.585678 seconds.
-  path: Assets/Arrow_01 1.prefab
-  artifactKey: Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Arrow_01 1.prefab using Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '759b8b249c8900b329d35e7df87f3ecc') in 0.009173 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.155882 seconds.
-  path: Assets/Arrow_01 1.prefab
-  artifactKey: Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Arrow_01 1.prefab using Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '56ce07e49d28303d3c9b1caf04133177') in 0.009615 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.617411 seconds.
-  path: Assets/Arrow_01 1.prefab
-  artifactKey: Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Arrow_01 1.prefab using Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '820a5943072734b16a923548ddbc7b06') in 0.033792 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.172648 seconds.
-  path: Assets/Arrow_01 1.prefab
-  artifactKey: Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Arrow_01 1.prefab using Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0c094c26ef0e6f4ae313dcfbed08f6a3') in 0.016570 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 2.417725 seconds.
-  path: Assets/Arrow_01 1.prefab
-  artifactKey: Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Arrow_01 1.prefab using Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a0312a9dc70ef2b17da77b0e0f26034c') in 0.012214 seconds 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.014542 seconds.
-Begin MonoManager ReloadAssembly
-Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
-Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.96 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.334 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1335ms)
-		BeginReloadAssembly (172ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (6ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (43ms)
-		EndReloadAssembly (1051ms)
-			LoadAssemblies (123ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (372ms)
-			ReleaseScriptCaches (2ms)
-			RebuildScriptCaches (68ms)
-			SetupLoadedEditorAssemblies (414ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (7ms)
-				SetLoadedEditorAssemblies (1ms)
-				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (88ms)
-				ProcessInitializeOnLoadAttributes (276ms)
-				ProcessInitializeOnLoadMethodAttributes (30ms)
-				AfterProcessingInitializeOnLoad (11ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (15ms)
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 3.71 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3062 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 17 unused Assets / (80.3 KB). Loaded Objects now: 3543.
-Memory consumption went from 112.7 MB to 112.6 MB.
-Total: 5.575100 ms (FindLiveObjects: 0.228200 ms CreateObjectMapping: 0.146500 ms MarkObjects: 4.414600 ms  DeleteObjects: 0.784300 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Import Request.
-  Time since last request: 15.890823 seconds.
-  path: Assets/Arrow_01 1.prefab
-  artifactKey: Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Arrow_01 1.prefab using Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c048d3fdb12e8f43bbaa4755235f05c4') in 0.092071 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 1235.713499 seconds.
-  path: Assets/Arrow_01 1.prefab
-  artifactKey: Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Arrow_01 1.prefab using Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'ef23a8e0563cb7f6166cfa28bed32ac0') in 0.016102 seconds 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.007124 seconds.
-Begin MonoManager ReloadAssembly
-Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
-Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.86 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.420 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1422ms)
-		BeginReloadAssembly (306ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (10ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (95ms)
-		EndReloadAssembly (939ms)
-			LoadAssemblies (164ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (353ms)
-			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (49ms)
-			SetupLoadedEditorAssemblies (375ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (7ms)
-				SetLoadedEditorAssemblies (1ms)
-				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (75ms)
-				ProcessInitializeOnLoadAttributes (253ms)
-				ProcessInitializeOnLoadMethodAttributes (27ms)
-				AfterProcessingInitializeOnLoad (10ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (14ms)
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 2.26 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3062 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 17 unused Assets / (80.2 KB). Loaded Objects now: 3546.
-Memory consumption went from 112.7 MB to 112.6 MB.
-Total: 3.238900 ms (FindLiveObjects: 0.310200 ms CreateObjectMapping: 0.241500 ms MarkObjects: 2.561300 ms  DeleteObjects: 0.125100 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.007518 seconds.
-Begin MonoManager ReloadAssembly
-Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
-Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
-Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.55 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Mono: successfully reloaded assembly
-- Completed reload, in  1.232 seconds
-Domain Reload Profiling:
-	ReloadAssembly (1233ms)
-		BeginReloadAssembly (158ms)
-			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (6ms)
-			BackupInstance (0ms)
-			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (36ms)
-		EndReloadAssembly (970ms)
-			LoadAssemblies (112ms)
-			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (388ms)
-			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (49ms)
-			SetupLoadedEditorAssemblies (373ms)
-				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (8ms)
-				SetLoadedEditorAssemblies (0ms)
-				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (80ms)
-				ProcessInitializeOnLoadAttributes (251ms)
-				ProcessInitializeOnLoadMethodAttributes (23ms)
-				AfterProcessingInitializeOnLoad (11ms)
-				EditorAssembliesLoaded (0ms)
-			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (11ms)
-Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 2.49 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3062 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 17 unused Assets / (80.3 KB). Loaded Objects now: 3549.
-Memory consumption went from 112.7 MB to 112.6 MB.
-Total: 3.267100 ms (FindLiveObjects: 0.289300 ms CreateObjectMapping: 0.410200 ms MarkObjects: 2.483900 ms  DeleteObjects: 0.082600 ms)
-
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Import Request.
-  Time since last request: 1878.949021 seconds.
-  path: Assets/Arrow_01 1.prefab
-  artifactKey: Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Arrow_01 1.prefab using Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '01d0a12376370fe6562a1dd925f7614d') in 0.083157 seconds 
-========================================================================
-Received Prepare
-Registering precompiled user dll's ...
-Registered in 0.007090 seconds.
+Registered in 0.006897 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
@@ -462,40 +280,96 @@ Native extension for WindowsStandalone target not found
 Refreshing native plugins compatible for Editor in 0.52 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.294 seconds
+- Completed reload, in  1.225 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1295ms)
-		BeginReloadAssembly (160ms)
+	ReloadAssembly (1226ms)
+		BeginReloadAssembly (233ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (5ms)
+			DisableScriptedObjects (7ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (33ms)
-		EndReloadAssembly (1029ms)
-			LoadAssemblies (114ms)
+			CreateAndSetChildDomain (72ms)
+		EndReloadAssembly (879ms)
+			LoadAssemblies (141ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (405ms)
+			SetupTypeCache (349ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (48ms)
-			SetupLoadedEditorAssemblies (420ms)
+			RebuildScriptCaches (43ms)
+			SetupLoadedEditorAssemblies (335ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (9ms)
+				InitializePlatformSupportModulesInManaged (6ms)
 				SetLoadedEditorAssemblies (1ms)
 				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (103ms)
-				ProcessInitializeOnLoadAttributes (270ms)
-				ProcessInitializeOnLoadMethodAttributes (27ms)
+				BeforeProcessingInitializeOnLoad (72ms)
+				ProcessInitializeOnLoadAttributes (225ms)
+				ProcessInitializeOnLoadMethodAttributes (21ms)
+				AfterProcessingInitializeOnLoad (9ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (10ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 1.73 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3062 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 17 unused Assets / (80.1 KB). Loaded Objects now: 3533.
+Memory consumption went from 108.7 MB to 108.6 MB.
+Total: 3.286500 ms (FindLiveObjects: 0.257200 ms CreateObjectMapping: 0.148700 ms MarkObjects: 2.772800 ms  DeleteObjects: 0.107000 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.009010 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.48 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.094 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1095ms)
+		BeginReloadAssembly (156ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (6ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (34ms)
+		EndReloadAssembly (826ms)
+			LoadAssemblies (109ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (278ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (41ms)
+			SetupLoadedEditorAssemblies (351ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (6ms)
+				SetLoadedEditorAssemblies (1ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (85ms)
+				ProcessInitializeOnLoadAttributes (221ms)
+				ProcessInitializeOnLoadMethodAttributes (28ms)
 				AfterProcessingInitializeOnLoad (10ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (11ms)
+			AwakeInstancesAfterBackupRestoration (14ms)
 Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 2.16 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 1.70 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Unloading 3062 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 17 unused Assets / (80.3 KB). Loaded Objects now: 3552.
-Memory consumption went from 112.7 MB to 112.6 MB.
-Total: 2.710100 ms (FindLiveObjects: 0.227800 ms CreateObjectMapping: 0.218500 ms MarkObjects: 2.177000 ms  DeleteObjects: 0.085600 ms)
+Unloading 17 unused Assets / (80.2 KB). Loaded Objects now: 3536.
+Memory consumption went from 108.7 MB to 108.6 MB.
+Total: 2.279000 ms (FindLiveObjects: 0.216100 ms CreateObjectMapping: 0.113900 ms MarkObjects: 1.856700 ms  DeleteObjects: 0.091300 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -509,14 +383,372 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 4.422533 seconds.
-  path: Assets/Arrow_01 1.prefab
-  artifactKey: Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Arrow_01 1.prefab using Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b79f3de68c606d28ae95c50b2ea51ae6') in 0.110578 seconds 
+  Time since last request: 972.425909 seconds.
+  path: Assets/Mixamo/StandingDraw.anim
+  artifactKey: Guid(5646afc5fe46c9b44a496611f48350b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/StandingDraw.anim using Guid(5646afc5fe46c9b44a496611f48350b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8b3ab8ad228db72b30fedc1d6a146a41') in 0.034850 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6.892609 seconds.
+  path: Assets/Mixamo/StandingAimWalkBack.anim
+  artifactKey: Guid(03498c93eafbeca4ea1ae5a8f8edf993) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/StandingAimWalkBack.anim using Guid(03498c93eafbeca4ea1ae5a8f8edf993) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e29956408d83a785c360e5137bdc3f39') in 0.018081 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.481100 seconds.
+  path: Assets/Mixamo/StandingAimWalkForward.anim
+  artifactKey: Guid(b5e505258902992419ef5f570a5163ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/StandingAimWalkForward.anim using Guid(b5e505258902992419ef5f570a5163ac) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '55792f4baf7e687e9e8bd87f92b9fb1c') in 0.016938 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.430511 seconds.
+  path: Assets/Mixamo/AimLeftStrafe.anim
+  artifactKey: Guid(9b2f8cdca9a4e0e4895aa871b5ea856c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/AimLeftStrafe.anim using Guid(9b2f8cdca9a4e0e4895aa871b5ea856c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '59832cc7e4b5a2891f66ee11c5e3b4dc') in 0.016379 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 31.816526 seconds.
+  path: Assets/Mixamo/AimRightStrafe.anim
+  artifactKey: Guid(b6b049aefb229a54280334bb120ee4c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/AimRightStrafe.anim using Guid(b6b049aefb229a54280334bb120ee4c9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '79c0321cacd3b659cef33e9a42cfc9e4') in 0.082638 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 6.227593 seconds.
+  path: Assets/Mixamo/DrawArrow.anim
+  artifactKey: Guid(a0b04cd8020e43b4fa71f0274f427827) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/DrawArrow.anim using Guid(a0b04cd8020e43b4fa71f0274f427827) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f675593c630bc3ac200bd21405f38196') in 0.031219 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.750764 seconds.
+  path: Assets/Mixamo/Idle.anim
+  artifactKey: Guid(ce7fbd23b56e55449aee019448f4c431) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/Idle.anim using Guid(ce7fbd23b56e55449aee019448f4c431) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f5dbca76a5c6bca84f36c5947eec4707') in 0.026189 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.719061 seconds.
+  path: Assets/Mixamo/RunBack.anim
+  artifactKey: Guid(94cf3fe6d1448734c8873613d73da77f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/RunBack.anim using Guid(94cf3fe6d1448734c8873613d73da77f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '736c302d6c9e9e34cd9c34bb2ca4d409') in 0.019056 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 12.744607 seconds.
+  path: Assets/Mixamo/RunForward.anim
+  artifactKey: Guid(07554e18bd246284e8837d1dab7c31aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/RunForward.anim using Guid(07554e18bd246284e8837d1dab7c31aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '69a3096803de3854423ad10019faf8de') in 0.022169 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.889173 seconds.
+  path: Assets/Mixamo/RunLeft.anim
+  artifactKey: Guid(39379d52d89760d458e6f102bd30f796) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/RunLeft.anim using Guid(39379d52d89760d458e6f102bd30f796) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '88e549c5c572cbc103fa20b6fe27874f') in 0.017026 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 3.591549 seconds.
+  path: Assets/Mixamo/RunRight.anim
+  artifactKey: Guid(c96db6afe9bd3e44ba85ba8a87ca9472) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/RunRight.anim using Guid(c96db6afe9bd3e44ba85ba8a87ca9472) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd8e57e11c228a185683439d21d880c65') in 0.020168 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 60.482245 seconds.
+  path: Assets/Mixamo/standing turn 90 left.fbx
+  artifactKey: Guid(87569097ed6eed74ea397f17333c64e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/standing turn 90 left.fbx using Guid(87569097ed6eed74ea397f17333c64e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4374f94c29bbfd2615d24acfde4f2944') in 0.035523 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.474635 seconds.
+  path: Assets/Mixamo/TurnLeft90Degrees.anim
+  artifactKey: Guid(de24805c52e2fd74589f7bdcf2cdb461) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/TurnLeft90Degrees.anim using Guid(de24805c52e2fd74589f7bdcf2cdb461) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b9f62473cc32e37e982363e0f8695b77') in 0.031833 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 11.338105 seconds.
+  path: Assets/Mixamo/standing turn 90 right.fbx
+  artifactKey: Guid(0e08718d755db3148bc7405a68dd9ac6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/standing turn 90 right.fbx using Guid(0e08718d755db3148bc7405a68dd9ac6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dcdde4dea680cb898fc8d4d740625906') in 0.014309 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.698993 seconds.
+  path: Assets/Mixamo/TurnRight90Degrees.anim
+  artifactKey: Guid(eb55d1269c65c204eae68697c36145bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/TurnRight90Degrees.anim using Guid(eb55d1269c65c204eae68697c36145bc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'be7e858e0f958411a5e2221b78fdd8ca') in 0.023520 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 7.189651 seconds.
+  path: Assets/Mixamo/WalkBack.anim
+  artifactKey: Guid(8e127edc39b96e94497aff512ac1c2c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/WalkBack.anim using Guid(8e127edc39b96e94497aff512ac1c2c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8f793178d427c01d597432899d5caba0') in 0.023253 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.230143 seconds.
+  path: Assets/Mixamo/WalkForward.anim
+  artifactKey: Guid(cae6c7e016416d048a17dc2e1cb8854a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/WalkForward.anim using Guid(cae6c7e016416d048a17dc2e1cb8854a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '93b0ce4d5c0c105a82c8dbc3685b0f79') in 0.021093 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.312861 seconds.
+  path: Assets/Mixamo/WalkLeft.anim
+  artifactKey: Guid(ff80efae182d2734890798f4460aa0dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/WalkLeft.anim using Guid(ff80efae182d2734890798f4460aa0dc) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7d422b2001b9dc1140d88d711104c640') in 0.025199 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.574578 seconds.
+  path: Assets/Mixamo/WalkRight.anim
+  artifactKey: Guid(53732dbc7f1aac4499e16b3ba9d7f07e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/WalkRight.anim using Guid(53732dbc7f1aac4499e16b3ba9d7f07e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6c0c97c4e55ca93476498acbe0b10d1f') in 0.024365 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 71.692845 seconds.
+  path: Assets/Mixamo/New Folder
+  artifactKey: Guid(79db102ed63bb804abdca63d9f99077f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/New Folder using Guid(79db102ed63bb804abdca63d9f99077f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2574ffb51a591b07bc8515ec31b3660e') in 0.013425 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 200.681690 seconds.
+  path: Assets/Mixamo/Animations
+  artifactKey: Guid(79db102ed63bb804abdca63d9f99077f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/Animations using Guid(79db102ed63bb804abdca63d9f99077f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a38bb8272223c3233851593be8e33de5') in 0.014590 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 120.041071 seconds.
+  path: Assets/Mixamo/AimLeftStrafe 1.anim
+  artifactKey: Guid(2d3c925d21d93af438caaa411b6d1810) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/AimLeftStrafe 1.anim using Guid(2d3c925d21d93af438caaa411b6d1810) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0cd3572443150c36668922957c95cb94') in 0.019216 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.064291 seconds.
+  path: Assets/Mixamo/AimRightStrafe 1.anim
+  artifactKey: Guid(7519e40f29127a54e8aea95df5cf0579) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/AimRightStrafe 1.anim using Guid(7519e40f29127a54e8aea95df5cf0579) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '728e916a897e54cb5bb22fb6a9cf21c6') in 0.030293 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 5.135982 seconds.
+  path: Assets/Mixamo/DrawArrow 1.anim
+  artifactKey: Guid(e03d844b9b3e3914aa0854d350842f0f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/DrawArrow 1.anim using Guid(e03d844b9b3e3914aa0854d350842f0f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'eedec913a6a28052b342bb2058c8a332') in 0.021716 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.639529 seconds.
+  path: Assets/Mixamo/Idle 1.anim
+  artifactKey: Guid(8b376988c154b354e8267452f8b76fde) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/Idle 1.anim using Guid(8b376988c154b354e8267452f8b76fde) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a04e4e115145dfdc6f2c207011dba8a3') in 0.019521 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.076470 seconds.
+  path: Assets/Mixamo/RunBack 1.anim
+  artifactKey: Guid(dd8f2ecd15318c0439fe0d5464612e86) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/RunBack 1.anim using Guid(dd8f2ecd15318c0439fe0d5464612e86) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '20d2d5f74e9b644ff7a13c3008878902') in 0.021719 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.976435 seconds.
+  path: Assets/Mixamo/RunForward 1.anim
+  artifactKey: Guid(d6fb5a7dd1e0a7249b7438675d5427b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/RunForward 1.anim using Guid(d6fb5a7dd1e0a7249b7438675d5427b6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '92e359fa566df49128bf9c7775127b45') in 0.029390 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.300268 seconds.
+  path: Assets/Mixamo/RunLeft 1.anim
+  artifactKey: Guid(2f04de70c9e10c142a8b9cf1f7a94ba7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/RunLeft 1.anim using Guid(2f04de70c9e10c142a8b9cf1f7a94ba7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '40a0ebc8058398398fd5743477225bb0') in 0.026104 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.240469 seconds.
+  path: Assets/Mixamo/RunRight 1.anim
+  artifactKey: Guid(a8c034c81cbd992439da564748ac3f2f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/RunRight 1.anim using Guid(a8c034c81cbd992439da564748ac3f2f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '78dee0b88bdfcd3a39afa27798abb205') in 0.030799 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.729870 seconds.
+  path: Assets/Mixamo/StandingAimWalkBack 1.anim
+  artifactKey: Guid(aca70748be543d048bc9c7e6bf68be9e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/StandingAimWalkBack 1.anim using Guid(aca70748be543d048bc9c7e6bf68be9e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'dfcc2c6e9c2d3fb8650ee1b514a7c368') in 0.032146 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.722580 seconds.
+  path: Assets/Mixamo/StandingAimWalkForward 1.anim
+  artifactKey: Guid(bbaf7f282a1dfc44a8a182c160e7f751) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/StandingAimWalkForward 1.anim using Guid(bbaf7f282a1dfc44a8a182c160e7f751) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '381c805952488323e0eee112c701370c') in 0.019360 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 2.379808 seconds.
+  path: Assets/Mixamo/StandingDraw 1.anim
+  artifactKey: Guid(d1f4fa3b7311cf84c8728797d6eab2c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/StandingDraw 1.anim using Guid(d1f4fa3b7311cf84c8728797d6eab2c6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2c01d40db144b94de0c354b156c78543') in 0.020996 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 57.088571 seconds.
+  path: Assets/Mixamo/TurnLeft90Degrees 1.anim
+  artifactKey: Guid(4ee12e6521e3cfb42a3aca8a604c50aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/TurnLeft90Degrees 1.anim using Guid(4ee12e6521e3cfb42a3aca8a604c50aa) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '890e41449cb2403783cea09766c8d62e') in 0.024093 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.868456 seconds.
+  path: Assets/Mixamo/TurnRight90Degrees 1.anim
+  artifactKey: Guid(6ff4846ef20d45e4bbacb6df2921c123) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/TurnRight90Degrees 1.anim using Guid(6ff4846ef20d45e4bbacb6df2921c123) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '32f8fb6688871bfc21d5d9e0a1d58673') in 0.028305 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1.047100 seconds.
+  path: Assets/Mixamo/WalkBack 1.anim
+  artifactKey: Guid(a6b9dbb47861f2441bedd5275e6819c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/WalkBack 1.anim using Guid(a6b9dbb47861f2441bedd5275e6819c5) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '912c765735d1ede20c22d07d55463494') in 0.019646 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 4.371518 seconds.
+  path: Assets/Mixamo/WalkRight 1.anim
+  artifactKey: Guid(4ff86b2127ffe9f49b429abf0d613283) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/WalkRight 1.anim using Guid(4ff86b2127ffe9f49b429abf0d613283) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7010b8e91f16a78ddeae0e4d52c8f2ef') in 0.018728 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 377.964550 seconds.
+  path: Assets/Mixamo/BowAndArrow.controller
+  artifactKey: Guid(a2abf05a406f414449be95608756970d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/BowAndArrow.controller using Guid(a2abf05a406f414449be95608756970d) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8f28f73abb7ba0f5089eec3f8581be33') in 0.010360 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 1489.728063 seconds.
+  path: Assets/Mixamo/Animations/IdleArrowDraw.anim
+  artifactKey: Guid(5646afc5fe46c9b44a496611f48350b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Mixamo/Animations/IdleArrowDraw.anim using Guid(5646afc5fe46c9b44a496611f48350b9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7eef6d7481ca222c688fe8e6781eaa4b') in 0.015447 seconds 
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.007334 seconds.
+Registered in 0.006331 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.63 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.691 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1693ms)
+		BeginReloadAssembly (364ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (17ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (112ms)
+		EndReloadAssembly (1210ms)
+			LoadAssemblies (160ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (351ms)
+			ReleaseScriptCaches (2ms)
+			RebuildScriptCaches (51ms)
+			SetupLoadedEditorAssemblies (628ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (8ms)
+				SetLoadedEditorAssemblies (1ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (156ms)
+				ProcessInitializeOnLoadAttributes (392ms)
+				ProcessInitializeOnLoadMethodAttributes (55ms)
+				AfterProcessingInitializeOnLoad (16ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (16ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 2.07 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3063 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 17 unused Assets / (80.1 KB). Loaded Objects now: 3540.
+Memory consumption went from 108.8 MB to 108.7 MB.
+Total: 4.647100 ms (FindLiveObjects: 0.214200 ms CreateObjectMapping: 0.114200 ms MarkObjects: 4.208200 ms  DeleteObjects: 0.109600 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 7918.944527 seconds.
+  path: Assets/AnimationController.cs
+  artifactKey: Guid(9c640e2ec0fa5c146bc66f611afe5fb1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/AnimationController.cs using Guid(9c640e2ec0fa5c146bc66f611afe5fb1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b614d69060284f4ddd4f00e0440d704b') in 0.016526 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 12.096572 seconds.
+  path: Assets/Player.prefab
+  artifactKey: Guid(ba5fd2f87b7c02b40a159b17454d7c3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Player.prefab using Guid(ba5fd2f87b7c02b40a159b17454d7c3f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '550d51803664980ba3fc4b960cb83134') in 0.142299 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.007318 seconds.
+Begin MonoManager ReloadAssembly
+Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
+Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.67 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.128 seconds
+Domain Reload Profiling:
+	ReloadAssembly (1129ms)
+		BeginReloadAssembly (153ms)
+			ExecutionOrderSort (0ms)
+			DisableScriptedObjects (4ms)
+			BackupInstance (0ms)
+			ReleaseScriptingObjects (0ms)
+			CreateAndSetChildDomain (36ms)
+		EndReloadAssembly (873ms)
+			LoadAssemblies (104ms)
+			RebuildTransferFunctionScriptingTraits (0ms)
+			SetupTypeCache (299ms)
+			ReleaseScriptCaches (1ms)
+			RebuildScriptCaches (44ms)
+			SetupLoadedEditorAssemblies (380ms)
+				LogAssemblyErrors (0ms)
+				InitializePlatformSupportModulesInManaged (6ms)
+				SetLoadedEditorAssemblies (1ms)
+				RefreshPlugins (1ms)
+				BeforeProcessingInitializeOnLoad (80ms)
+				ProcessInitializeOnLoadAttributes (257ms)
+				ProcessInitializeOnLoadMethodAttributes (25ms)
+				AfterProcessingInitializeOnLoad (10ms)
+				EditorAssembliesLoaded (0ms)
+			ExecutionOrderSort2 (0ms)
+			AwakeInstancesAfterBackupRestoration (10ms)
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 2.21 ms, found 3 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 3063 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 20 unused Assets / (82.1 KB). Loaded Objects now: 3552.
+Memory consumption went from 113.0 MB to 112.9 MB.
+Total: 3.549500 ms (FindLiveObjects: 0.285800 ms CreateObjectMapping: 0.229400 ms MarkObjects: 2.907800 ms  DeleteObjects: 0.125000 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 186.455505 seconds.
+  path: Assets/LowPolyRPGWeapons_Lite/Materials/LowPolyRPGWeaponLite_BG.mat
+  artifactKey: Guid(3aa8c55f91287f04ba6aff861716f358) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LowPolyRPGWeapons_Lite/Materials/LowPolyRPGWeaponLite_BG.mat using Guid(3aa8c55f91287f04ba6aff861716f358) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '236709a9981b19ceb3e410194484fd4e') in 0.141726 seconds 
+========================================================================
+Received Import Request.
+  Time since last request: 0.000032 seconds.
+  path: Assets/LowPolyRPGWeapons_Lite/Materials/LowPolyRPGWeapons_Lite_MAIN.mat
+  artifactKey: Guid(49c61f7d98b36a6438e5deb41f0f7207) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/LowPolyRPGWeapons_Lite/Materials/LowPolyRPGWeapons_Lite_MAIN.mat using Guid(49c61f7d98b36a6438e5deb41f0f7207) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'de54d472a83de1fbcc6bd62037d56fb0') in 0.043547 seconds 
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.006701 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
@@ -524,40 +756,40 @@ Native extension for WindowsStandalone target not found
 Refreshing native plugins compatible for Editor in 0.57 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.421 seconds
+- Completed reload, in  1.096 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1422ms)
-		BeginReloadAssembly (155ms)
+	ReloadAssembly (1097ms)
+		BeginReloadAssembly (149ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (5ms)
+			DisableScriptedObjects (4ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (35ms)
-		EndReloadAssembly (1162ms)
+			CreateAndSetChildDomain (33ms)
+		EndReloadAssembly (850ms)
 			LoadAssemblies (108ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (345ms)
+			SetupTypeCache (285ms)
 			ReleaseScriptCaches (2ms)
-			RebuildScriptCaches (61ms)
-			SetupLoadedEditorAssemblies (550ms)
+			RebuildScriptCaches (55ms)
+			SetupLoadedEditorAssemblies (361ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (9ms)
-				SetLoadedEditorAssemblies (0ms)
+				InitializePlatformSupportModulesInManaged (7ms)
+				SetLoadedEditorAssemblies (1ms)
 				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (82ms)
-				ProcessInitializeOnLoadAttributes (340ms)
-				ProcessInitializeOnLoadMethodAttributes (102ms)
-				AfterProcessingInitializeOnLoad (16ms)
+				BeforeProcessingInitializeOnLoad (75ms)
+				ProcessInitializeOnLoadAttributes (244ms)
+				ProcessInitializeOnLoadMethodAttributes (23ms)
+				AfterProcessingInitializeOnLoad (10ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (22ms)
+			AwakeInstancesAfterBackupRestoration (11ms)
 Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 2.18 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 2.58 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3062 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 17 unused Assets / (80.3 KB). Loaded Objects now: 3555.
-Memory consumption went from 112.7 MB to 112.7 MB.
-Total: 3.409400 ms (FindLiveObjects: 0.254500 ms CreateObjectMapping: 0.154100 ms MarkObjects: 2.913500 ms  DeleteObjects: 0.086300 ms)
+Unloading 3063 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 17 unused Assets / (80.4 KB). Loaded Objects now: 3588.
+Memory consumption went from 113.2 MB to 113.1 MB.
+Total: 2.909800 ms (FindLiveObjects: 0.312500 ms CreateObjectMapping: 0.161200 ms MarkObjects: 2.312100 ms  DeleteObjects: 0.122900 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -572,48 +804,48 @@ AssetImportParameters requested are different than current active one (requested
 ========================================================================
 Received Prepare
 Registering precompiled user dll's ...
-Registered in 0.007366 seconds.
+Registered in 0.006012 seconds.
 Begin MonoManager ReloadAssembly
 Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll
 Symbol file LoadedFromMemory doesn't match image C:\Users\jonat\OneDrive\Documents\GitHub\ArcherFPS\ArcherFPS\Library\PackageCache\com.unity.visualscripting@1.8.0\Editor\VisualScripting.Core\Dependencies\DotNetZip\Unity.VisualScripting.IonicZip.dll
 Native extension for WindowsStandalone target not found
-Refreshing native plugins compatible for Editor in 0.50 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 0.52 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Mono: successfully reloaded assembly
-- Completed reload, in  1.393 seconds
+- Completed reload, in  1.124 seconds
 Domain Reload Profiling:
-	ReloadAssembly (1394ms)
-		BeginReloadAssembly (299ms)
+	ReloadAssembly (1125ms)
+		BeginReloadAssembly (146ms)
 			ExecutionOrderSort (0ms)
-			DisableScriptedObjects (13ms)
+			DisableScriptedObjects (5ms)
 			BackupInstance (0ms)
 			ReleaseScriptingObjects (0ms)
-			CreateAndSetChildDomain (100ms)
-		EndReloadAssembly (961ms)
-			LoadAssemblies (149ms)
+			CreateAndSetChildDomain (31ms)
+		EndReloadAssembly (866ms)
+			LoadAssemblies (114ms)
 			RebuildTransferFunctionScriptingTraits (0ms)
-			SetupTypeCache (340ms)
+			SetupTypeCache (304ms)
 			ReleaseScriptCaches (1ms)
-			RebuildScriptCaches (46ms)
-			SetupLoadedEditorAssemblies (405ms)
+			RebuildScriptCaches (55ms)
+			SetupLoadedEditorAssemblies (346ms)
 				LogAssemblyErrors (0ms)
-				InitializePlatformSupportModulesInManaged (8ms)
+				InitializePlatformSupportModulesInManaged (6ms)
 				SetLoadedEditorAssemblies (1ms)
 				RefreshPlugins (1ms)
-				BeforeProcessingInitializeOnLoad (103ms)
-				ProcessInitializeOnLoadAttributes (259ms)
-				ProcessInitializeOnLoadMethodAttributes (20ms)
-				AfterProcessingInitializeOnLoad (13ms)
+				BeforeProcessingInitializeOnLoad (76ms)
+				ProcessInitializeOnLoadAttributes (230ms)
+				ProcessInitializeOnLoadMethodAttributes (22ms)
+				AfterProcessingInitializeOnLoad (11ms)
 				EditorAssembliesLoaded (0ms)
 			ExecutionOrderSort2 (0ms)
-			AwakeInstancesAfterBackupRestoration (12ms)
+			AwakeInstancesAfterBackupRestoration (10ms)
 Platform modules already initialized, skipping
-Refreshing native plugins compatible for Editor in 1.74 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 2.19 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 3062 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 17 unused Assets / (80.3 KB). Loaded Objects now: 3558.
-Memory consumption went from 112.7 MB to 112.7 MB.
-Total: 3.113400 ms (FindLiveObjects: 0.297400 ms CreateObjectMapping: 0.140800 ms MarkObjects: 2.549500 ms  DeleteObjects: 0.124100 ms)
+Unloading 3063 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 17 unused Assets / (80.3 KB). Loaded Objects now: 3591.
+Memory consumption went from 113.2 MB to 113.1 MB.
+Total: 3.091800 ms (FindLiveObjects: 0.309500 ms CreateObjectMapping: 0.184200 ms MarkObjects: 2.504000 ms  DeleteObjects: 0.093100 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
@@ -627,259 +859,13 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 4693.876607 seconds.
-  path: Assets/Longbow Aiming Pack 1
-  artifactKey: Guid(606d7a7d96b02584dbdd37dac9a7ce09) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Aiming Pack 1 using Guid(606d7a7d96b02584dbdd37dac9a7ce09) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'de89d9a4769f3def0ff9396c6735c5a6') in 0.043642 seconds 
+  Time since last request: 127.107374 seconds.
+  path: Assets/Arrow_01.prefab
+  artifactKey: Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Arrow_01.prefab using Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c32fddf541326faaf3ff10d9c37acc64') in 0.082471 seconds 
 ========================================================================
 Received Import Request.
-  Time since last request: 0.880300 seconds.
-  path: Assets/Longbow Locomotion Pack 1
-  artifactKey: Guid(c493b59eec5188440ad4cbbd3cf76d05) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Locomotion Pack 1 using Guid(c493b59eec5188440ad4cbbd3cf76d05) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '68817e307ec373d104161d95509da103') in 0.012117 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.702462 seconds.
-  path: Assets/Longbow Locomotion Pack 1/Erika Archer.fbx
-  artifactKey: Guid(21613e46e11666742b8cdf772b9b253b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Locomotion Pack 1/Erika Archer.fbx using Guid(21613e46e11666742b8cdf772b9b253b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'f67ebda4ced6cd54d1f9460f55b50f96') in 0.889814 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000026 seconds.
-  path: Assets/Longbow Locomotion Pack 1/standing walk back.fbx
-  artifactKey: Guid(f541a287724e18e4fa7bc4ce297e0ead) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Locomotion Pack 1/standing walk back.fbx using Guid(f541a287724e18e4fa7bc4ce297e0ead) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1dd875300c423307553ccf00de3577b9') in 0.025168 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000064 seconds.
-  path: Assets/Longbow Locomotion Pack 1/standing run back.fbx
-  artifactKey: Guid(ab12e56b9b013cb4f9078e60ff740413) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Locomotion Pack 1/standing run back.fbx using Guid(ab12e56b9b013cb4f9078e60ff740413) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0423512bc7edaa2250c8d1d348651280') in 0.023452 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000020 seconds.
-  path: Assets/Longbow Locomotion Pack 1/standing idle 01.fbx
-  artifactKey: Guid(b9c8d33814fb108449e904d7aea0e3f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Locomotion Pack 1/standing idle 01.fbx using Guid(b9c8d33814fb108449e904d7aea0e3f9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '87aef45ee9675dc16a8a3d91e2bf3782') in 0.027531 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000020 seconds.
-  path: Assets/Longbow Locomotion Pack 1/standing run right.fbx
-  artifactKey: Guid(6679e42027063b9459f82133c41a4945) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Locomotion Pack 1/standing run right.fbx using Guid(6679e42027063b9459f82133c41a4945) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'cb20393a9c9fddb9664a6730c7caf4d4') in 0.022352 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000021 seconds.
-  path: Assets/Longbow Locomotion Pack 1/standing run forward stop.fbx
-  artifactKey: Guid(af0967d275583d6458b13bdae45bd63a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Locomotion Pack 1/standing run forward stop.fbx using Guid(af0967d275583d6458b13bdae45bd63a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '0e228fef81a67db1e68d20f50ea664ee') in 0.025460 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000021 seconds.
-  path: Assets/Longbow Locomotion Pack 1/standing run forward.fbx
-  artifactKey: Guid(965b111784bd6914fbcbdc81392df59f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Locomotion Pack 1/standing run forward.fbx using Guid(965b111784bd6914fbcbdc81392df59f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '93ea59991c59e4cfc9d0eb6e55b8be01') in 0.028646 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000021 seconds.
-  path: Assets/Longbow Locomotion Pack 1/standing walk right.fbx
-  artifactKey: Guid(07cf6415442932e45b2b33e9585421b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Locomotion Pack 1/standing walk right.fbx using Guid(07cf6415442932e45b2b33e9585421b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '2c8acc593ae9debb8f6ecb4aedf03a0e') in 0.023786 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000017 seconds.
-  path: Assets/Longbow Locomotion Pack 1/standing walk left.fbx
-  artifactKey: Guid(48cbf031740dda249955f7b967e4b4f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Locomotion Pack 1/standing walk left.fbx using Guid(48cbf031740dda249955f7b967e4b4f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '7df56d687f64f7234999b2589c9173f8') in 0.026405 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000097 seconds.
-  path: Assets/Longbow Locomotion Pack 1/standing turn 90 left.fbx
-  artifactKey: Guid(87569097ed6eed74ea397f17333c64e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Locomotion Pack 1/standing turn 90 left.fbx using Guid(87569097ed6eed74ea397f17333c64e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e3fe6aca434805529e2990c61ee1eb0b') in 0.028861 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000036 seconds.
-  path: Assets/Longbow Locomotion Pack 1/standing turn 90 right.fbx
-  artifactKey: Guid(0e08718d755db3148bc7405a68dd9ac6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Locomotion Pack 1/standing turn 90 right.fbx using Guid(0e08718d755db3148bc7405a68dd9ac6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '606840b421d5077ccf8daa4fd1827227') in 0.022525 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000028 seconds.
-  path: Assets/Longbow Locomotion Pack 1/standing run left.fbx
-  artifactKey: Guid(7b21b8d34856b8d4d9101708f2c3dd64) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Locomotion Pack 1/standing run left.fbx using Guid(7b21b8d34856b8d4d9101708f2c3dd64) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a999548a648cf7c04b334b08c0692104') in 0.023482 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000025 seconds.
-  path: Assets/Longbow Locomotion Pack 1/standing walk forward.fbx
-  artifactKey: Guid(9e04a0047ee67bb499c5aac3be9ce048) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Locomotion Pack 1/standing walk forward.fbx using Guid(9e04a0047ee67bb499c5aac3be9ce048) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '99ccd79288f5c27169dd0b054811f45b') in 0.022875 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 1.495832 seconds.
-  path: Assets/Longbow Aiming Pack 1/Erika Archer With Bow Arrow.fbx
-  artifactKey: Guid(0bb03b6f4a5961c4da58ce0ee32235a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Aiming Pack 1/Erika Archer With Bow Arrow.fbx using Guid(0bb03b6f4a5961c4da58ce0ee32235a9) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '8e75136fb1871570eae9828ecdef0be1') in 0.097619 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000018 seconds.
-  path: Assets/Longbow Aiming Pack 1/standing draw arrow.fbx
-  artifactKey: Guid(53bd33c95bf479e489e09cc06e0870e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Aiming Pack 1/standing draw arrow.fbx using Guid(53bd33c95bf479e489e09cc06e0870e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '9f9b2009e8194a5b9db305f9b3001ced') in 0.022785 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000019 seconds.
-  path: Assets/Longbow Aiming Pack 1/standing aim walk left.fbx
-  artifactKey: Guid(e2bffc11c1434d542ac73088bf604062) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Aiming Pack 1/standing aim walk left.fbx using Guid(e2bffc11c1434d542ac73088bf604062) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c454b5c7caa7131c124e782475944e99') in 0.022035 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000039 seconds.
-  path: Assets/Longbow Aiming Pack 1/standing aim walk forward.fbx
-  artifactKey: Guid(90f9061d2ce730e4a94288198ed92e68) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Aiming Pack 1/standing aim walk forward.fbx using Guid(90f9061d2ce730e4a94288198ed92e68) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '791a54cd7c62577b18e962193a64444e') in 0.023231 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000025 seconds.
-  path: Assets/Longbow Aiming Pack 1/standing aim walk right.fbx
-  artifactKey: Guid(2592921f46a6f7741a2c881e141ce75f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Aiming Pack 1/standing aim walk right.fbx using Guid(2592921f46a6f7741a2c881e141ce75f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '850b69ebee0afb98f789f9df3692e89f') in 0.021026 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000021 seconds.
-  path: Assets/Longbow Aiming Pack 1/standing aim walk back.fbx
-  artifactKey: Guid(c2daecbda34faaa4299812e14f17302f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Aiming Pack 1/standing aim walk back.fbx using Guid(c2daecbda34faaa4299812e14f17302f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '18494ec3c1fe857e57ace2b5d0f26fef') in 0.027429 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000030 seconds.
-  path: Assets/Longbow Aiming Pack 1/standing idle 01.fbx
-  artifactKey: Guid(4b5162b5637445349afe969e64419c52) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Aiming Pack 1/standing idle 01.fbx using Guid(4b5162b5637445349afe969e64419c52) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b44bd7d79af0f767619b2be9352c605c') in 0.014866 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000017 seconds.
-  path: Assets/Longbow Aiming Pack 1/standing aim recoil.fbx
-  artifactKey: Guid(48b01a3a733f1fe46b5a5d84e0149d2c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Aiming Pack 1/standing aim recoil.fbx using Guid(48b01a3a733f1fe46b5a5d84e0149d2c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4308a967e8baf4996d04a145ce3cc56f') in 0.021991 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000036 seconds.
-  path: Assets/Longbow Aiming Pack 1/standing aim overdraw.fbx
-  artifactKey: Guid(1a243c65e5d9e9c44b61e7623e18032c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Longbow Aiming Pack 1/standing aim overdraw.fbx using Guid(1a243c65e5d9e9c44b61e7623e18032c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '98cfe6b7fb4aca0a81dfc9ec0f9ffc80') in 0.019649 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 1617.547376 seconds.
-  path: Assets/Mixamo/standing run back.fbx
-  artifactKey: Guid(ab12e56b9b013cb4f9078e60ff740413) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Mixamo/standing run back.fbx using Guid(ab12e56b9b013cb4f9078e60ff740413) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '20fc26600e3cdd2fe5b3d6abc50ab045') in 0.011527 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.067436 seconds.
-  path: Assets/Mixamo/standing aim overdraw.fbx
-  artifactKey: Guid(1a243c65e5d9e9c44b61e7623e18032c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Mixamo/standing aim overdraw.fbx using Guid(1a243c65e5d9e9c44b61e7623e18032c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '999a9f26deab8c24a342c0f30b221c7c') in 0.013353 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000021 seconds.
-  path: Assets/Mixamo/standing walk back.fbx
-  artifactKey: Guid(f541a287724e18e4fa7bc4ce297e0ead) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Mixamo/standing walk back.fbx using Guid(f541a287724e18e4fa7bc4ce297e0ead) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c85a3b65b3e170204edad3f2469f25d9') in 0.007577 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000120 seconds.
-  path: Assets/Mixamo/standing draw arrow.fbx
-  artifactKey: Guid(53bd33c95bf479e489e09cc06e0870e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Mixamo/standing draw arrow.fbx using Guid(53bd33c95bf479e489e09cc06e0870e3) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'af59a7609c467f8553c5607deab40b37') in 0.011867 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000027 seconds.
-  path: Assets/Mixamo/standing aim walk left.fbx
-  artifactKey: Guid(e2bffc11c1434d542ac73088bf604062) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Mixamo/standing aim walk left.fbx using Guid(e2bffc11c1434d542ac73088bf604062) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a5f8fe817adbaf1755c5ffca5e2aabf1') in 0.008844 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000025 seconds.
-  path: Assets/Mixamo/standing aim walk forward.fbx
-  artifactKey: Guid(90f9061d2ce730e4a94288198ed92e68) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Mixamo/standing aim walk forward.fbx using Guid(90f9061d2ce730e4a94288198ed92e68) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e0f8393c9af0a03ef162dfa80c35867f') in 0.011902 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000022 seconds.
-  path: Assets/Mixamo/standing aim walk right.fbx
-  artifactKey: Guid(2592921f46a6f7741a2c881e141ce75f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Mixamo/standing aim walk right.fbx using Guid(2592921f46a6f7741a2c881e141ce75f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e82ac8e7dea6ca2584af28555e04b961') in 0.016248 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000023 seconds.
-  path: Assets/Mixamo/standing run right.fbx
-  artifactKey: Guid(6679e42027063b9459f82133c41a4945) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Mixamo/standing run right.fbx using Guid(6679e42027063b9459f82133c41a4945) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '541445b22a7bcc23057d1750504fe6f3') in 0.020036 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000027 seconds.
-  path: Assets/Mixamo/standing aim walk back.fbx
-  artifactKey: Guid(c2daecbda34faaa4299812e14f17302f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Mixamo/standing aim walk back.fbx using Guid(c2daecbda34faaa4299812e14f17302f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4b892e7bbe4a5fb63ba3d93ca8e39f3f') in 0.008720 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000025 seconds.
-  path: Assets/Mixamo/standing idle 01.fbx
-  artifactKey: Guid(4b5162b5637445349afe969e64419c52) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Mixamo/standing idle 01.fbx using Guid(4b5162b5637445349afe969e64419c52) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b629c7a83118200f1d856c15e55b0eaf') in 0.007293 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000051 seconds.
-  path: Assets/Mixamo/standing aim recoil.fbx
-  artifactKey: Guid(48b01a3a733f1fe46b5a5d84e0149d2c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Mixamo/standing aim recoil.fbx using Guid(48b01a3a733f1fe46b5a5d84e0149d2c) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '84d32ff6204b6fcd81751e177d992621') in 0.010603 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000022 seconds.
-  path: Assets/Mixamo/standing run forward stop.fbx
-  artifactKey: Guid(af0967d275583d6458b13bdae45bd63a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Mixamo/standing run forward stop.fbx using Guid(af0967d275583d6458b13bdae45bd63a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '01cf820139ac1e384c80833b7ba2c174') in 0.010952 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000057 seconds.
-  path: Assets/Mixamo/standing run forward.fbx
-  artifactKey: Guid(965b111784bd6914fbcbdc81392df59f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Mixamo/standing run forward.fbx using Guid(965b111784bd6914fbcbdc81392df59f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a21fcd924d66815f15b792f187b693f8') in 0.013688 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000024 seconds.
-  path: Assets/Mixamo/standing walk right.fbx
-  artifactKey: Guid(07cf6415442932e45b2b33e9585421b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Mixamo/standing walk right.fbx using Guid(07cf6415442932e45b2b33e9585421b4) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '807acc53f782ec1d5ec2b3d269c60c6c') in 0.008775 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000028 seconds.
-  path: Assets/Mixamo/standing walk left.fbx
-  artifactKey: Guid(48cbf031740dda249955f7b967e4b4f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Mixamo/standing walk left.fbx using Guid(48cbf031740dda249955f7b967e4b4f1) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '61ba590eccb3c09dba71f9c0165976f0') in 0.015070 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000022 seconds.
-  path: Assets/Mixamo/standing turn 90 left.fbx
-  artifactKey: Guid(87569097ed6eed74ea397f17333c64e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Mixamo/standing turn 90 left.fbx using Guid(87569097ed6eed74ea397f17333c64e6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c8aa2e4479f141d977b65ae0f1b91e30') in 0.009386 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000027 seconds.
-  path: Assets/Mixamo/standing turn 90 right.fbx
-  artifactKey: Guid(0e08718d755db3148bc7405a68dd9ac6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Mixamo/standing turn 90 right.fbx using Guid(0e08718d755db3148bc7405a68dd9ac6) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '1392b67c282bf4e5fa209168f2d814fa') in 0.008566 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000029 seconds.
-  path: Assets/Mixamo/standing run left.fbx
-  artifactKey: Guid(7b21b8d34856b8d4d9101708f2c3dd64) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Mixamo/standing run left.fbx using Guid(7b21b8d34856b8d4d9101708f2c3dd64) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b9fc032e683cfd655f3ef560eec348f4') in 0.007313 seconds 
-========================================================================
-Received Import Request.
-  Time since last request: 0.000025 seconds.
-  path: Assets/Mixamo/standing walk forward.fbx
-  artifactKey: Guid(9e04a0047ee67bb499c5aac3be9ce048) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Mixamo/standing walk forward.fbx using Guid(9e04a0047ee67bb499c5aac3be9ce048) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '4dc1addcf8e131794a06cc3eed85d4e8') in 0.016250 seconds 
+  Time since last request: 1.057342 seconds.
+  path: Assets/Arrow_01.prefab
+  artifactKey: Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Arrow_01.prefab using Guid(1d86ce5ded6b23d4c92f1cd2a464f10f) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '300d89c789ca9bcff8b5952161ae1b8d') in 0.012216 seconds 
