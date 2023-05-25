@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ef19ea2397f96744a294a95d6b40a0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  torque: 1
+  torque: 0
   rb: {fileID: -2244408426735211293}
 --- !u!54 &-2244408426735211293
 Rigidbody:
