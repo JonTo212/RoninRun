@@ -22,15 +22,17 @@ public class Arrow : MonoBehaviour
 
     void OnTriggerEnter(Collider collider)
     {
-        if (hit)
+        /*if (hit)
         {
             return;
         }
 
         hit = true;
+        rb.isKinematic = true;
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
-        rb.isKinematic = true;
-        transform.SetParent(collider.transform);
+        transform.SetParent(collider.transform, true);*/
+
+        Destroy(this.gameObject);
     }
 }

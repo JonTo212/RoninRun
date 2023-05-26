@@ -17,6 +17,9 @@ public class Bow : MonoBehaviour
     [Range(0, 3)]
     float zoomSpeed;
 
+    [SerializeField]
+    PlayerController playerController;
+
     Arrow currentArrow;
     bool isAiming;
     bool zoomedIn;
@@ -25,10 +28,13 @@ public class Bow : MonoBehaviour
     float startingFOV;
     Vector3 destination;
 
+
     void Start()
     {
         cam = Camera.main;
         startingFOV = cam.fieldOfView;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
@@ -41,7 +47,7 @@ public class Bow : MonoBehaviour
         }
         else if (fire)
         {
-            float arrowPower = (startingFOV - cam.fieldOfView) * 3f;
+            float arrowPower = (startingFOV - cam.fieldOfView) * 5f;
             FireArrow(arrowPower);
         }
         else
@@ -78,14 +84,11 @@ public class Bow : MonoBehaviour
             destination = ray.GetPoint(1000);
         }
 
-        InstantiateProjectile(arrowPower);
-    }
-
-    void InstantiateProjectile(float arrowPower)
-    {
         currentArrow = Instantiate(arrowPrefab, arrowSpawnPoint);
-        //currentArrow.GetComponent<Rigidbody>().velocity = (destination - arrowSpawnPoint.position).normalized * arrowPower;
-        currentArrow.Fly(((destination - arrowSpawnPoint.forward).normalized) * arrowPower);
+        currentArrow.GetComponent<Rigidbody>().velocity = (destination - arrowSpawnPoint.position).normalized * arrowPower;
+        currentArrow.GetComponent<Rigidbody>().AddTorque(transform.right * playerController.playerVelocity.x);
+        currentArrow.transform.SetParent(null);
+        //currentArrow.Fly((destination.normalized) * arrowPower);
         fire = false;
     }
 }
