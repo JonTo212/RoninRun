@@ -21,7 +21,7 @@ public class Bow : MonoBehaviour
     PlayerController playerController;
 
     Arrow currentArrow;
-    bool isAiming;
+    public bool isAiming; //Public for animator
     bool zoomedIn;
     bool fire;
     Camera cam;
