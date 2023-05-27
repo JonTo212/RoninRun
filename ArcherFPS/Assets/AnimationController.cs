@@ -21,8 +21,16 @@ public class AnimationController : MonoBehaviour
     void SetAnim()
     {
         anim.SetBool("Aiming", bow.isAiming);
-        anim.SetFloat("xInput", playerController.inputVector.x);
-        anim.SetFloat("zInput", playerController.inputVector.z);
-        anim.SetBool("InAir", !playerController.isGrounded);
+        anim.SetFloat("xInput", Input.GetAxis("Horizontal"));
+        anim.SetFloat("zInput", Input.GetAxis("Vertical"));
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            anim.SetBool("Jump", true);
+        }
+        else if (playerController.isGrounded)
+        {
+            anim.SetBool("Jump", false);
+        }
     }
 }
