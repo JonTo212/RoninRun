@@ -24,13 +24,13 @@ public class AnimationController : MonoBehaviour
         anim.SetFloat("xInput", Input.GetAxis("Horizontal"));
         anim.SetFloat("zInput", Input.GetAxis("Vertical"));
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space))
         {
-            anim.SetBool("Jump", true);
+            anim.SetBool("InAir", true);
         }
-        else if (playerController.isGrounded)
+        if (playerController.isGrounded)
         {
-            anim.SetBool("Jump", false);
+            anim.SetBool("InAir", false);
         }
     }
 }

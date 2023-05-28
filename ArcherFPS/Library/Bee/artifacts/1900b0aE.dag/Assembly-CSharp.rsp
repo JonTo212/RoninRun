@@ -349,6 +349,7 @@
 "Assets/AnimationController.cs"
 "Assets/Arrow.cs"
 "Assets/Bow.cs"
+"Assets/CameraFollow.cs"
 "Assets/Scripts/BlastPack.cs"
 "Assets/Scripts/CameraCollision.cs"
 "Assets/Scripts/CameraSwap.cs"
