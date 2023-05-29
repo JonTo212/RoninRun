@@ -11,6 +11,9 @@ public class AnimationController : MonoBehaviour
     PlayerController playerController;
 
     [SerializeField]
+    LucioSurf wallrun;
+
+    [SerializeField]
     Bow bow;
 
     void Update()
@@ -20,17 +23,24 @@ public class AnimationController : MonoBehaviour
 
     void SetAnim()
     {
-        anim.SetBool("Aiming", bow.isAiming);
+        anim.SetBool("isAiming", bow.isAiming);
         anim.SetFloat("xInput", Input.GetAxis("Horizontal"));
         anim.SetFloat("zInput", Input.GetAxis("Vertical"));
+        anim.SetBool("crouching", playerController.crouched);
 
         if (Input.GetKey(KeyCode.Space))
         {
-            anim.SetBool("InAir", true);
+            anim.SetBool("inAir", true);
         }
         if (playerController.isGrounded)
         {
-            anim.SetBool("InAir", false);
+            anim.SetBool("inAir", false);
+        }
+
+        if (wallrun != null)
+        {
+            anim.SetBool("wallLeft", wallrun.wallLeft);
+            anim.SetBool("wallRight", wallrun.wallRight);
         }
     }
 }

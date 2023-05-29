@@ -14,8 +14,8 @@ public class LucioSurf : MonoBehaviour
     bool canWallBounce;
     bool hasWallBounced;
 
-    bool wallLeft = false;
-    bool wallRight = false;
+    public bool wallLeft = false;
+    public bool wallRight = false;
     RaycastHit leftWallHit;
     RaycastHit rightWallHit;
     public bool wallHit;

@@ -1559,6 +1559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 919132148012138872}
   playerController: {fileID: 1670364354415673123}
+  wallrun: {fileID: 1670364354415673131}
   bow: {fileID: 1670364354415673136}
 --- !u!1 &929078528960387196
 GameObject:
@@ -26078,6 +26079,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   surfBoostForce: 10
+  wallLeft: 0
+  wallRight: 0
   wallHit: 0
   currentTilt: 0
 --- !u!114 &1670364354415673132
