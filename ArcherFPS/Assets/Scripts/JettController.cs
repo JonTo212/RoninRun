@@ -18,7 +18,7 @@ public class JettController : MonoBehaviour
 
 
     //Updraft variables
-    bool isUpdrafting = false;
+    public bool isUpdrafting = false;
     bool isTryingToUpdraft;
     float lastTimeUpdrafted = 0f;
     float updraftHeight = 15f;
@@ -28,7 +28,7 @@ public class JettController : MonoBehaviour
     //bool hasUpdrafted = false; //For floating only after updrafting
 
     //Dashing variables
-    bool isDashing;
+    public bool isDashing;
     public bool dashCooldownActive;
     float dashStartTime;
     Vector3 currentForward;
@@ -81,13 +81,13 @@ public class JettController : MonoBehaviour
             ResetUpdraft();
             //ResetDash() //For updrafting only after dashing
         }
-        else if (wallRun != null)
+        /*else if (wallRun != null)
         {
             if (wallRun.wallHit)
             {
                 updraftAttempts = 0;
             }
-        }
+        }*/
     }
 
     #region Dashing
@@ -143,10 +143,10 @@ public class JettController : MonoBehaviour
         }
 
         //Camera tilt glitch when wall-run enabled during dash
-        if (wallRun != null)
+        /*if (wallRun != null)
         {
             wallRun.enabled = false;
-        }
+        }*/
     }
 
     void OnDashEnd()
@@ -158,10 +158,10 @@ public class JettController : MonoBehaviour
         {
             arms.SetActive(true);
         }
-        if (wallRun != null)
+        /*if (wallRun != null)
         {
             wallRun.enabled = true;
-        }
+        }*/
         //hasDashed = true;
     }
 

@@ -16,6 +16,9 @@ public class AnimationController : MonoBehaviour
     [SerializeField]
     Bow bow;
 
+    [SerializeField]
+    JettController jett;
+
     void Update()
     {
         SetAnim();
@@ -27,6 +30,8 @@ public class AnimationController : MonoBehaviour
         anim.SetFloat("xInput", Input.GetAxis("Horizontal"));
         anim.SetFloat("zInput", Input.GetAxis("Vertical"));
         anim.SetBool("crouching", playerController.crouched);
+        anim.SetBool("dashInput", jett.isDashing);
+        anim.SetBool("updraft", jett.isUpdrafting);
 
         if (Input.GetKey(KeyCode.Space))
         {

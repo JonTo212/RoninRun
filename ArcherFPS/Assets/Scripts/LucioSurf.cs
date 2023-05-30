@@ -23,6 +23,7 @@ public class LucioSurf : MonoBehaviour
     float camTilt = 30f;
     float camTiltTime = 3f;
     public float currentTilt;
+    public LayerMask playerMask;
 
     bool CanWallRun() //Can wall run if you're above the minimum jump height
     {
@@ -32,6 +33,7 @@ public class LucioSurf : MonoBehaviour
     void Start()
     {
         playerController = GetComponent<PlayerController>();
+        playerMask = ~playerMask;
     }
 
     void Update()
@@ -41,6 +43,7 @@ public class LucioSurf : MonoBehaviour
             canWallBounce = false;
             hasWallBounced = false;
         }
+
         CheckWall();
 
         if (CanWallRun())
@@ -62,8 +65,9 @@ public class LucioSurf : MonoBehaviour
 
     void CheckWall()
     {
-        wallLeft = Physics.Raycast(transform.position, -transform.right, out leftWallHit, wallDistance);
-        wallRight = Physics.Raycast(transform.position, transform.right, out rightWallHit, wallDistance);
+        wallLeft = Physics.Raycast(transform.position, -transform.right, out leftWallHit, wallDistance, playerMask);
+        wallRight = Physics.Raycast(transform.position, transform.right, out rightWallHit, wallDistance, playerMask);
+
         if (wallLeft || wallRight)
         {
             wallHit = true;
