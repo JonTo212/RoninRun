@@ -37,6 +37,7 @@ public class PlayerController : MonoBehaviour
     bool canSlideJump;
     public bool crouched;
     bool hasSlid;
+    public bool slide;
     public Vector3 wishdir;
     public bool canWallRun;
 
@@ -303,6 +304,7 @@ public class PlayerController : MonoBehaviour
     #region Crouching/sliding
     void Crouch()
     {
+        slide = false;
         //Check for crouching input
         crouched = Input.GetKey(KeyCode.LeftControl);
 
@@ -339,6 +341,7 @@ public class PlayerController : MonoBehaviour
             playerVelocity.z += playerVelocity.z * slideForce;
             hasSlid = true;
             canSlideJump = true;
+            slide = true;
         }
     }
 

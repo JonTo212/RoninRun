@@ -32,6 +32,7 @@ public class AnimationController : MonoBehaviour
         anim.SetBool("crouching", playerController.crouched);
         anim.SetBool("dashInput", jett.isDashing);
         anim.SetBool("updraft", jett.isUpdrafting);
+        anim.SetBool("slide", playerController.slide);
 
         if (Input.GetKey(KeyCode.Space))
         {
