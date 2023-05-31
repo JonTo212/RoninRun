@@ -42,7 +42,6 @@ public class JettController : MonoBehaviour
     bool isFalling = false;
     float defaultGravity;
 
-    [SerializeField] WallRun wallRun;
     [SerializeField] LucioSurf lucioSurf;
     PlayerController playerController;
     CharacterController characterController;
@@ -81,13 +80,6 @@ public class JettController : MonoBehaviour
             ResetUpdraft();
             //ResetDash() //For updrafting only after dashing
         }
-        /*else if (wallRun != null)
-        {
-            if (wallRun.wallHit)
-            {
-                updraftAttempts = 0;
-            }
-        }*/
     }
 
     #region Dashing
@@ -141,12 +133,6 @@ public class JettController : MonoBehaviour
         {
             arms.SetActive(false);
         }
-
-        //Camera tilt glitch when wall-run enabled during dash
-        /*if (wallRun != null)
-        {
-            wallRun.enabled = false;
-        }*/
     }
 
     void OnDashEnd()
@@ -158,11 +144,6 @@ public class JettController : MonoBehaviour
         {
             arms.SetActive(true);
         }
-        /*if (wallRun != null)
-        {
-            wallRun.enabled = true;
-        }*/
-        //hasDashed = true;
     }
 
     void PlayDashParticles()

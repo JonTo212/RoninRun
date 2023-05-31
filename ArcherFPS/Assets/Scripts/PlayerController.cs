@@ -75,7 +75,6 @@ public class PlayerController : MonoBehaviour
     RaycastHit roofHit;
     RaycastHit groundHit;
 
-    [SerializeField] WallRun wallRun;
     [SerializeField] CameraSwap camSwap;
     [SerializeField] LucioSurf lucioSurf;
 
@@ -249,11 +248,6 @@ public class PlayerController : MonoBehaviour
             this.transform.rotation = Quaternion.Euler(0, rotY, 0);
 
             float cameraTilt = 0;
-            if (wallRun != null)
-            {
-                cameraTilt = wallRun.currentTilt;
-            }
-
             if (lucioSurf != null)
             {
                 cameraTilt = lucioSurf.currentTilt;

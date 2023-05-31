@@ -579,7 +579,7 @@ GameObject:
   - component: {fileID: 1477502563}
   - component: {fileID: 1477502562}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25968,10 +25968,8 @@ GameObject:
   - component: {fileID: 1670364354415673123}
   - component: {fileID: 1670364354415673122}
   - component: {fileID: 1670364354415673132}
-  - component: {fileID: 1670364354415673135}
   - component: {fileID: 1670364354415673129}
   - component: {fileID: 1670364354415673131}
-  - component: {fileID: 1670364354415673130}
   - component: {fileID: 1670364354415673136}
   m_Layer: 6
   m_Name: Player
@@ -26021,6 +26019,7 @@ MonoBehaviour:
   unlockMouse: 1
   inputVector: {x: 0, y: 0, z: 0}
   crouched: 0
+  slide: 0
   wishdir: {x: 0, y: 0, z: 0}
   canWallRun: 0
   rotX: 0
@@ -26031,7 +26030,6 @@ MonoBehaviour:
   playerFriction: 0
   useGravity: 1
   isGrounded: 0
-  wallRun: {fileID: 1670364354415673135}
   camSwap: {fileID: 0}
   lucioSurf: {fileID: 1670364354415673131}
 --- !u!114 &1670364354415673129
@@ -26049,24 +26047,6 @@ MonoBehaviour:
   ThirdPersonCamera: {fileID: 1670364354940769265}
   FirstPersonCamera: {fileID: 1670364354826531657}
   cam: 0
---- !u!114 &1670364354415673130
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1670364354415673120}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee9d30673ee00584893ae0489cffb27b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  blastPackPrefab: {fileID: 1200664716270934775, guid: a22e117ec25722e42af61a90550900a9, type: 3}
-  cam: {fileID: 1670364354826531659}
-  spawnPoint: {fileID: 1670364353361230657}
-  hasSpawned: 0
-  throwForce: 8
-  throwUpwardForce: 1
 --- !u!114 &1670364354415673131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26112,7 +26092,6 @@ MonoBehaviour:
   dashCooldownActive: 0
   dashDelay: 2
   dashCooldown: 0
-  wallRun: {fileID: 1670364354415673135}
   lucioSurf: {fileID: 1670364354415673131}
   arms: {fileID: 0}
 --- !u!136 &1670364354415673133
@@ -26147,20 +26126,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1670364354415673135
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1670364354415673120}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55caca9d1aea00f48a8246f8cf9908e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  wallHit: 0
-  currentTilt: 0
 --- !u!114 &1670364354415673136
 MonoBehaviour:
   m_ObjectHideFlags: 0
