@@ -37,28 +37,27 @@ public class JettController : MonoBehaviour
     public float dashCooldown = 0;
     //bool hasDashed = false;
 
-    //Floating variables
+    /*//Floating variables
     float lastJumpVelocityY = 0f;
     bool isFalling = false;
-    float defaultGravity;
+    float defaultGravity;*/
 
     [SerializeField] LucioSurf lucioSurf;
     PlayerController playerController;
     CharacterController characterController;
-    [SerializeField] GameObject arms;
 
     void Start()
     {
         playerController = GetComponent<PlayerController>();
         characterController = GetComponent<CharacterController>();
-        defaultGravity = playerController.gravity;
+        //defaultGravity = playerController.gravity;
         dashCooldown = dashDelay;
     }
     void Update()
     {
         HandleDash();
         HandleUpdraft();
-        HandleIsFalling();
+        /*HandleIsFalling();
         //No floating if lucio surf wall bouncing
         if (lucioSurf != null)
         {
@@ -74,7 +73,7 @@ public class JettController : MonoBehaviour
         else if (lucioSurf == null)
         {
             HandleFloat();
-        }
+        }*/
         if (playerController.isGrounded)
         {
             ResetUpdraft();
@@ -129,10 +128,7 @@ public class JettController : MonoBehaviour
         currentVel = playerController.wishdir;
         dashCooldownActive = false;
         PlayDashParticles();
-        if (arms != null)
-        {
-            arms.SetActive(false);
-        }
+
     }
 
     void OnDashEnd()
@@ -140,10 +136,6 @@ public class JettController : MonoBehaviour
         isDashing = false;
         dashStartTime = 0;
         dashCooldownActive = true;
-        if (arms != null)
-        {
-            arms.SetActive(true);
-        }
     }
 
     void PlayDashParticles()
@@ -237,7 +229,7 @@ public class JettController : MonoBehaviour
     #endregion
 
     #region Floating
-    void HandleIsFalling()
+    /*void HandleIsFalling()
     {
         if (!playerController.isGrounded &&
             playerController.playerVelocity.y <= 0
@@ -281,6 +273,6 @@ public class JettController : MonoBehaviour
         {
             floatingParticles.Emit(1);
         }
-    }
+    }*/
     #endregion
 }

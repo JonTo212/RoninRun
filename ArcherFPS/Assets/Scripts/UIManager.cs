@@ -19,21 +19,21 @@ public class UIManager : MonoBehaviour
     public TMP_Text maxSpeedText;
     public PlayerController playerController;
 
-    bool gameStart;
+    bool gameStart = true;
 
-    void Start()
+    /*void Start()
     {
         Time.timeScale = 0;
         gameStart = false;
-    }
+    }*/
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1") && !gameStart)
+        /*if (Input.GetButtonDown("Fire1") && !gameStart)
         {
             gameStart = true;
             Time.timeScale = 1;
-        }
+        }*/
         if (gameStart)
         {
             RunTimer();
