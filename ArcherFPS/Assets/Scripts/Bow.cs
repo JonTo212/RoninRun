@@ -33,8 +33,8 @@ public class Bow : MonoBehaviour
     {
         cam = Camera.main;
         startingFOV = cam.fieldOfView;
-        //Cursor.lockState = CursorLockMode.Locked;
-        //Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()

@@ -6,12 +6,12 @@ public class LucioSurf : MonoBehaviour
 {
     PlayerController playerController;
     float wallDistance = 1f;
-    float minimumJumpHeight = 2f;
+    public float minimumJumpHeight = 2f;
     public float surfBoostForce = 15f;
     Vector3 wallRunJumpDirection;
     Vector3 jumpAccel;
     Vector3 wallStick;
-    bool canWallBounce;
+    public bool canWallBounce;
     bool hasWallBounced;
 
     public bool wallLeft = false;
@@ -24,18 +24,21 @@ public class LucioSurf : MonoBehaviour
     float camTilt = 30f;
     float camTiltTime = 3f;
     public float currentTilt;
-    public LayerMask playerMask;
+    //public LayerMask playerMask;
+    public LayerMask wallMask;
     public bool wallRun;
+    //public float wallBounceActivateTimer; //activate if spacebar hold
+    //float timer;    
 
     bool CanWallRun() //Can wall run if you're above the minimum jump height
     {
         if (!wallRun)
         {
-            return !Physics.Raycast(transform.position, Vector3.down, minimumJumpHeight) && playerController.canWallRun;
+            return !Physics.Raycast(transform.position, Vector3.down, minimumJumpHeight) && playerController.canWallRun; //for spacebar hold wallrunning
         }
         else if (wallRun)
         {
-            return !Physics.Raycast(transform.position, Vector3.down, minimumJumpHeight);
+            return !Physics.Raycast(transform.position, Vector3.down, minimumJumpHeight); 
         }
         return false;
     }
@@ -43,7 +46,7 @@ public class LucioSurf : MonoBehaviour
     void Start()
     {
         playerController = GetComponent<PlayerController>();
-        playerMask = ~playerMask;
+        //playerMask = ~playerMask; //allows for wallrunning on all surfaces
     }
 
     void Update()
@@ -52,6 +55,7 @@ public class LucioSurf : MonoBehaviour
         {
             canWallBounce = false;
             hasWallBounced = false;
+            //timer = 0;
         }
 
         CheckWall();
@@ -60,19 +64,27 @@ public class LucioSurf : MonoBehaviour
         {
             if (wallLeft)
             {
-                wallRunning = true;
-                WallRunning();
+                currentTilt = Mathf.Lerp(currentTilt, -camTilt, camTiltTime * Time.deltaTime);
+                WallRunning(leftWallHit);
+                //timer += Time.deltaTime;
             }
             else if (wallRight)
             {
-                wallRunning = true;
-                WallRunning();
+                currentTilt = Mathf.Lerp(currentTilt, camTilt, camTiltTime * Time.deltaTime);
+                WallRunning(rightWallHit);
+                //timer += Time.deltaTime;
             }
             else
             {
                 wallRunning = false;
+                //timer = 0;
             }
         }
+        
+        /*if (timer >= wallBounceActivateTimer)
+        {
+            canWallBounce = true; //activate for spacebar hold
+        }*/
 
         WallBounce();
 
@@ -81,8 +93,8 @@ public class LucioSurf : MonoBehaviour
 
     void CheckWall()
     {
-        wallLeft = Physics.Raycast(transform.position, -transform.right, out leftWallHit, wallDistance, playerMask);
-        wallRight = Physics.Raycast(transform.position, transform.right, out rightWallHit, wallDistance, playerMask);
+        wallLeft = Physics.Raycast(transform.position, -transform.right, out leftWallHit, wallDistance, wallMask);
+        wallRight = Physics.Raycast(transform.position, transform.right, out rightWallHit, wallDistance, wallMask);
 
         if (wallLeft || wallRight)
         {
@@ -94,42 +106,19 @@ public class LucioSurf : MonoBehaviour
         }
     }
 
-    void WallRunning()
+    void WallRunning(RaycastHit wallInfo)
     {
-        if (playerController.playerVelocity.y < 0)
+        wallRunning = true;
+
+        if (playerController.playerVelocity.y < 0) //cut effects of gravity in 1/2 during wallrunning
         {
-            playerController.playerVelocity = new Vector3(playerController.playerVelocity.x, playerController.playerVelocity.y / 1.5f, playerController.playerVelocity.z);
+            playerController.playerVelocity = new Vector3(playerController.playerVelocity.x, playerController.playerVelocity.y / 2, playerController.playerVelocity.z); 
         }
 
-        if (wallLeft)
+        //Cancel sideways input if there is a wall, to cancel accidental unsticking
+        if (playerController.inputVector.x != 0)
         {
-            //Calculate and apply camera tilt
-            currentTilt = Mathf.Lerp(currentTilt, -camTilt, camTiltTime * Time.deltaTime);
-
-            //Apply small force to stick to wall
-            wallStick = leftWallHit.normal * 5f * Time.deltaTime;
-            playerController.playerVelocity -= wallStick;
-
-            //Cancel sideways input if there is a wall, to cancel accidental unsticking
-            if (playerController.inputVector.x != 0)
-            {
-                playerController.inputVector.x = 0;
-            }
-            canWallBounce = true;
-        }
-
-        else if (wallRight)
-        {
-            currentTilt = Mathf.Lerp(currentTilt, camTilt, camTiltTime * Time.deltaTime);
-
-            wallStick = rightWallHit.normal * 1f * Time.deltaTime;
-            playerController.playerVelocity -= wallStick;
-
-            if (playerController.inputVector.x != 0)
-            {
-                playerController.inputVector.x = 0;
-            }
-            canWallBounce = true;
+            playerController.inputVector.x = 0;
         }
 
         //Apply friction if there's no movement input
@@ -137,6 +126,13 @@ public class LucioSurf : MonoBehaviour
         {
             playerController.ApplyFriction(0.1f);
         }
+
+
+        //Apply small force to stick to wall
+        wallStick = wallInfo.normal * 5f * Time.deltaTime;
+        playerController.playerVelocity -= wallStick;
+
+        canWallBounce = true; //remove if spacebar hold
     }
 
     void WallBounce()
@@ -146,7 +142,7 @@ public class LucioSurf : MonoBehaviour
             if (wallLeft)
             {
                 //Wall jump
-                if (Input.GetKeyUp(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space)) //change to getkeyup for space hold
                 {
                     //wallRunJumpDirection = transform.up + transform.right + transform.forward;
                     wallRunJumpDirection = transform.up + leftWallHit.normal; //Diagonal vector between the up and wall normal
@@ -169,7 +165,7 @@ public class LucioSurf : MonoBehaviour
 
             if (wallRight)
             {
-                if (Input.GetKeyUp(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space))
                 {
                     //wallRunJumpDirection = transform.up - transform.right + transform.forward;
                     wallRunJumpDirection = transform.up + rightWallHit.normal;

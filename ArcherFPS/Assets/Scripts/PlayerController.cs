@@ -238,7 +238,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (camSwap.cam == 1)
             {
-                rotX = 15f;
+                rotX = 15;
             }
 
             //Get horizontal mouse movement
@@ -368,7 +368,6 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-        Debug.Log(slopeAccel);
         playerVelocity.y = slopeForce;
     }
     #endregion
