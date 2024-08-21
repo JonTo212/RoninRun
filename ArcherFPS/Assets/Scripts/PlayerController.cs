@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
 
     public float maxVelocity = 15.0f;
     float minVelocity;
-    float runAcceleration = 7.5f;         // Ground accel
+    public float runAcceleration = 7.5f;         // Ground accel
     float runDeacceleration = 7.5f;       // Deacceleration that occurs when running on the ground
     float airAcceleration = 1.0f;          // Air accel
 
@@ -58,8 +58,6 @@ public class PlayerController : MonoBehaviour
     // Queue the next jump just before you hit the ground
     public bool wishJump = false;
 
-    // Used to display real time fricton values
-    public float playerFriction = 0.0f;
 
     public bool useGravity = true;
     public bool isGrounded;
@@ -519,27 +517,25 @@ public class PlayerController : MonoBehaviour
     /**
      * Applies friction to the player, called in both the air and on the ground
      */
-    public void ApplyFriction(float t)
+    public void ApplyFriction(float frictionRate)
     {
-        Vector3 vec = playerVelocity; // Equivalent to: VectorCopy();
-        float speed; //Player velocity magnitude
+        Vector3 horizontalVel = new Vector3(playerVelocity.x, 0, playerVelocity.z); //Get player's horizontal velocity
+        float speed = horizontalVel.magnitude; //Player velocity magnitude
         float newSpeed; //speed - drop
-        float control; //If player velocity is lower than deceleration value, control = rundeceleration. If it is higher, control = speed
-        float drop; //Either rundeceleration * friction or speed * friction
-
-        vec.y = 0.0f;
-        speed = vec.magnitude;
-        drop = 0.0f;
-
-        control = speed < runDeacceleration ? runDeacceleration : speed;
-        drop = control * friction * Time.deltaTime * t;
+        float control = speed < runDeacceleration ? runDeacceleration : speed; //If velocity > deceleration, then friction is higher, otherwise this value = deceleration
+        float drop = control * friction * Time.deltaTime * frictionRate; // Deceleration * friction * Time required to reach 0 (friction and decel compound)
 
         newSpeed = speed - drop;
-        playerFriction = newSpeed;
+
         if (newSpeed < 0)
-            newSpeed = 0;
+        {
+            newSpeed = 0; //Cannot have negative speed (backwards accel)
+        }
+
         if (speed > 0)
-            newSpeed /= speed;
+        {
+            newSpeed /= speed; //Divide by original speed so it is a % reduction rather than a flat rate
+        }
 
         playerVelocity.x *= newSpeed;
         playerVelocity.z *= newSpeed;

@@ -18,16 +18,17 @@ public class Bow : MonoBehaviour
     float zoomSpeed;
 
     [SerializeField]
-    PlayerController playerController;
+    PlayerControllerV2 playerController;
 
     Arrow currentArrow;
     public bool isAiming; //Public for animator
-    bool zoomedIn;
     bool fire;
     Camera cam;
     float startingFOV;
     Vector3 destination;
-
+    public bool useWallRunArrows;
+    public float wallRunArrows;
+    public float regularArrows;
 
     void Start()
     {
@@ -40,15 +41,36 @@ public class Bow : MonoBehaviour
     void Update()
     {
         GetAimInput();
+        ChooseArrowType();
 
         if (isAiming)
         {
             cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, 80f, Time.deltaTime * zoomSpeed);
+            if(wallRunArrows == 0 && regularArrows == 0)
+            {
+                useWallRunArrows = false;
+            }
+            else if(useWallRunArrows && wallRunArrows == 0)
+            {
+                useWallRunArrows = false;
+            }
+            else if(!useWallRunArrows && regularArrows == 0)
+            {
+                useWallRunArrows = true;
+            }
         }
         else if (fire)
         {
             float arrowPower = (startingFOV - cam.fieldOfView) * 5f;
-            FireArrow(arrowPower);
+            if (wallRunArrows > 0 && useWallRunArrows || regularArrows > 0 && !useWallRunArrows)
+            {
+                FireArrow(arrowPower);
+            }
+            else
+            {
+                fire = false;
+                print("out of arrows");
+            }
         }
         else
         {
@@ -83,11 +105,36 @@ public class Bow : MonoBehaviour
             destination = ray.GetPoint(1000);
         }
 
+        if (useWallRunArrows)
+        {
+            wallRunArrows--;
+        }
+        else
+        {
+            regularArrows--;
+        }
+
         currentArrow = Instantiate(arrowPrefab, arrowSpawnPoint);
+        currentArrow.wallRunArrow = useWallRunArrows;
         currentArrow.GetComponent<Rigidbody>().velocity = (destination - arrowSpawnPoint.position).normalized * arrowPower;
         currentArrow.GetComponent<Rigidbody>().AddTorque(transform.right * playerController.playerVelocity.x);
         currentArrow.transform.SetParent(null);
-        //currentArrow.Fly((destination.normalized) * arrowPower);
+
         fire = false;
+    }
+
+    void ChooseArrowType()
+    {
+        if(wallRunArrows > 0)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                useWallRunArrows = !useWallRunArrows;
+            }
+        }
+        else
+        {
+            useWallRunArrows = false;
+        }
     }
 }

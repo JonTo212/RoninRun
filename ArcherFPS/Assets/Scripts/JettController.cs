@@ -35,6 +35,7 @@ public class JettController : MonoBehaviour
     Vector3 currentVel;
     public float dashDelay = 2;
     public float dashCooldown = 0;
+    public float dashPower = 30f;
     //bool hasDashed = false;
 
     /*//Floating variables
@@ -100,11 +101,11 @@ public class JettController : MonoBehaviour
                 if (currentVel.Equals(Vector3.zero))
                 {
                     //No input, dash forward
-                    characterController.Move(currentForward * 30f * Time.deltaTime);
+                    characterController.Move(currentForward * dashPower * Time.deltaTime);
                 }
                 else
                 {
-                    characterController.Move(currentVel * 30f * Time.deltaTime);
+                    characterController.Move(currentVel * dashPower * Time.deltaTime);
                 }
             }
             else
