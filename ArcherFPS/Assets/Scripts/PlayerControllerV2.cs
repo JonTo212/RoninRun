@@ -256,11 +256,11 @@ public class PlayerControllerV2 : MonoBehaviour
         if (wishJump)
         {
             playerVelocity.y = jumpSpeed;
-            wishJump = false;
             if (playerAbilities.canSlideJump)
             {
                 playerAbilities.updraftInput = true;
             }
+            wishJump = false;
         }
     }
 

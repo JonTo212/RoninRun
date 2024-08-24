@@ -43,6 +43,7 @@ public class ArrowPickup : MonoBehaviour
                 if (arrow.wallRunArrow)
                 {
                     bow.wallRunArrows++;
+                    arrow.ResetWallRunObj();
                 }
                 else if (!arrow.wallRunArrow)
                 {

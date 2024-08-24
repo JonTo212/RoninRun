@@ -126,6 +126,11 @@ MonoBehaviour:
   rb: {fileID: -2244408426735211293}
   destroyTimer: 5
   wallRunMat: {fileID: 2100000, guid: 4c6e7f41b680a68448f8f6bfe58fd33c, type: 2}
+  wallRunArrowMat: {fileID: 2100000, guid: f6729cb9c3ab89a42ad2c798869c363d, type: 2}
+  regArrowMat: {fileID: 2100000, guid: 49c61f7d98b36a6438e5deb41f0f7207, type: 2}
+  originalLayer: 0
+  originalMat: {fileID: 0}
+  collidedObj: {fileID: 0}
   wallRunArrow: 0
 --- !u!54 &-2244408426735211293
 Rigidbody:
@@ -173,7 +178,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 0.1, y: 0.6, z: 0.1}
+  m_Size: {x: 0.3, y: 0.6, z: 0.15}
   m_Center: {x: 0, y: 0.30000007, z: -4.2632566e-15}
 --- !u!136 &6267639261751557161
 CapsuleCollider:
@@ -194,7 +199,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.1
+  m_Radius: 0.25
   m_Height: 0.75
   m_Direction: 1
   m_Center: {x: 0, y: 0.30000007, z: -4.2632566e-15}

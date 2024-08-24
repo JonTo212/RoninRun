@@ -8,13 +8,15 @@ public class Arrow : MonoBehaviour
     [SerializeField] Rigidbody rb;
     [SerializeField] float destroyTimer;
     [SerializeField] Material wallRunMat;
+    [SerializeField] Material wallRunArrowMat;
+    [SerializeField] Material regArrowMat;
     float arrowLength;
     BoxCollider boxCol;
     MeshCollider meshCol;
     bool hit;
-    int originalLayer;
-    Material originalMat;
-    GameObject collidedObj;
+    public int originalLayer;
+    public Material originalMat;
+    public GameObject collidedObj;
     public bool wallRunArrow;
 
     private void Start()
@@ -23,6 +25,14 @@ public class Arrow : MonoBehaviour
         boxCol = GetComponent<BoxCollider>();
         meshCol = GetComponent<MeshCollider>();
         arrowLength = transform.localScale.z / 2f;
+        if(wallRunArrow)
+        {
+            //GetComponent<Renderer>().material = wallRunArrowMat;
+        }
+        else
+        {
+            //GetComponent<Renderer>().material = regArrowMat;
+        }
     }
 
     void OnCollisionEnter(Collision collision)
@@ -63,6 +73,13 @@ public class Arrow : MonoBehaviour
     IEnumerator DelayedDestroy()
     {
         yield return new WaitForSeconds(destroyTimer);
+        collidedObj.layer = originalLayer;
+        collidedObj.GetComponent<Renderer>().material = originalMat;
+        Destroy(gameObject);
+    }
+
+    public void ResetWallRunObj()
+    {
         collidedObj.layer = originalLayer;
         collidedObj.GetComponent<Renderer>().material = originalMat;
         Destroy(gameObject);

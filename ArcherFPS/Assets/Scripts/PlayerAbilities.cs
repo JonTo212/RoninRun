@@ -121,6 +121,7 @@ public class PlayerAbilities : MonoBehaviour
         {
             if (Time.time - slideStartTime <= 0.4f)
             {
+                playerController.isGrounded = true;
                 if (currentVel.Equals(Vector3.zero))
                 {
                     //No input, slide forward
