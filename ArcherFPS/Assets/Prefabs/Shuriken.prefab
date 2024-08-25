@@ -95,12 +95,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 059c5c1e59fcdf545996534b2d4ddbdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  torque: 0
-  rb: {fileID: 0}
+  torque: 3
+  rb: {fileID: -2244408426735211293}
   destroyTimer: 0
-  wallRunMat: {fileID: 0}
-  wallRunArrowMat: {fileID: 0}
-  regArrowMat: {fileID: 0}
+  wallRunMat: {fileID: 2100000, guid: 4c6e7f41b680a68448f8f6bfe58fd33c, type: 2}
+  wallRunArrowMat: {fileID: 2100000, guid: f6729cb9c3ab89a42ad2c798869c363d, type: 2}
+  regArrowMat: {fileID: 2100000, guid: 49c61f7d98b36a6438e5deb41f0f7207, type: 2}
+  meshRenderer: {fileID: 8219187262834509755}
   originalLayer: 0
   originalMat: {fileID: 0}
   collidedObj: {fileID: 0}

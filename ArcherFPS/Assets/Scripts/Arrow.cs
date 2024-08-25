@@ -27,11 +27,11 @@ public class Arrow : MonoBehaviour
         arrowLength = transform.localScale.z / 2f;
         if(wallRunArrow)
         {
-            //GetComponent<Renderer>().material = wallRunArrowMat;
+            GetComponent<Renderer>().material = wallRunArrowMat;
         }
         else
         {
-            //GetComponent<Renderer>().material = regArrowMat;
+            GetComponent<Renderer>().material = regArrowMat;
         }
     }
 

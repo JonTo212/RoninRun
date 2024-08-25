@@ -10,10 +10,9 @@ public class Shuriken : MonoBehaviour
     [SerializeField] Material wallRunMat;
     [SerializeField] Material wallRunArrowMat;
     [SerializeField] Material regArrowMat;
-    float arrowLength;
-    BoxCollider boxCol;
-    MeshCollider meshCol;
+    [SerializeField] Renderer meshRenderer;
     bool hit;
+    BoxCollider boxCol;
     public int originalLayer;
     public Material originalMat;
     public GameObject collidedObj;
@@ -23,15 +22,13 @@ public class Shuriken : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         boxCol = GetComponent<BoxCollider>();
-        meshCol = GetComponent<MeshCollider>();
-        arrowLength = transform.localScale.z / 2f;
         if(wallRunArrow)
         {
-            //GetComponent<Renderer>().material = wallRunArrowMat;
+            meshRenderer.material = wallRunArrowMat;
         }
         else
         {
-            //GetComponent<Renderer>().material = regArrowMat;
+            meshRenderer.material = regArrowMat;
         }
     }
 
@@ -46,15 +43,13 @@ public class Shuriken : MonoBehaviour
         rb.velocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
         rb.isKinematic = true;
-        //boxCol.enabled = true;
-        //meshCol.enabled = false;
 
         //Rotate arrow to be parallel to wall
         ContactPoint contact = collision.contacts[0];
         Vector3 collisionNormal = contact.normal;
         Quaternion targetRotation = Quaternion.LookRotation(-collisionNormal);
-        transform.rotation = targetRotation * Quaternion.Euler(90f, 0f, 0f);
-        transform.position = contact.point + collisionNormal * arrowLength;
+        transform.rotation = targetRotation * Quaternion.Euler(90f, 45f, 0f);
+        transform.position = contact.point + collisionNormal * boxCol.size.x / 2;
 
         if (wallRunArrow)
         {
@@ -63,8 +58,10 @@ public class Shuriken : MonoBehaviour
             originalMat = collision.gameObject.GetComponent<Renderer>().material;
             collision.gameObject.layer = LayerMask.NameToLayer("WallRun");
             collision.gameObject.GetComponent<Renderer>().material = wallRunMat;
-            boxCol.enabled = true;
-            meshCol.enabled = false;
+        }
+        else
+        {
+            boxCol.size *= 2;
         }
 
         //StartCoroutine(DelayedDestroy());
