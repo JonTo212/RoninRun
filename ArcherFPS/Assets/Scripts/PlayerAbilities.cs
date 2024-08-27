@@ -241,15 +241,7 @@ public class PlayerAbilities : MonoBehaviour
 
     bool CanWallRun() //Can wall run if you're above the minimum jump height
     {
-        if (!wallRun)
-        {
-            return !Physics.Raycast(transform.position, Vector3.down, minimumJumpHeight) && playerController.canWallRun; //for spacebar hold wallrunning
-        }
-        else if (wallRun)
-        {
-            return !Physics.Raycast(transform.position, Vector3.down, minimumJumpHeight);
-        }
-        return false;
+        return !Physics.Raycast(transform.position, Vector3.down, minimumJumpHeight) && playerController.canWallRun; //for spacebar hold wallrunning
     }
 
     void CheckWall()
@@ -287,7 +279,7 @@ public class PlayerAbilities : MonoBehaviour
         playerController.playerVelocity -= wallStick;
 
         //Walljumping
-        if (!hasWallBounced && Input.GetKeyDown(KeyCode.Space)) // change to GetKeyUp for space hold
+        if (!hasWallBounced && Input.GetKeyUp(KeyCode.Space)) // change to GetKeyUp for space hold
         {
             Vector3 wallNormal = wallInfo.normal;
             wallRunJumpDirection = transform.up + wallNormal;

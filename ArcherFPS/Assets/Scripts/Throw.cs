@@ -4,37 +4,31 @@ using UnityEngine;
 
 public class Throw : MonoBehaviour
 {
-    [SerializeField]
-    Shuriken starPrefab;
+    /*
+    0 = Regular shuriken
+    1 = Wallrun shuriken
+    2 = Teleport shuriken
+    3 = Grapple shuriken
+    */
 
-    [SerializeField]
-    Transform starSpawnPoint;
-
-    [SerializeField]
-    float delay;
-
-    [SerializeField]
-    [Range(0, 3)]
-    float zoomSpeed;
-
-    [SerializeField]
-    PlayerControllerV2 playerController;
-
+    [SerializeField] Shuriken[] starPrefab;
+    [SerializeField] Transform starSpawnPoint;
+    [SerializeField][Range(0, 3)] float zoomSpeed;
+    [SerializeField] PlayerControllerV2 playerController;
     [SerializeField] LineRenderer lineRenderer;
     [SerializeField] Transform lineStartPos;
     [SerializeField] float lineRendererWidth;
     [SerializeField] GameObject indicatorObj;
 
-    Shuriken currentArrow;
+    Shuriken currentStar;
     GameObject indicator;
     public bool isAiming; //Public for animator
     bool fire;
     Camera cam;
     float startingFOV;
     Vector3 destination;
-    public bool useWallRunStars;
-    public float wallRunStars;
-    public float regularStars;
+    public int[] starCount;
+    public int selectionIndex;
 
     void Start()
     {
@@ -52,37 +46,25 @@ public class Throw : MonoBehaviour
     void Update()
     {
         GetAimInput();
-        ChooseArrowType();
+        ChooseShurikenType();
 
         if (isAiming)
         {
             cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, 80f, Time.deltaTime * zoomSpeed);
             AimIndicator();
-
-            if(wallRunStars == 0 && regularStars == 0)
-            {
-                useWallRunStars = false;
-            }
-            else if(useWallRunStars && wallRunStars == 0)
-            {
-                useWallRunStars = false;
-            }
-            else if(!useWallRunStars && regularStars == 0)
-            {
-                useWallRunStars = true;
-            }
         }
         else if (fire)
         {
             float arrowPower = (startingFOV - cam.fieldOfView) * 5f;
-            if (wallRunStars > 0 && useWallRunStars || regularStars > 0 && !useWallRunStars)
+
+            if (starCount[selectionIndex] > 0)
             {
                 FireArrow(arrowPower);
             }
             else
             {
                 fire = false;
-                print("out of arrows");
+                print("out of this type of shuriken");
             }
         }
         else
@@ -113,7 +95,7 @@ public class Throw : MonoBehaviour
 
         lineRenderer.SetPosition(0, lineStartPos.position);
 
-        if (Physics.Raycast(ray, out hit))
+        if (Physics.Raycast(ray, out hit) && !hit.transform.CompareTag("Ground"))
         {
             lineRenderer.SetPosition(1, hit.point);
             indicator.SetActive(true);
@@ -141,36 +123,49 @@ public class Throw : MonoBehaviour
             destination = ray.GetPoint(1000);
         }
 
-        if (useWallRunStars)
+        currentStar = Instantiate(starPrefab[selectionIndex], starSpawnPoint);
+        currentStar.GetComponent<Rigidbody>().velocity = (destination - starSpawnPoint.position).normalized * arrowPower;
+        currentStar.GetComponent<Rigidbody>().AddTorque(transform.right * playerController.playerVelocity.x);
+        currentStar.transform.SetParent(null);
+
+        if(currentStar.teleportStar)
         {
-            wallRunStars--;
-        }
-        else
-        {
-            regularStars--;
+            currentStar.player = this.gameObject;
         }
 
-        currentArrow = Instantiate(starPrefab, starSpawnPoint);
-        currentArrow.wallRunArrow = useWallRunStars;
-        currentArrow.GetComponent<Rigidbody>().velocity = (destination - starSpawnPoint.position).normalized * arrowPower;
-        currentArrow.GetComponent<Rigidbody>().AddTorque(transform.right * playerController.playerVelocity.x);
-        currentArrow.transform.SetParent(null);
+        starCount[selectionIndex]--;
 
         fire = false;
     }
 
-    void ChooseArrowType()
+    void ChooseShurikenType()
     {
-        if(wallRunStars > 0)
+        // Check if any shuriken is available
+        bool shurikenAvailable = false;
+        for (int i = 0; i < starCount.Length; i++)
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (starCount[i] > 0)
             {
-                useWallRunStars = !useWallRunStars;
+                shurikenAvailable = true;
+                break;
             }
         }
-        else
+
+        // If no shuriken is available, break
+        if (!shurikenAvailable)
         {
-            useWallRunStars = false;
+            print("out of shurikens");
+            return;
+        }
+
+        // Cycle through available shuriken types
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            do
+            {
+                selectionIndex = (selectionIndex + 1) % starCount.Length;
+            }
+            while (starCount[selectionIndex] == 0);
         }
     }
 }

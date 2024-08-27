@@ -8,27 +8,29 @@ public class Shuriken : MonoBehaviour
     [SerializeField] Rigidbody rb;
     [SerializeField] float destroyTimer;
     [SerializeField] Material wallRunMat;
-    [SerializeField] Material wallRunArrowMat;
-    [SerializeField] Material regArrowMat;
-    [SerializeField] Renderer meshRenderer;
+    public GameObject player;
     bool hit;
     BoxCollider boxCol;
     public int originalLayer;
     public Material originalMat;
     public GameObject collidedObj;
-    public bool wallRunArrow;
+    public bool wallRunStar;
+    public bool teleportStar;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         boxCol = GetComponent<BoxCollider>();
-        if(wallRunArrow)
+    }
+
+    private void Update()
+    {
+        if(teleportStar)
         {
-            meshRenderer.material = wallRunArrowMat;
-        }
-        else
-        {
-            meshRenderer.material = regArrowMat;
+            if (Input.GetMouseButtonDown(1))
+            {
+                TeleportStar();
+            }
         }
     }
 
@@ -44,20 +46,21 @@ public class Shuriken : MonoBehaviour
         rb.angularVelocity = Vector3.zero;
         rb.isKinematic = true;
 
-        //Rotate arrow to be parallel to wall
+        if(teleportStar)
+        {
+            TeleportStar();
+        }
+
+        //Rotate shuriken to be perpendicular to wall
         ContactPoint contact = collision.contacts[0];
         Vector3 collisionNormal = contact.normal;
         Quaternion targetRotation = Quaternion.LookRotation(-collisionNormal);
         transform.rotation = targetRotation * Quaternion.Euler(90f, 45f, 0f);
-        transform.position = contact.point + collisionNormal * boxCol.size.x / 2;
+        transform.position = contact.point + collisionNormal * boxCol.size.y / 2;
 
-        if (wallRunArrow)
+        if (wallRunStar)
         {
-            collidedObj = collision.gameObject;
-            originalLayer = collision.gameObject.layer;
-            originalMat = collision.gameObject.GetComponent<Renderer>().material;
-            collision.gameObject.layer = LayerMask.NameToLayer("WallRun");
-            collision.gameObject.GetComponent<Renderer>().material = wallRunMat;
+            WallRunStar(collision);
         }
         else
         {
@@ -79,6 +82,22 @@ public class Shuriken : MonoBehaviour
     {
         collidedObj.layer = originalLayer;
         collidedObj.GetComponent<Renderer>().material = originalMat;
+        Destroy(gameObject);
+    }
+
+    void WallRunStar(Collision collision)
+    {
+        collidedObj = collision.gameObject;
+        originalLayer = collision.gameObject.layer;
+        originalMat = collision.gameObject.GetComponent<Renderer>().material;
+        collision.gameObject.layer = LayerMask.NameToLayer("WallRun");
+        collision.gameObject.GetComponent<Renderer>().material = wallRunMat;
+    }
+
+    void TeleportStar()
+    {
+        Vector3 teleportDistance = transform.position - player.transform.position;
+        player.GetComponent<CharacterController>().Move(teleportDistance);
         Destroy(gameObject);
     }
 }
