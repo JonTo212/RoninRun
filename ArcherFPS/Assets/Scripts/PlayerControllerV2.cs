@@ -10,7 +10,7 @@ public class PlayerControllerV2 : MonoBehaviour
     //
     /*Frame occuring factors*/
     public float gravity = 25f;
-    public float friction = 5f; //Ground friction
+    public float friction = 7.5f; //Ground friction
 
     /* Movement stuff */
     public float moveSpeed = 10.0f;                // Ground move speed
@@ -18,13 +18,13 @@ public class PlayerControllerV2 : MonoBehaviour
     float minVelocity;
     public float runAcceleration = 7.5f;         // Ground accel
     float runDeacceleration = 7.5f;       // Deacceleration that occurs when running on the ground
-    float airAcceleration = 1.0f;          // Air accel
+    float airAcceleration = 2.5f;          // Air accel
 
-    float airDeceleration = 1.0f;
+    float airDeceleration = 2.5f;
     float airControl = 0.3f;               // How precise air control is
-    float sideStrafeAcceleration = 50.0f;  // How fast acceleration occurs to get up to sideStrafeSpeed
+    float sideStrafeAcceleration = 50f;  // How fast acceleration occurs to get up to sideStrafeSpeed
     float sideStrafeSpeed = 1.0f;          // Max speed to generate when side strafing
-    public float jumpSpeed = 8.0f;                // The speed at which the character's up axis gains when hitting jump
+    public float jumpSpeed = 10.0f;                // The speed at which the character's up axis gains when hitting jump
 
     public bool unlockMouse = true;
     public Vector3 inputVector = Vector3.zero;
@@ -51,8 +51,6 @@ public class PlayerControllerV2 : MonoBehaviour
 
     // Queue the next jump just before you hit the ground
     public bool wishJump = false;
-
-
     public bool useGravity = true;
     public bool isGrounded;
     float playerHeight;
@@ -69,6 +67,7 @@ public class PlayerControllerV2 : MonoBehaviour
 
     [SerializeField] CameraSwap camSwap;
     [SerializeField] PlayerAbilities playerAbilities;
+    [SerializeField] LayerMask shurikenLayer;
 
     void Start()
     {
@@ -108,6 +107,7 @@ public class PlayerControllerV2 : MonoBehaviour
         if (isGrounded)
         {
             GroundMove();
+            Jump();
         }
         else if (!isGrounded)
         {
@@ -133,31 +133,6 @@ public class PlayerControllerV2 : MonoBehaviour
     }
 
     #region Detection 
-    private void GetSlopeNormal()
-    {
-        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + groundRayDistance))
-        {
-            slopeNormal = slopeHit.normal;
-            slopeAngle = Vector3.Angle(transform.up, slopeNormal);
-        }
-    }
-
-    void OnTriggerEnter(Collider collider)
-    {
-        if (collider.transform.tag == "AntiGravity")
-        {
-            useGravity = false;
-        }
-    }
-
-    void OnTriggerExit(Collider collider)
-    {
-        if (collider.transform.tag == "AntiGravity")
-        {
-            useGravity = true;
-        }
-    }
-
     private bool OnSlope()
     {
         if (!isGrounded)
@@ -165,10 +140,12 @@ public class PlayerControllerV2 : MonoBehaviour
             return false;
         }
 
-        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + groundRayDistance))
+        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + groundRayDistance, ~shurikenLayer)) //ignore shurikens because of the box collider edges
         {
-            if (slopeHit.normal != Vector3.up)
+            if (Mathf.Abs(slopeHit.normal.y) < 0.9f)
             {
+                slopeNormal = slopeHit.normal;
+                slopeAngle = Vector3.Angle(transform.up, slopeNormal);
                 return true;
             }
         }
@@ -312,7 +289,6 @@ public class PlayerControllerV2 : MonoBehaviour
 
     void HandleSlope()
     {
-        GetSlopeNormal();
         float slopeAccel = 0.5f * Mathf.Sin(slopeAngle * Mathf.Deg2Rad); //Accelerate faster depending on slope angle
         if (crouched)
         {
@@ -483,8 +459,6 @@ public class PlayerControllerV2 : MonoBehaviour
 
         //Reset gravity velocity to smooth falling
         playerVelocity.y = -gravity * Time.deltaTime;
-
-        Jump();
     }
 
     /**

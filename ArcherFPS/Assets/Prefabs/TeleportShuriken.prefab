@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8656963478346459627}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: -5439663654181060691}
   - component: {fileID: -6379778384828028065}
   - component: {fileID: -2146115025240708690}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TeleportShuriken
   m_TagString: Shuriken
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 48
   m_CollisionDetection: 0
 --- !u!65 &-5439663654181060691
 BoxCollider:
@@ -129,9 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 059c5c1e59fcdf545996534b2d4ddbdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  torque: 3
   rb: {fileID: -2244408426735211293}
-  destroyTimer: 0
   wallRunMat: {fileID: 2100000, guid: 4c6e7f41b680a68448f8f6bfe58fd33c, type: 2}
   player: {fileID: 0}
   originalLayer: 0
@@ -173,7 +171,7 @@ GameObject:
   - component: {fileID: 9145464216217169402}
   - component: {fileID: 510708510849686372}
   - component: {fileID: 8219187262834509755}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MeshTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,7 +255,7 @@ GameObject:
   - component: {fileID: 5217920827757577351}
   - component: {fileID: 6738440416103577763}
   - component: {fileID: 5415689893665357533}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: MeshBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}

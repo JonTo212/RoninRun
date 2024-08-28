@@ -24,6 +24,7 @@ public class Throw : MonoBehaviour
     GameObject indicator;
     public bool isAiming; //Public for animator
     bool fire;
+    float throwPower;
     Camera cam;
     float startingFOV;
     Vector3 destination;
@@ -51,15 +52,14 @@ public class Throw : MonoBehaviour
         if (isAiming)
         {
             cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, 80f, Time.deltaTime * zoomSpeed);
-            AimIndicator();
+            throwPower = (startingFOV - cam.fieldOfView) * 2f;
+            AimIndicator(throwPower);
         }
         else if (fire)
         {
-            float arrowPower = (startingFOV - cam.fieldOfView) * 5f;
-
             if (starCount[selectionIndex] > 0)
             {
-                FireArrow(arrowPower);
+                FireArrow(throwPower);
             }
             else
             {
@@ -88,19 +88,56 @@ public class Throw : MonoBehaviour
         }
     }
 
-    void AimIndicator()
+    void AimIndicator(float projectileSpeed)
     {
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
 
-        lineRenderer.SetPosition(0, lineStartPos.position);
-
-        if (Physics.Raycast(ray, out hit) && !hit.transform.CompareTag("Ground"))
+        if (Physics.Raycast(ray, out hit))
         {
-            lineRenderer.SetPosition(1, hit.point);
+            destination = hit.point;
+        }
+        else
+        {
+            destination = ray.GetPoint(1000);
+        }
+
+        Vector3 velocity = (destination - starSpawnPoint.position).normalized * projectileSpeed;
+
+        float simulationTimeStep = 0.05f; //Simulation increment, make larger for less accurate increments and smaller for more accurate increments
+        float maxSimulationDistance = 100f; //Distance in units that the arc will simulate to
+
+        // Simulate trajectory
+        List<Vector3> trajectoryPoints = new List<Vector3>();
+        Vector3 currentPosition = lineStartPos.position;
+
+        for (int i = 0; i < maxSimulationDistance; i++)
+        {
+            trajectoryPoints.Add(currentPosition);
+
+            // Apply physics to calculate next position
+            currentPosition += velocity * simulationTimeStep;
+            velocity += Physics.gravity * simulationTimeStep; // Adjust for gravity
+
+
+            //Stop simulating arc if aiming at object
+            if (Physics.Raycast(currentPosition, velocity, out hit, velocity.magnitude * simulationTimeStep))
+            {
+                trajectoryPoints.Add(hit.point); // Add the hit point
+                break; // Stop simulating on collision
+            }
+        }
+
+        // Apply the calculated trajectory points to the LineRenderer
+        lineRenderer.positionCount = trajectoryPoints.Count;
+        lineRenderer.SetPositions(trajectoryPoints.ToArray());
+
+        // Show/hide indicator
+        if (trajectoryPoints.Count > 1)
+        {
             indicator.SetActive(true);
+            indicator.transform.position = trajectoryPoints[trajectoryPoints.Count - 1]; // Position indicator at the last point
             lineRenderer.enabled = true;
-            indicator.transform.position = hit.point;
         }
         else
         {
@@ -109,7 +146,8 @@ public class Throw : MonoBehaviour
         }
     }
 
-    void FireArrow(float arrowPower)
+
+    void FireArrow(float projectileSpeed)
     {
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
@@ -124,8 +162,8 @@ public class Throw : MonoBehaviour
         }
 
         currentStar = Instantiate(starPrefab[selectionIndex], starSpawnPoint);
-        currentStar.GetComponent<Rigidbody>().velocity = (destination - starSpawnPoint.position).normalized * arrowPower;
-        currentStar.GetComponent<Rigidbody>().AddTorque(transform.right * playerController.playerVelocity.x);
+        currentStar.GetComponent<Rigidbody>().velocity = (destination - starSpawnPoint.position).normalized * projectileSpeed;
+        currentStar.GetComponent<Rigidbody>().angularVelocity = new Vector3(0, projectileSpeed, 0);
         currentStar.transform.SetParent(null);
 
         if(currentStar.teleportStar)
