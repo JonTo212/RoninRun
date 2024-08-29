@@ -50,10 +50,22 @@ public class Shuriken : MonoBehaviour
         if (teleportStar)
         {
             TeleportStar();
+            boxCol.enabled = false;
+            return;
         }
         else if(grappleStar)
         {
             canGrapple = true;
+            boxCol.enabled = false;
+        }
+        else if (wallRunStar)
+        {
+            WallRunStar(collision);
+            boxCol.enabled = false;
+        }
+        else
+        {
+            boxCol.size *= 2;
         }
 
         //Rotate shuriken to be perpendicular to wall
@@ -61,16 +73,7 @@ public class Shuriken : MonoBehaviour
         Vector3 collisionNormal = contact.normal;
         Quaternion targetRotation = Quaternion.LookRotation(-collisionNormal);
         transform.rotation = targetRotation * Quaternion.Euler(90f, 45f, 0f);
-        transform.position = contact.point + collisionNormal * boxCol.size.y / 2;
-
-        if (wallRunStar)
-        {
-            WallRunStar(collision);
-        }
-        else
-        {
-            boxCol.size *= 2;
-        }
+        transform.position = contact.point + collisionNormal * boxCol.size.z / 2;
 
         //StartCoroutine(DelayedDestroy());
     }
