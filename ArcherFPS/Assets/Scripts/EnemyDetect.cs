@@ -22,7 +22,7 @@ public class EnemyDetect : MonoBehaviour
     {
         if(Detect())
         {
-            print("yes");
+            print("detected");
         }
     }
 

@@ -17,11 +17,13 @@ public class Shuriken : MonoBehaviour
     public bool wallRunStar;
     public bool teleportStar;
     public bool grappleStar;
+    public Vector3 angularVel;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         boxCol = GetComponent<BoxCollider>();
+        rb.maxAngularVelocity = Mathf.Infinity;
     }
 
     private void Update()
@@ -33,6 +35,16 @@ public class Shuriken : MonoBehaviour
                 TeleportStar();
             }
         }
+
+       //LookDir();
+    }
+
+    void LookDir() //rotates object to face arc's forward, but gets rid of spin
+    {
+        Vector3 fallDirection = rb.velocity.normalized;
+        Quaternion initialRotation = Quaternion.Euler(90, 0, 45);
+        Quaternion targetRotation = Quaternion.LookRotation(fallDirection, Vector3.up) * initialRotation;
+        transform.rotation = targetRotation;
     }
 
     void OnCollisionEnter(Collision collision)
@@ -72,7 +84,7 @@ public class Shuriken : MonoBehaviour
         ContactPoint contact = collision.contacts[0];
         Vector3 collisionNormal = contact.normal;
         Quaternion targetRotation = Quaternion.LookRotation(-collisionNormal);
-        transform.rotation = targetRotation * Quaternion.Euler(90f, 45f, 0f);
+        transform.rotation = targetRotation * Quaternion.Euler(90f, 0f, 45f);
         transform.position = contact.point + collisionNormal * boxCol.size.z / 2;
 
         //StartCoroutine(DelayedDestroy());

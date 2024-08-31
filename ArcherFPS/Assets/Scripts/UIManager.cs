@@ -18,6 +18,7 @@ public class UIManager : MonoBehaviour
     public TMP_Text speedText;
     public TMP_Text maxSpeedText;
     public PlayerController playerController;
+    public PlayerControllerV2 playerControllerV2;
 
     bool gameStart = true;
 
@@ -73,14 +74,28 @@ public class UIManager : MonoBehaviour
 
     void SpeedDisplays()
     {
-        //Velocity
-        var playerVel = playerController.playerVelocity;
-        playerVel.y = 0;
-        speedText.text = ("Velocity: ") + (Mathf.Round(playerVel.magnitude * 100) / 100).ToString();
+        if (playerController != null)
+        {
+            //Velocity
+            var playerVel = playerController.playerVelocity;
+            playerVel.y = 0;
+            speedText.text = "Velocity: " + (Mathf.Round(playerVel.magnitude * 100) / 100).ToString();
 
-        //Max velocity
-        var maxVel = playerController.playerTopVelocity;
-        maxSpeedText.text = ("Max Velocity: ") + (Mathf.Round(maxVel * 100) / 100).ToString();
+            //Max velocity
+            var maxVel = playerController.playerTopVelocity;
+            maxSpeedText.text = "Max Velocity: " + (Mathf.Round(maxVel * 100) / 100).ToString();
+        }
+        else if(playerControllerV2 != null)
+        {
+            //Velocity
+            var playerVel = playerControllerV2.clampedVel;
+            playerVel.y = 0;
+            speedText.text = "Velocity: " + (Mathf.Round(playerVel.magnitude * 100) / 100).ToString();
+
+            //Max velocity
+            var maxVel = playerControllerV2.playerTopVelocity;
+            maxSpeedText.text = "Max Velocity: " + (Mathf.Round(maxVel * 100) / 100).ToString();
+        }
     }
     #endregion
 }

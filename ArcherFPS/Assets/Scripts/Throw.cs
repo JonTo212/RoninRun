@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Unity.VisualScripting.Metadata;
 
 public class Throw : MonoBehaviour
 {
@@ -41,13 +42,14 @@ public class Throw : MonoBehaviour
         lineRenderer.startWidth = lineRendererWidth;
         lineRenderer.endWidth = lineRendererWidth;
         indicator = Instantiate(indicatorObj);
-        indicator.SetActive(false);
+        indicator.transform.GetChild(selectionIndex).gameObject.SetActive(true);
     }
 
     void Update()
     {
         GetAimInput();
         ChooseShurikenType();
+        SetIndicatorObjectsActive();
 
         if (isAiming)
         {
@@ -146,6 +148,27 @@ public class Throw : MonoBehaviour
         }
     }
 
+    void SetIndicatorObjectsActive()
+    {
+        for (int i = 0; i < indicator.transform.childCount; i++)
+        {
+            GameObject child = indicator.transform.GetChild(i).gameObject;
+
+            if (i == selectionIndex)
+            {
+                child.SetActive(true);
+            }
+            else
+            {
+                child.SetActive(false);
+            }
+        }
+        
+        //Rotate indicator to face forward
+        Quaternion targetRotation = Quaternion.LookRotation(transform.forward);
+        indicator.transform.rotation = targetRotation * Quaternion.Euler(90, 45, 0);
+    }
+
 
     void FireArrow(float projectileSpeed)
     {
@@ -162,9 +185,14 @@ public class Throw : MonoBehaviour
         }
 
         currentStar = Instantiate(starPrefab[selectionIndex], starSpawnPoint);
-        currentStar.GetComponent<Rigidbody>().velocity = (destination - starSpawnPoint.position).normalized * projectileSpeed;
-        currentStar.GetComponent<Rigidbody>().angularVelocity = new Vector3(0, projectileSpeed, 0);
         currentStar.transform.SetParent(null);
+        currentStar.GetComponent<Rigidbody>().velocity = (destination - starSpawnPoint.position).normalized * projectileSpeed;
+
+        if (!currentStar.grappleStar)
+        {
+            currentStar.GetComponent<Rigidbody>().AddTorque(currentStar.transform.forward * projectileSpeed, ForceMode.VelocityChange);
+            currentStar.angularVel = currentStar.GetComponent<Rigidbody>().angularVelocity;
+        }
 
         if(currentStar.teleportStar)
         {

@@ -47,6 +47,7 @@ public class PlayerControllerV2 : MonoBehaviour
     Vector3 moveDirectionNorm = Vector3.zero;
     public Vector3 playerVelocity = Vector3.zero;
     public float playerTopVelocity = 0.0f;
+    public Vector3 clampedVel;
 
 
     // Queue the next jump just before you hit the ground
@@ -122,10 +123,13 @@ public class PlayerControllerV2 : MonoBehaviour
             HandleSlope();
         }
 
-        characterController.Move(playerVelocity * Time.deltaTime);
+        clampedVel = Vector3.ClampMagnitude(new Vector3(playerVelocity.x, 0, playerVelocity.z), maxVelocity);
+        clampedVel.y = playerVelocity.y;
+
+        characterController.Move(clampedVel * Time.deltaTime);
 
         /* Calculate top velocity */
-        udp = playerVelocity;
+        udp = clampedVel;
         udp.y = 0.0f;
         if (udp.magnitude > playerTopVelocity)
             playerTopVelocity = udp.magnitude;
@@ -509,9 +513,10 @@ public class PlayerControllerV2 : MonoBehaviour
         //Apply acceleration
         playerVelocity += accelspeed * wishdir;
 
-        //Truncate velocity
+        /* //Clamp velocity
         playerVelocity.x = Mathf.Clamp(playerVelocity.x, minVelocity, maxVelocity);
         playerVelocity.z = Mathf.Clamp(playerVelocity.z, minVelocity, maxVelocity);
+        */
     }
     #endregion
 }

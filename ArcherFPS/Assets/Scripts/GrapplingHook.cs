@@ -41,31 +41,31 @@ public class GrapplingHook : MonoBehaviour
 
     void CheckForGrapple()
     {
-        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        RaycastHit hit;
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, grapplingRange);
+        Shuriken closestShuriken = null;
+        float closestDistance = Mathf.Infinity;
 
-        if (Physics.Raycast(ray, out hit, grapplingRange))
+        foreach (Collider hitCollider in hitColliders)
         {
-            Shuriken shuriken = hit.collider.GetComponent<Shuriken>();
+            Shuriken shuriken = hitCollider.GetComponent<Shuriken>();
 
             if (shuriken != null && shuriken.canGrapple)
             {
-                // Use the trigger collider on the shuriken for proximity detection
-                CapsuleCollider collider = shuriken.GetComponent<CapsuleCollider>();
-                if (collider != null)
-                {
-                    Vector3 closestPoint = collider.ClosestPoint(hit.point);
-                    float distance = Vector3.Distance(hit.point, closestPoint);
+                float distance = Vector3.Distance(transform.position, hitCollider.transform.position);
 
-                    // Check if the hit point is within the trigger collider
-                    if (distance < 0.1f) // Adjust this threshold based on your needs
-                    {
-                        grapplePoint = hit.point;
-                        playerController.playerVelocity.y = 0;
-                        isGrappling = true;
-                    }
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestShuriken = shuriken;
                 }
             }
+        }
+
+        if (closestShuriken != null)
+        {
+            grapplePoint = closestShuriken.transform.position;
+            playerController.playerVelocity.y = 0;
+            isGrappling = true;
         }
     }
 
