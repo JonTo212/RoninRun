@@ -22,11 +22,15 @@ public class ShurikenPickup : MonoBehaviour
 
             if (shuriken.wallRunStar)
             {
-                pickupText.text = "Press F to Pick Up Shuriken (Wall Run)";
+                pickupText.text = "Press F to Pick Up Wall-Run Shuriken";
+            }
+            else if(shuriken.grappleStar)
+            {
+                pickupText.text = "Press F to Pick Up Grapple Shuriken";
             }
             else
             {
-                pickupText.text = "Press F to Pick Up Shuriken (Platform)";
+                pickupText.text = "Press F to Pick Up Platform Shuriken";
             }
         }
     }
@@ -43,6 +47,10 @@ public class ShurikenPickup : MonoBehaviour
                 {
                     starThrow.starCount[1]++;
                     shuriken.ResetWallRunObj();
+                }
+                else if (shuriken.grappleStar)
+                {
+                    starThrow.starCount[3]++;
                 }
                 else
                 {

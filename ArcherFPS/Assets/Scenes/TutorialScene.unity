@@ -5256,6 +5256,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4482141849155321494, guid: b94d937f62c92c146af9491c09c6a926, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4865309214770636011, guid: b94d937f62c92c146af9491c09c6a926, type: 3}
       propertyPath: m_Name
       value: ShurikenPickup
@@ -21362,6 +21366,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 45
       objectReference: {fileID: 0}
+    - target: {fileID: 8919900093744773599, guid: e9d4c5a18736fbf42a120b19ba4770a9, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -21428,7 +21436,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 41196a00abf587c439ee89171475a907, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -43359,7 +43367,7 @@ Transform:
   m_GameObject: {fileID: 1420647360}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1, y: -0.15, z: 1.5}
+  m_LocalPosition: {x: 0.125, y: -0.125, z: 1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44278,6 +44286,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -620155794383977138, guid: 64ee9becad0bbe246885defcca4f47a5, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4865309214770636011, guid: 64ee9becad0bbe246885defcca4f47a5, type: 3}
       propertyPath: m_Name
       value: WallRunShurikenPickup
@@ -44527,7 +44539,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1858296507}
   - component: {fileID: 1858296506}
-  - component: {fileID: 1858296508}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameManager
@@ -44568,19 +44579,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1858296508
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1858296505}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03885cc6b9a72b04697c39bb226781dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  totalScore: 0
 --- !u!1 &1860430997
 GameObject:
   m_ObjectHideFlags: 0
@@ -64778,6 +64776,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4082804166942193242, guid: ddebf648e270b99439987d5b3dbce958, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4865309214770636011, guid: ddebf648e270b99439987d5b3dbce958, type: 3}
       propertyPath: m_Name
       value: GrappleShurikenPickup

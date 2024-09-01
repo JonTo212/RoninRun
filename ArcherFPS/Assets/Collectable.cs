@@ -9,7 +9,7 @@ public class Collectable : MonoBehaviour
 
     private void Update()
     {
-        transform.Rotate(0, 1, 0);
+        transform.Rotate(1, 1, 1);
     }
 
     private void OnTriggerEnter(Collider other)

@@ -36,7 +36,7 @@ public class Shuriken : MonoBehaviour
             }
         }
 
-       //LookDir();
+       LookDir();
     }
 
     void LookDir() //rotates object to face arc's forward, but gets rid of spin
@@ -85,7 +85,7 @@ public class Shuriken : MonoBehaviour
         Vector3 collisionNormal = contact.normal;
         Quaternion targetRotation = Quaternion.LookRotation(-collisionNormal);
         transform.rotation = targetRotation * Quaternion.Euler(90f, 0f, 45f);
-        transform.position = contact.point + collisionNormal * boxCol.size.z / 2;
+        transform.position = contact.point + collisionNormal * boxCol.size.y / 3;
 
         //StartCoroutine(DelayedDestroy());
     }
