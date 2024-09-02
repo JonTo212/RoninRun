@@ -4,37 +4,30 @@ using UnityEngine;
 
 public class PlayerAbilities : MonoBehaviour
 {
-    //Slide particles
-    [SerializeField] ParticleSystem forwardSlideParticles;
-    [SerializeField] ParticleSystem backwardSlideParticles;
-    [SerializeField] ParticleSystem rightSlideParticles;
-    [SerializeField] ParticleSystem leftSlideParticles;
+    //Dash particles
+    [SerializeField] ParticleSystem forwardDashParticles;
+    [SerializeField] ParticleSystem backwardDashParticles;
+    [SerializeField] ParticleSystem rightDashParticles;
+    [SerializeField] ParticleSystem leftDashParticles;
 
     //Updraft particles
     [SerializeField] ParticleSystem updraftParticles;
 
-    //Floating particles
-    [SerializeField] ParticleSystem floatingParticles;
-
     //Dashing variables
-    public bool canSlide;
-    public bool hasSlid;
-    public bool isSliding;
-    float slideStartTime;
+    public bool isDashing;
+    public bool dashCooldownActive;
+    float dashStartTime;
     Vector3 currentForward;
     Vector3 currentVel;
-    public float slidePower = 30f;
-    public bool canSlideJump;
-    public float slideJumpHorizontalForce;
-    public float slideJumpVerticalForce;
+    public float dashPower = 30f;
+    public bool hasDashed;
 
     //Updraft variables
-    public bool isUpdrafting = false;
+    public bool canUpdraft;
+    public bool isUpdrafting;
     float lastTimeUpdrafted = 0f;
     float updraftHeight = 15f;
     float updraftDelay = 0.2f;
-    public float updraftAttempts = 0;
-    public float maxUpdrafts = 2;
     public bool updraftInput;
 
     PlayerControllerV2 playerController;
@@ -51,8 +44,8 @@ public class PlayerAbilities : MonoBehaviour
     public bool canWallBounce;
     bool hasWallBounced;
 
-    public bool wallLeft = false;
-    public bool wallRight = false;
+    public bool wallLeft;
+    public bool wallRight;
     RaycastHit leftWallHit;
     RaycastHit rightWallHit;
     public bool wallHit;
@@ -73,13 +66,14 @@ public class PlayerAbilities : MonoBehaviour
     }
     void Update()
     {
-        HandleSlide();
+        HandleDash();
         HandleUpdraft();
 
         if (playerController.isGrounded || !wallHit)
         {
             canWallBounce = false;
             hasWallBounced = false;
+            //canUpdraft = false;
             //timer = 0;
         }
 
@@ -109,100 +103,103 @@ public class PlayerAbilities : MonoBehaviour
         currentTilt = Mathf.Lerp(currentTilt, 0, camTiltTime * Time.deltaTime);
     }
 
-    #region Sliding
-    public void HandleSlide()
+    #region Dashing
+    void HandleDash()
     {
-        if (!isSliding && playerController.isGrounded && !hasSlid && canSlide)
+        bool isTryingToDash = Input.GetKeyDown(KeyCode.E);
+
+        if (isTryingToDash && !isDashing && !hasDashed)
         {
-            OnStartSlide();
+            OnStartDash();
         }
 
-        if (isSliding)
+        if (isDashing)
         {
-            if (Time.time - slideStartTime <= 0.4f)
+            if (Time.time - dashStartTime <= 0.4f)
             {
-                playerController.isGrounded = true;
                 if (currentVel.Equals(Vector3.zero))
                 {
-                    //No input, slide forward
-                    characterController.Move(currentForward * slidePower * Time.deltaTime);
+                    //No input, dash forward
+                    characterController.Move(currentForward * dashPower * Time.deltaTime);
                 }
                 else
                 {
-                    characterController.Move(currentVel * slidePower * Time.deltaTime);
+                    characterController.Move(currentVel * dashPower * Time.deltaTime);
                 }
             }
             else
             {
-                OnSlideEnd();
+                OnDashEnd();
             }
         }
     }
 
-    void OnStartSlide()
+    void ResetDash()
+    {
+        hasDashed = false;
+    }
+
+    void OnStartDash()
     {
         playerController.playerVelocity.z = 0;
-        isSliding = true;
-        slideStartTime = Time.time;
+        isDashing = true;
+        dashStartTime = Time.time;
         currentForward = transform.forward;
         currentVel = playerController.wishdir;
-        canSlideJump = true;
-        PlaySlideParticles();
+        dashCooldownActive = false;
+        hasDashed = true;
+        canUpdraft = true;
+        PlayDashParticles();
+
     }
 
-    public void OnSlideEnd()
+    void OnDashEnd()
     {
-        isSliding = false;
-        slideStartTime = 0;
-        hasSlid = true;
-        canSlide = false;
-        canSlideJump = false;
+        isDashing = false;
+        dashStartTime = 0;
+        dashCooldownActive = true;
     }
 
-    void PlaySlideParticles()
+    void PlayDashParticles()
     {
         Vector3 inputVector = playerController.inputVector;
 
         if (inputVector.z > 0 && Mathf.Abs(inputVector.x) <= inputVector.z)
         {
             //Forward and forward-diagonal dashes play the forward dash particles
-            forwardSlideParticles.Play();
-            currentParticles = forwardSlideParticles;
+            forwardDashParticles.Play();
             return;
         }
 
         if (inputVector.z < 0 && Mathf.Abs(inputVector.x) >= inputVector.z)
         {
             //Backward and backward-diagonal dashes play the backward dash particles
-            backwardSlideParticles.Play();
-            currentParticles = backwardSlideParticles;
+            backwardDashParticles.Play();
             return;
         }
 
         if (inputVector.x > 0)
         {
-            rightSlideParticles.Play();
-            currentParticles = rightSlideParticles;
+            rightDashParticles.Play();
             return;
         }
 
         if (inputVector.x < 0)
         {
-            leftSlideParticles.Play();
-            currentParticles = leftSlideParticles;
+            leftDashParticles.Play();
             return;
         }
 
-        forwardSlideParticles.Play();
-        currentParticles = forwardSlideParticles;
+        forwardDashParticles.Play();
     }
-
     #endregion
 
     #region Updrafting
     public void HandleUpdraft()
     {
-        if (updraftInput)
+        updraftInput = Input.GetKeyDown(KeyCode.Q);
+
+        if (updraftInput && canUpdraft)
         {
             if (Time.time - lastTimeUpdrafted < updraftDelay)
             {
@@ -227,12 +224,12 @@ public class PlayerAbilities : MonoBehaviour
         isUpdrafting = true;
         lastTimeUpdrafted = Time.time;
         updraftParticles.Play();
+        canUpdraft = false;
     }
 
     void OnUpdraftEnd()
     {
         isUpdrafting = false;
-        canSlideJump = false;
         updraftInput = false;
     }
     #endregion

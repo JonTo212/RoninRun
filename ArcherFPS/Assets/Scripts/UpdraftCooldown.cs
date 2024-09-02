@@ -7,12 +7,29 @@ using TMPro;
 public class UpdraftCooldown : MonoBehaviour
 {
     [SerializeField] TMP_Text updraftCount;
+    [SerializeField] Button fadeOut;
 
     [SerializeField] JettController abilityController;
+    [SerializeField] PlayerAbilities playerAbilities;
 
     // Update is called once per frame
     void Update()
     {
-        updraftCount.text = (abilityController.maxUpdrafts - abilityController.updraftAttempts).ToString();
+        if (abilityController != null)
+        {
+            updraftCount.text = (abilityController.maxUpdrafts - abilityController.updraftAttempts).ToString();
+        }
+
+        else if (playerAbilities != null)
+        {
+            if (playerAbilities.canUpdraft)
+            {
+                fadeOut.interactable = true;
+            }
+            else
+            {
+                fadeOut.interactable = false;
+            }
+        }
     }
 }

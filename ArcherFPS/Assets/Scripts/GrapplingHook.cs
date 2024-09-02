@@ -9,6 +9,7 @@ public class GrapplingHook : MonoBehaviour
     Vector3 grapplePoint;
     LineRenderer lineRenderer;
     float originalGrav;
+    [SerializeField] float releaseJumpForce;
 
     private void Start()
     {
@@ -27,6 +28,10 @@ public class GrapplingHook : MonoBehaviour
         if ((Input.GetMouseButtonUp(1) || playerController.isGrounded) && isGrappling)
         {
             StopGrapple();
+            if (playerController.playerVelocity.y > 0)
+            {
+                playerController.playerVelocity.y += releaseJumpForce;
+            }
         }
 
         if (isGrappling && Vector3.Distance(transform.position, grapplePoint) <= grapplingRange)

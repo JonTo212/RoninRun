@@ -309,7 +309,7 @@ MonoBehaviour:
   wallRunStar: 0
   teleportStar: 1
   grappleStar: 0
-  angularVel: {x: 0, y: 0, z: 0}
+  spinRate: 10
 --- !u!136 &-2146115025240708690
 CapsuleCollider:
   m_ObjectHideFlags: 0

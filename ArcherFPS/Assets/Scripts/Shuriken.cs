@@ -17,7 +17,8 @@ public class Shuriken : MonoBehaviour
     public bool wallRunStar;
     public bool teleportStar;
     public bool grappleStar;
-    public Vector3 angularVel;
+    float additionalSpin;
+    public float spinRate;
 
     private void Start()
     {
@@ -36,7 +37,10 @@ public class Shuriken : MonoBehaviour
             }
         }
 
-       LookDir();
+        if (!hit)
+        {
+            LookDir();
+        }
     }
 
     void LookDir() //rotates object to face arc's forward, but gets rid of spin
@@ -44,7 +48,18 @@ public class Shuriken : MonoBehaviour
         Vector3 fallDirection = rb.velocity.normalized;
         Quaternion initialRotation = Quaternion.Euler(90, 0, 45);
         Quaternion targetRotation = Quaternion.LookRotation(fallDirection, Vector3.up) * initialRotation;
-        transform.rotation = targetRotation;
+
+        if (!grappleStar)
+        {
+            Quaternion additionalRot = Quaternion.Euler(0, 0, additionalSpin);
+            transform.rotation = targetRotation * additionalRot;
+            additionalSpin += spinRate;
+        }
+
+        else
+        {
+            transform.rotation = targetRotation;
+        }
     }
 
     void OnCollisionEnter(Collision collision)

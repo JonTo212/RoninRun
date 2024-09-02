@@ -20,6 +20,7 @@ public class Throw : MonoBehaviour
     [SerializeField] Transform lineStartPos;
     [SerializeField] float lineRendererWidth;
     [SerializeField] GameObject indicatorObj;
+    [SerializeField] LayerMask playerMask;
 
     Shuriken currentStar;
     GameObject indicator;
@@ -43,6 +44,7 @@ public class Throw : MonoBehaviour
         lineRenderer.endWidth = lineRendererWidth;
         indicator = Instantiate(indicatorObj);
         indicator.transform.GetChild(selectionIndex).gameObject.SetActive(true);
+        playerMask = ~playerMask;
     }
 
     void Update()
@@ -106,12 +108,20 @@ public class Throw : MonoBehaviour
 
         Vector3 velocity = (destination - starSpawnPoint.position).normalized * projectileSpeed;
 
-        float simulationTimeStep = 0.05f; //Simulation increment, make larger for less accurate increments and smaller for more accurate increments
+        // Predicted angular velocity (same as what will be applied to the object after instantiation)
+        Vector3 predictedAngularVelocity = Vector3.zero;
+        if (selectionIndex != 3)
+        {
+            predictedAngularVelocity = starPrefab[selectionIndex].transform.forward * projectileSpeed;
+        }
+
+        float simulationTimeStep = 0.02f; //Simulation increment, make larger for less accurate increments and smaller for more accurate increments
         float maxSimulationDistance = 200f; //Distance in units that the arc will simulate to
 
         // Simulate trajectory
         List<Vector3> trajectoryPoints = new List<Vector3>();
         Vector3 currentPosition = lineStartPos.position;
+        Quaternion currentRotation = Quaternion.Euler(90, 0, 45); // Initial rotation
 
         for (int i = 0; i < maxSimulationDistance; i++)
         {
@@ -120,11 +130,12 @@ public class Throw : MonoBehaviour
             // Apply physics to calculate next position
             currentPosition += velocity * simulationTimeStep;
             velocity += Physics.gravity * simulationTimeStep; // Adjust for gravity
+            currentRotation *= Quaternion.Euler(predictedAngularVelocity * simulationTimeStep); // Simulate rotation
 
             // Check for collision with a box collider
-            if (Physics.CheckBox(currentPosition, new Vector3(0.525f, 0.525f, 0.0875f), Quaternion.Euler(90, 0, 45))) //added extra size to detection checkbox for more accuracy
+            if (Physics.CheckBox(currentPosition, new Vector3(0.525f, 0.525f, 0.0875f), currentRotation, playerMask)) //added extra size to detection checkbox for more accuracy
             {
-                //trajectoryPoints.Add(currentPosition); //idk if I should keep this, it sometimes adds an extra point of fake simulation
+                trajectoryPoints.Add(currentPosition); //idk if I should keep this, it sometimes adds an extra point which makes it inaccurate
                 break; // Stop simulating on collision
             }
         }
@@ -249,7 +260,6 @@ public class Throw : MonoBehaviour
         if (!currentStar.grappleStar)
         {
             currentStar.GetComponent<Rigidbody>().AddTorque(currentStar.transform.forward * projectileSpeed, ForceMode.VelocityChange);
-            currentStar.angularVel = currentStar.GetComponent<Rigidbody>().angularVelocity;
         }
 
         if(currentStar.teleportStar)
@@ -283,7 +293,7 @@ public class Throw : MonoBehaviour
         }
 
         // Cycle through available shuriken types
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             do
             {

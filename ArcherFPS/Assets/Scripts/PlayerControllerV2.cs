@@ -15,11 +15,9 @@ public class PlayerControllerV2 : MonoBehaviour
     /* Movement stuff */
     public float moveSpeed = 10.0f;                // Ground move speed
     public float maxVelocity = 15.0f;
-    float minVelocity;
     public float runAcceleration = 7.5f;         // Ground accel
     float runDeacceleration = 7.5f;       // Deacceleration that occurs when running on the ground
     float airAcceleration = 2.5f;          // Air accel
-
     float airDeceleration = 2.5f;
     float airControl = 0.3f;               // How precise air control is
     float sideStrafeAcceleration = 50f;  // How fast acceleration occurs to get up to sideStrafeSpeed
@@ -29,8 +27,12 @@ public class PlayerControllerV2 : MonoBehaviour
     public bool unlockMouse = true;
     public Vector3 inputVector = Vector3.zero;
 
-    //Crouching
+    //Crouching/sliding
+    public float slideForce = 0.5f;
+    public float slideJumpForce = 0.25f;
+    bool canSlideJump;
     public bool crouched;
+    bool hasSlid;
     public bool slide;
     public Vector3 wishdir;
     public bool canWallRun;
@@ -47,12 +49,10 @@ public class PlayerControllerV2 : MonoBehaviour
     Vector3 moveDirectionNorm = Vector3.zero;
     public Vector3 playerVelocity = Vector3.zero;
     public float playerTopVelocity = 0.0f;
-    public Vector3 clampedVel;
-
+    public Vector3 xzVel;
 
     // Queue the next jump just before you hit the ground
     public bool wishJump = false;
-    public bool useGravity = true;
     public bool isGrounded;
     float playerHeight;
 
@@ -64,7 +64,6 @@ public class PlayerControllerV2 : MonoBehaviour
     float slopeAngle;
 
     RaycastHit roofHit;
-    RaycastHit groundHit;
 
     [SerializeField] CameraSwap camSwap;
     [SerializeField] PlayerAbilities playerAbilities;
@@ -87,7 +86,6 @@ public class PlayerControllerV2 : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         capsule = GetComponent<CapsuleCollider>();
         camSwap = GetComponent<CameraSwap>();
-        minVelocity = -maxVelocity;
         slopeForce = 3f * -jumpSpeed;
         canWallRun = true;
     }
@@ -123,13 +121,13 @@ public class PlayerControllerV2 : MonoBehaviour
             HandleSlope();
         }
 
-        clampedVel = Vector3.ClampMagnitude(new Vector3(playerVelocity.x, 0, playerVelocity.z), maxVelocity);
-        clampedVel.y = playerVelocity.y;
+        xzVel = Vector3.ClampMagnitude(new Vector3(playerVelocity.x, 0, playerVelocity.z), maxVelocity);
+        xzVel.y = playerVelocity.y;
 
-        characterController.Move(clampedVel * Time.deltaTime);
+        characterController.Move(xzVel * Time.deltaTime);
 
         /* Calculate top velocity */
-        udp = clampedVel;
+        udp = xzVel;
         udp.y = 0.0f;
         if (udp.magnitude > playerTopVelocity)
             playerTopVelocity = udp.magnitude;
@@ -158,7 +156,7 @@ public class PlayerControllerV2 : MonoBehaviour
 
     public bool CanStandUp()
     {
-        if (Physics.SphereCast(transform.position, 0.01f, transform.up, out roofHit, 1f))
+        if (Physics.SphereCast(transform.position, 1f, transform.up, out roofHit, 1f))
         {
             return false;
         }
@@ -237,9 +235,11 @@ public class PlayerControllerV2 : MonoBehaviour
         if (wishJump)
         {
             playerVelocity.y = jumpSpeed;
-            if (playerAbilities.canSlideJump)
+            if (canSlideJump && crouched)
             {
-                playerAbilities.updraftInput = true;
+                playerVelocity.x += playerVelocity.x * slideJumpForce;
+                playerVelocity.z += playerVelocity.z * slideJumpForce;
+                canSlideJump = false;
             }
             wishJump = false;
         }
@@ -247,24 +247,14 @@ public class PlayerControllerV2 : MonoBehaviour
 
     void Gravity()
     {
-        if (useGravity)
-        {
-            playerVelocity.y -= gravity * Time.deltaTime;
-        }
-        else if (!useGravity)
-        {
-            if (playerVelocity.y < 0)
-            {
-                playerVelocity.y = Mathf.Lerp(playerVelocity.y, 0, 0.1f);
-            }
-            playerVelocity.y += gravity * Time.deltaTime;
-        }
+        playerVelocity.y -= gravity * Time.deltaTime;
     }
     #endregion
 
     #region Crouching/sliding
     void Crouch()
     {
+        slide = false;
         //Check for crouching input
         crouched = Input.GetKey(KeyCode.LeftControl);
 
@@ -272,10 +262,14 @@ public class PlayerControllerV2 : MonoBehaviour
         if (crouched)
         {
             characterController.height = Mathf.Lerp(0.6f, playerHeight, Time.deltaTime);
-            Vector3 horizontalVel = new Vector3(playerVelocity.x, 0, playerVelocity.z);
-            if (playerVelocity.magnitude < maxVelocity && horizontalVel.magnitude > 0.5f && !playerAbilities.hasSlid)
+
+            //Check if player can slide boost
+            if (xzVel.magnitude > 0.5 && !hasSlid && xzVel.magnitude < maxVelocity)
             {
-                playerAbilities.canSlide = true;
+                if (isGrounded)
+                {
+                    SlideBoost();
+                }
             }
         }
 
@@ -283,12 +277,22 @@ public class PlayerControllerV2 : MonoBehaviour
         else if (CanStandUp())
         {
             characterController.height = Mathf.Lerp(1.8f, playerHeight, Time.deltaTime);
-            playerAbilities.canSlide = false;
-            //playerAbilities.isSliding = false;
-            playerAbilities.hasSlid = false;
+            hasSlid = false;
         }
 
         capsule.height = characterController.height;
+    }
+
+    //Movespeed boost if sliding
+    void SlideBoost()
+    {
+        if (inputVector.z > 0)
+        {
+            playerVelocity += xzVel * slideForce;
+            hasSlid = true;
+            canSlideJump = true;
+            slide = true;
+        }
     }
 
     void HandleSlope()
@@ -512,11 +516,6 @@ public class PlayerControllerV2 : MonoBehaviour
 
         //Apply acceleration
         playerVelocity += accelspeed * wishdir;
-
-        /* //Clamp velocity
-        playerVelocity.x = Mathf.Clamp(playerVelocity.x, minVelocity, maxVelocity);
-        playerVelocity.z = Mathf.Clamp(playerVelocity.z, minVelocity, maxVelocity);
-        */
     }
     #endregion
 }
