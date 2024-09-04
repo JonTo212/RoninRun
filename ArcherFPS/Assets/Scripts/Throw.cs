@@ -21,6 +21,9 @@ public class Throw : MonoBehaviour
     [SerializeField] float lineRendererWidth;
     [SerializeField] GameObject indicatorObj;
     [SerializeField] LayerMask playerMask;
+    [SerializeField] LayerMask ignoreRaycastMask;
+    [SerializeField] LayerMask thrownObjectMask;
+    LayerMask excludedLayers;
 
     Shuriken currentStar;
     GameObject indicator;
@@ -44,7 +47,8 @@ public class Throw : MonoBehaviour
         lineRenderer.endWidth = lineRendererWidth;
         indicator = Instantiate(indicatorObj);
         indicator.transform.GetChild(selectionIndex).gameObject.SetActive(true);
-        playerMask = ~playerMask;
+        excludedLayers = playerMask | ignoreRaycastMask | thrownObjectMask;
+        excludedLayers = ~excludedLayers;
     }
 
     void Update()
@@ -133,7 +137,7 @@ public class Throw : MonoBehaviour
             currentRotation *= Quaternion.Euler(predictedAngularVelocity * simulationTimeStep); // Simulate rotation
 
             // Check for collision with a box collider
-            if (Physics.CheckBox(currentPosition, new Vector3(0.525f, 0.525f, 0.0875f), currentRotation, playerMask)) //added extra size to detection checkbox for more accuracy
+            if (Physics.CheckBox(currentPosition, new Vector3(0.525f, 0.525f, 0.0875f), currentRotation, excludedLayers)) //added extra size to detection checkbox for more accuracy
             {
                 trajectoryPoints.Add(currentPosition); //idk if I should keep this, it sometimes adds an extra point which makes it inaccurate
                 break; // Stop simulating on collision

@@ -25,9 +25,8 @@ public class PlayerAbilities : MonoBehaviour
     //Updraft variables
     public bool canUpdraft;
     public bool isUpdrafting;
-    float lastTimeUpdrafted = 0f;
+    float updraftStartTime = 0f;
     float updraftHeight = 15f;
-    float updraftDelay = 0.2f;
     public bool updraftInput;
 
     PlayerControllerV2 playerController;
@@ -69,6 +68,12 @@ public class PlayerAbilities : MonoBehaviour
         HandleDash();
         HandleUpdraft();
 
+        //dev tool
+        if(Input.GetKeyDown(KeyCode.BackQuote))
+        {
+            ResetDash();
+        }
+
         if (playerController.isGrounded || !wallHit)
         {
             canWallBounce = false;
@@ -93,11 +98,11 @@ public class PlayerAbilities : MonoBehaviour
                 WallRunning(rightWallHit);
                 //timer += Time.deltaTime;
             }
-            else
-            {
-                wallRunning = false;
-                //timer = 0;
-            }
+        }
+        else
+        {
+            wallRunning = false;
+            //timer = 0;
         }
 
         currentTilt = Mathf.Lerp(currentTilt, 0, camTiltTime * Time.deltaTime);
@@ -117,7 +122,9 @@ public class PlayerAbilities : MonoBehaviour
         {
             if (Time.time - dashStartTime <= 0.4f)
             {
-                if (currentVel.Equals(Vector3.zero))
+                characterController.Move(currentForward * dashPower * Time.deltaTime);
+                
+                /*if (currentVel.Equals(Vector3.zero)) //Sideways 
                 {
                     //No input, dash forward
                     characterController.Move(currentForward * dashPower * Time.deltaTime);
@@ -125,7 +132,7 @@ public class PlayerAbilities : MonoBehaviour
                 else
                 {
                     characterController.Move(currentVel * dashPower * Time.deltaTime);
-                }
+                }*/
             }
             else
             {
@@ -201,16 +208,19 @@ public class PlayerAbilities : MonoBehaviour
 
         if (updraftInput && canUpdraft)
         {
-            if (Time.time - lastTimeUpdrafted < updraftDelay)
-            {
-                if (isUpdrafting)
-                {
-                    OnUpdraftEnd();
-                }
-                return;
-            }
             OnUpdraftStart();
-            Updraft();
+        }
+
+        if (isUpdrafting)
+        {
+            if (Time.time - updraftStartTime < 0.4f)
+            {
+                Updraft();
+            }
+            else
+            {
+                OnUpdraftEnd();
+            }
         }
     }
 
@@ -222,7 +232,7 @@ public class PlayerAbilities : MonoBehaviour
     void OnUpdraftStart()
     {
         isUpdrafting = true;
-        lastTimeUpdrafted = Time.time;
+        updraftStartTime = Time.time;
         updraftParticles.Play();
         canUpdraft = false;
     }

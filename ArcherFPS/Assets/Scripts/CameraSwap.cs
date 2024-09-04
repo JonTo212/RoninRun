@@ -7,6 +7,14 @@ public class CameraSwap : MonoBehaviour
     public GameObject ThirdPersonCamera;
     public GameObject FirstPersonCamera;
     public int cam;
+    [SerializeField] Material invisShadowMat;
+    [SerializeField] Material originalMat;
+    [SerializeField] GameObject hatObj;
+
+    private void Start()
+    {
+        hatObj.GetComponent<Renderer>().material = invisShadowMat;
+    }
 
     void Update()
     {
@@ -31,11 +39,13 @@ public class CameraSwap : MonoBehaviour
         {
             ThirdPersonCamera.SetActive(false);
             FirstPersonCamera.SetActive(true);
+            hatObj.GetComponent<Renderer>().material = invisShadowMat;
         }
         if (cam == 1)
         {
             ThirdPersonCamera.SetActive(true);
             FirstPersonCamera.SetActive(false);
+            hatObj.GetComponent<Renderer>().material = originalMat;
         }
     }
 }

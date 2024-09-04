@@ -7,6 +7,9 @@ public class AnimationControllerV2 : MonoBehaviour
     [SerializeField] Animator anim;
     [SerializeField] PlayerControllerV2 playerController;
     [SerializeField] PlayerAbilities playerAbilities;
+    [SerializeField] Throw shurikenThrow;
+
+    bool isJumping;
 
     void Update()
     {
@@ -15,20 +18,35 @@ public class AnimationControllerV2 : MonoBehaviour
 
     void SetAnim()
     {
-        anim.SetFloat("xInput", Input.GetAxis("Horizontal"));
-        anim.SetFloat("zInput", Input.GetAxis("Vertical"));
-        anim.SetBool("crouching", playerController.crouched);
-        anim.SetBool("updraft", playerAbilities.isUpdrafting);
-        anim.SetBool("dash", playerAbilities.isDashing);
+        anim.SetFloat("xInput", playerController.animXInput);
+        anim.SetFloat("zInput", playerController.animZInput);
+        anim.SetBool("isCrouching", playerController.crouched);
+        anim.SetBool("isUpdrafting", playerAbilities.isUpdrafting);
+        anim.SetBool("isDashing", playerAbilities.isDashing);
         anim.SetBool("isWallRunning", playerAbilities.wallRunning);
+        anim.SetBool("wallLeft", playerAbilities.wallLeft);
+        anim.SetBool("wallRight", playerAbilities.wallRight);
+        anim.SetBool("isAiming", shurikenThrow.isAiming);
 
-        if (Input.GetKey(KeyCode.Space))
+        //Detect if the player is pressing the jump key and hasn't landed yet
+        if (Input.GetKey(KeyCode.Space) && !playerController.isGrounded)
         {
-            anim.SetBool("inAir", true);
+            anim.SetBool("isGrounded", false);
+            isJumping = true;
         }
-        if (playerController.isGrounded)
+
+        //Player has landed but bhop input detected
+        else if (playerController.isGrounded && Input.GetKey(KeyCode.Space))
         {
-            anim.SetBool("inAir", false);
+            anim.SetBool("isGrounded", false);
+            isJumping = true;
+        }
+
+        //Player has properly landed
+        else if (playerController.isGrounded)
+        {
+            anim.SetBool("isGrounded", true);
+            isJumping = false;
         }
     }
 }

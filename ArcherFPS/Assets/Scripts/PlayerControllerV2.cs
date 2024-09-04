@@ -69,6 +69,9 @@ public class PlayerControllerV2 : MonoBehaviour
     [SerializeField] PlayerAbilities playerAbilities;
     [SerializeField] LayerMask shurikenLayer;
 
+    public float animXInput;
+    public float animZInput;
+
     void Start()
     {
         // Hide the cursor
@@ -174,6 +177,17 @@ public class PlayerControllerV2 : MonoBehaviour
         inputVector.z = Input.GetAxisRaw("Vertical");
         inputVector.x = Input.GetAxisRaw("Horizontal");
         wishdir = new Vector3(inputVector.x, 0, inputVector.z);
+
+        // Smoothed input for animation
+        float animationSmoothSpeed = 3f;  // Adjust for desired animation smoothness
+
+        // Smooth out the input values for animations using Lerp
+        float smoothZInput = Mathf.Lerp(animZInput, inputVector.z, Time.deltaTime * animationSmoothSpeed);
+        float smoothXInput = Mathf.Lerp(animXInput, inputVector.x, Time.deltaTime * animationSmoothSpeed);
+
+        // Update previous input values for the next frame
+        animZInput = smoothZInput;
+        animXInput = smoothXInput;
     }
 
     //Queues jumps to allow for bhopping
