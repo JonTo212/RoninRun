@@ -6,7 +6,7 @@ using UnityEngine;
 public class TutorialText : MonoBehaviour
 {
     [SerializeField] GameObject tutorialText;
-    [SerializeField] string text;
+    [SerializeField] [TextArea] string text;
 
     private void OnTriggerEnter(Collider other)
     {
