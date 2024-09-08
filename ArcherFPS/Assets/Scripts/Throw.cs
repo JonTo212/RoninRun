@@ -23,6 +23,7 @@ public class Throw : MonoBehaviour
     [SerializeField] LayerMask playerMask;
     [SerializeField] LayerMask ignoreRaycastMask;
     [SerializeField] LayerMask thrownObjectMask;
+    [SerializeField] ParticleSystem smokePuff;
     LayerMask excludedLayers;
 
     Shuriken currentStar;
@@ -35,6 +36,8 @@ public class Throw : MonoBehaviour
     Vector3 destination;
     public int[] starCount;
     public int selectionIndex;
+    public Vector3 finalPos;
+    public bool noThrow;
 
     void Start()
     {
@@ -67,7 +70,7 @@ public class Throw : MonoBehaviour
         {
             if (starCount[selectionIndex] > 0)
             {
-                FireArrow(throwPower);
+                FireShuriken(throwPower);
             }
             else
             {
@@ -85,14 +88,25 @@ public class Throw : MonoBehaviour
 
     void GetAimInput()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !isAiming)
         {
             isAiming = true;
         }
-        if (Input.GetMouseButtonUp(0))
+        else if(Input.GetMouseButtonUp(1)) //for animator
+        {
+            noThrow = false;
+        }
+
+        if (Input.GetMouseButtonUp(0) && isAiming)
         {
             isAiming = false;
             fire = true;
+        }
+        else if(Input.GetMouseButtonDown(1) && isAiming) //for animator
+        {
+            isAiming = false;
+            fire = false;
+            noThrow = true;
         }
     }
 
@@ -137,10 +151,15 @@ public class Throw : MonoBehaviour
             currentRotation *= Quaternion.Euler(predictedAngularVelocity * simulationTimeStep); // Simulate rotation
 
             // Check for collision with a box collider
-            if (Physics.CheckBox(currentPosition, new Vector3(0.525f, 0.525f, 0.0875f), currentRotation, excludedLayers)) //added extra size to detection checkbox for more accuracy
+            if (Physics.CheckBox(currentPosition, new Vector3(0.45f, 0.45f, 0.075f), currentRotation, excludedLayers)) //added extra size to detection checkbox for more accuracy
             {
                 trajectoryPoints.Add(currentPosition); //idk if I should keep this, it sometimes adds an extra point which makes it inaccurate
+                finalPos = currentPosition;
                 break; // Stop simulating on collision
+            }
+            else
+            {
+                finalPos = Vector3.zero;
             }
         }
 
@@ -243,7 +262,7 @@ public class Throw : MonoBehaviour
     }
 
 
-    void FireArrow(float projectileSpeed)
+    void FireShuriken(float projectileSpeed)
     {
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         RaycastHit hit;
@@ -260,6 +279,7 @@ public class Throw : MonoBehaviour
         currentStar = Instantiate(starPrefab[selectionIndex], starSpawnPoint);
         currentStar.transform.SetParent(null);
         currentStar.GetComponent<Rigidbody>().velocity = (destination - starSpawnPoint.position).normalized * projectileSpeed;
+        currentStar.finalPos = finalPos;
 
         if (!currentStar.grappleStar)
         {
@@ -269,6 +289,7 @@ public class Throw : MonoBehaviour
         if(currentStar.teleportStar)
         {
             currentStar.player = this.gameObject;
+            currentStar.smokePuff = smokePuff;
         }
 
         starCount[selectionIndex]--;

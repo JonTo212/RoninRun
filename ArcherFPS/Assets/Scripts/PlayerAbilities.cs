@@ -50,13 +50,13 @@ public class PlayerAbilities : MonoBehaviour
     public bool wallHit;
     public bool wallRunning;
 
-    float camTilt = 30f;
-    float camTiltTime = 3f;
+    float camTilt = 15f;
+    float desiredTilt;
+    public float tiltSpeed = 25f;
     public float currentTilt;
     public LayerMask wallMask;
     public bool wallRun;
-    //public float wallBounceActivateTimer; //activate if spacebar hold
-    //float timer; 
+    [SerializeField] float autoRunForce;
 
     void Start()
     {
@@ -78,34 +78,29 @@ public class PlayerAbilities : MonoBehaviour
         {
             canWallBounce = false;
             hasWallBounced = false;
-            //canUpdraft = false;
-            //timer = 0;
         }
 
         CheckWall();
 
         if (CanWallRun())
         {
-            if (wallLeft)
+            if (wallLeft || wallRight)
             {
-                currentTilt = Mathf.Lerp(currentTilt, -camTilt, camTiltTime * Time.deltaTime);
-                WallRunning(leftWallHit);
-                //timer += Time.deltaTime;
+                WallRunning();
             }
-            else if (wallRight)
+            else
             {
-                currentTilt = Mathf.Lerp(currentTilt, camTilt, camTiltTime * Time.deltaTime);
-                WallRunning(rightWallHit);
-                //timer += Time.deltaTime;
+                desiredTilt = 0;
+                wallRunning = false;
             }
         }
         else
         {
             wallRunning = false;
-            //timer = 0;
+            desiredTilt = 0;
         }
 
-        currentTilt = Mathf.Lerp(currentTilt, 0, camTiltTime * Time.deltaTime);
+        currentTilt = Mathf.MoveTowards(currentTilt, desiredTilt, tiltSpeed * Time.deltaTime);
     }
 
     #region Dashing
@@ -206,7 +201,7 @@ public class PlayerAbilities : MonoBehaviour
     {
         updraftInput = Input.GetKeyDown(KeyCode.Q);
 
-        if (updraftInput && canUpdraft)
+        if (updraftInput && canUpdraft && !playerController.isGrounded)
         {
             OnUpdraftStart();
         }
@@ -248,7 +243,7 @@ public class PlayerAbilities : MonoBehaviour
 
     bool CanWallRun() //Can wall run if you're above the minimum jump height
     {
-        return !Physics.Raycast(transform.position, Vector3.down, minimumJumpHeight) && playerController.canWallRun; //for spacebar hold wallrunning
+        return !Physics.Raycast(transform.position, Vector3.down, minimumJumpHeight); //&& playerController.canWallRun; //for spacebar hold wallrunning
     }
 
     void CheckWall()
@@ -259,7 +254,7 @@ public class PlayerAbilities : MonoBehaviour
         wallHit = wallLeft || wallRight;
     }
 
-    void WallRunning(RaycastHit wallInfo)
+    void WallRunning()
     {
         wallRunning = true;
 
@@ -280,15 +275,30 @@ public class PlayerAbilities : MonoBehaviour
             playerController.ApplyFriction(0.1f);
         }
 
+        Vector3 wallNormal = wallRight ? rightWallHit.normal : leftWallHit.normal;
+        Vector3 wallForward = Vector3.Cross(wallNormal, transform.up);
 
         //Apply small force to stick to wall
-        wallStick = wallInfo.normal * 5f * Time.deltaTime;
+        wallStick = wallNormal * 5f * Time.deltaTime;
         playerController.playerVelocity -= wallStick;
 
-        //Walljumping
-        if (!hasWallBounced && Input.GetKeyUp(KeyCode.Space)) // change to GetKeyUp for space hold
+        if (wallLeft)
         {
-            Vector3 wallNormal = wallInfo.normal;
+            //Set camera tilt
+            desiredTilt = -camTilt;
+            playerController.playerVelocity += wallForward * autoRunForce * Time.deltaTime;
+        }
+
+        else if (wallRight)
+        {
+            desiredTilt = camTilt;
+            playerController.playerVelocity -= wallForward * autoRunForce * Time.deltaTime;
+
+        }
+
+        //Walljumping
+        if (!hasWallBounced && Input.GetKeyDown(KeyCode.Space)) // change to GetKeyUp for space hold
+        {
             wallRunJumpDirection = transform.up + wallNormal;
             jumpAccel = wallRunJumpDirection * wallJumpForce;
 
@@ -298,6 +308,7 @@ public class PlayerAbilities : MonoBehaviour
             playerController.playerVelocity += jumpAccel;
             canWallBounce = false;
             hasWallBounced = true;
+            wallRunning = false;
         }
     }
 

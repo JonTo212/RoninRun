@@ -11,14 +11,16 @@ public class Shuriken : MonoBehaviour
     bool hit;
     public bool canGrapple;
     BoxCollider boxCol;
-    public int originalLayer;
-    public Material originalMat;
-    public GameObject collidedObj;
+    int originalLayer;
+    Material originalMat;
+    GameObject collidedObj;
     public bool wallRunStar;
     public bool teleportStar;
     public bool grappleStar;
     float additionalSpin;
-    public float spinRate;
+    [SerializeField] float spinRate;
+    public Vector3 finalPos;
+    public ParticleSystem smokePuff;
 
     private void Start()
     {
@@ -100,7 +102,10 @@ public class Shuriken : MonoBehaviour
         Vector3 collisionNormal = contact.normal;
         Quaternion targetRotation = Quaternion.LookRotation(-collisionNormal);
         transform.rotation = targetRotation * Quaternion.Euler(90f, 0f, 45f);
-        transform.position = contact.point + collisionNormal * boxCol.size.y / 3;
+        if(finalPos != Vector3.zero)
+        {
+            transform.position = finalPos;
+        }
 
         //StartCoroutine(DelayedDestroy());
     }
@@ -131,6 +136,7 @@ public class Shuriken : MonoBehaviour
 
     void TeleportStar()
     {
+        smokePuff.Play();
         player.GetComponent<CharacterController>().enabled = false;
         player.transform.position = transform.position;
         player.GetComponent<CharacterController>().enabled = true;

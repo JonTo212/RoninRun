@@ -9,8 +9,6 @@ public class AnimationControllerV2 : MonoBehaviour
     [SerializeField] PlayerAbilities playerAbilities;
     [SerializeField] Throw shurikenThrow;
 
-    bool isJumping;
-
     void Update()
     {
         SetAnim();
@@ -27,26 +25,24 @@ public class AnimationControllerV2 : MonoBehaviour
         anim.SetBool("wallLeft", playerAbilities.wallLeft);
         anim.SetBool("wallRight", playerAbilities.wallRight);
         anim.SetBool("isAiming", shurikenThrow.isAiming);
+        anim.SetBool("noThrow", shurikenThrow.noThrow);
 
         //Detect if the player is pressing the jump key and hasn't landed yet
         if (Input.GetKey(KeyCode.Space) && !playerController.isGrounded)
         {
             anim.SetBool("isGrounded", false);
-            isJumping = true;
         }
 
         //Player has landed but bhop input detected
         else if (playerController.isGrounded && Input.GetKey(KeyCode.Space))
         {
             anim.SetBool("isGrounded", false);
-            isJumping = true;
         }
 
         //Player has properly landed
         else if (playerController.isGrounded)
         {
             anim.SetBool("isGrounded", true);
-            isJumping = false;
         }
     }
 }
