@@ -7,6 +7,13 @@ TagManager:
   - WallRun
   - Arrow
   - GameManager
+  - Ground
+  - Shuriken
+  - UpdraftParticles
+  - ForwardDashParticles
+  - BackwardDashParticles
+  - RightDashParticles
+  - LeftDashParticles
   layers:
   - Default
   - TransparentFX

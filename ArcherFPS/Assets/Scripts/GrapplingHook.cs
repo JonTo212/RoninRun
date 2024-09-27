@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour
@@ -10,6 +11,7 @@ public class GrapplingHook : MonoBehaviour
     LineRenderer lineRenderer;
     float originalGrav;
     [SerializeField] float releaseJumpForce;
+    [SerializeField] Transform lineRendererStartPos;
 
     private void Start()
     {
@@ -104,7 +106,7 @@ public class GrapplingHook : MonoBehaviour
 
         //Update line renderer
         lineRenderer.positionCount = 2;
-        lineRenderer.SetPosition(0, transform.position);    
+        lineRenderer.SetPosition(0, lineRendererStartPos.position);    
         lineRenderer.SetPosition(1, grapplePoint);
     }
 

@@ -210,11 +210,11 @@ public class PlayerControllerV2 : MonoBehaviour
     {
         if (unlockMouse)
         {
+            rotX -= Input.GetAxisRaw("Mouse Y") * xMouseSensitivity * 0.02f;
+
             //Lock vertical mouse movement if 3rd person
             if (camSwap.cam == 0)
             {
-                rotX -= Input.GetAxisRaw("Mouse Y") * xMouseSensitivity * 0.02f;
-
                 // Clamp vertical rotation of camera
                 if (rotX < -90)
                     rotX = -90;
@@ -223,7 +223,10 @@ public class PlayerControllerV2 : MonoBehaviour
             }
             else if (camSwap.cam == 1)
             {
-                rotX = 15;
+                if (rotX < 0)
+                    rotX = 0;
+                else if (rotX > 30)
+                    rotX = 30;
             }
 
             //Get horizontal mouse movement

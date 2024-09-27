@@ -8,7 +8,7 @@ public class Shuriken : MonoBehaviour
     //[SerializeField] float destroyTimer;
     [SerializeField] Material wallRunMat;
     public GameObject player;
-    bool hit;
+    public bool hit;
     public bool canGrapple;
     BoxCollider boxCol;
     int originalLayer;
@@ -76,6 +76,17 @@ public class Shuriken : MonoBehaviour
         rb.angularVelocity = Vector3.zero;
         rb.isKinematic = true;
 
+        //Rotate shuriken to be perpendicular to wall
+        ContactPoint contact = collision.contacts[0];
+        Vector3 collisionNormal = contact.normal;
+        Quaternion targetRotation = Quaternion.LookRotation(-collisionNormal);
+        transform.rotation = targetRotation * Quaternion.Euler(90f, 0f, 45f);
+
+        if (finalPos != Vector3.zero)
+        {
+            transform.position = finalPos;
+        }
+
         if (teleportStar)
         {
             TeleportStar();
@@ -95,16 +106,6 @@ public class Shuriken : MonoBehaviour
         else
         {
             boxCol.size *= 2;
-        }
-
-        //Rotate shuriken to be perpendicular to wall
-        ContactPoint contact = collision.contacts[0];
-        Vector3 collisionNormal = contact.normal;
-        Quaternion targetRotation = Quaternion.LookRotation(-collisionNormal);
-        transform.rotation = targetRotation * Quaternion.Euler(90f, 0f, 45f);
-        if(finalPos != Vector3.zero)
-        {
-            transform.position = finalPos;
         }
 
         //StartCoroutine(DelayedDestroy());

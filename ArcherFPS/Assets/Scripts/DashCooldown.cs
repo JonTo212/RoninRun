@@ -14,16 +14,18 @@ public class DashCooldown : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (abilityController != null)
+        /*if (abilityController != null)
         {
             imageCooldown.fillAmount = 0.0f;
-        }
+        }*/
+
+        imageCooldown.fillAmount = 0.0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(abilityController != null)
+        /*if(abilityController != null)
         {
             ApplyCooldown();
         }
@@ -37,11 +39,20 @@ public class DashCooldown : MonoBehaviour
             {
                 fadeOut.interactable = false;
             }
-        }
+        }*/
+
+        ApplyCooldown();
     }
 
     void ApplyCooldown()
     {
-        imageCooldown.fillAmount = abilityController.dashCooldown / abilityController.dashDelay;
+        if (abilityController != null)
+        {
+            imageCooldown.fillAmount = abilityController.dashCooldown / abilityController.dashDelay;
+        }
+        else if(playerAbilities != null)
+        {
+            imageCooldown.fillAmount = playerAbilities.dashCooldown / playerAbilities.dashDelay;
+        }
     }
 }

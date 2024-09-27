@@ -5,13 +5,13 @@ using UnityEngine;
 public class PlayerAbilities : MonoBehaviour
 {
     //Dash particles
-    [SerializeField] ParticleSystem forwardDashParticles;
-    [SerializeField] ParticleSystem backwardDashParticles;
-    [SerializeField] ParticleSystem rightDashParticles;
-    [SerializeField] ParticleSystem leftDashParticles;
+    ParticleSystem forwardDashParticles;
+    ParticleSystem backwardDashParticles;
+    ParticleSystem rightDashParticles;
+    ParticleSystem leftDashParticles;
 
     //Updraft particles
-    [SerializeField] ParticleSystem updraftParticles;
+    ParticleSystem updraftParticles;
 
     //Dashing variables
     public bool isDashing;
@@ -20,13 +20,15 @@ public class PlayerAbilities : MonoBehaviour
     Vector3 currentForward;
     Vector3 currentVel;
     public float dashPower = 30f;
+    public float dashDelay = 2;
+    public float dashCooldown = 0;
     public bool hasDashed;
 
     //Updraft variables
     public bool canUpdraft;
     public bool isUpdrafting;
     float updraftStartTime = 0f;
-    float updraftHeight = 15f;
+    public float updraftHeight = 15f;
     public bool updraftInput;
 
     PlayerControllerV2 playerController;
@@ -65,6 +67,7 @@ public class PlayerAbilities : MonoBehaviour
     }
     void Update()
     {
+        GetParticles();
         HandleDash();
         HandleUpdraft();
 
@@ -103,23 +106,32 @@ public class PlayerAbilities : MonoBehaviour
         currentTilt = Mathf.MoveTowards(currentTilt, desiredTilt, tiltSpeed * Time.deltaTime);
     }
 
+    void GetParticles()
+    {
+        forwardDashParticles = GameObject.FindGameObjectWithTag("ForwardDashParticles").GetComponent<ParticleSystem>();
+        backwardDashParticles = GameObject.FindGameObjectWithTag("BackwardDashParticles").GetComponent<ParticleSystem>();
+        rightDashParticles = GameObject.FindGameObjectWithTag("RightDashParticles").GetComponent<ParticleSystem>();
+        leftDashParticles = GameObject.FindGameObjectWithTag("LeftDashParticles").GetComponent<ParticleSystem>();
+        updraftParticles = GameObject.FindGameObjectWithTag("UpdraftParticles").GetComponent<ParticleSystem>();
+    }
+
     #region Dashing
     void HandleDash()
     {
         bool isTryingToDash = Input.GetKeyDown(KeyCode.E);
+        dashCooldown += Time.deltaTime;
 
-        if (isTryingToDash && !isDashing && !hasDashed)
+        if (isTryingToDash && !isDashing && dashCooldown > dashDelay)
         {
             OnStartDash();
+            dashCooldown = 0;
         }
 
         if (isDashing)
         {
             if (Time.time - dashStartTime <= 0.4f)
             {
-                characterController.Move(currentForward * dashPower * Time.deltaTime);
-                
-                /*if (currentVel.Equals(Vector3.zero)) //Sideways 
+                if (currentVel.Equals(Vector3.zero))
                 {
                     //No input, dash forward
                     characterController.Move(currentForward * dashPower * Time.deltaTime);
@@ -127,7 +139,7 @@ public class PlayerAbilities : MonoBehaviour
                 else
                 {
                     characterController.Move(currentVel * dashPower * Time.deltaTime);
-                }*/
+                }
             }
             else
             {

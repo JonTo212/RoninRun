@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Unity.VisualScripting.Metadata;
 
 public class Throw : MonoBehaviour
 {
@@ -62,7 +61,7 @@ public class Throw : MonoBehaviour
 
         if (isAiming)
         {
-            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, 80f, Time.deltaTime * zoomSpeed);
+            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, 60f, Time.deltaTime * zoomSpeed);
             throwPower = (startingFOV - cam.fieldOfView) * 2f;
             AimIndicator(throwPower);
         }
@@ -75,6 +74,8 @@ public class Throw : MonoBehaviour
             else
             {
                 fire = false;
+                isAiming = false;
+                noThrow = true;
                 print("out of this type of shuriken");
             }
         }
@@ -133,7 +134,7 @@ public class Throw : MonoBehaviour
             predictedAngularVelocity = starPrefab[selectionIndex].transform.forward * projectileSpeed;
         }
 
-        float simulationTimeStep = 0.02f; //Simulation increment, make larger for less accurate increments and smaller for more accurate increments
+        float simulationTimeStep = 0.01f; //Simulation increment, make larger for less accurate increments and smaller for more accurate increments
         float maxSimulationDistance = 200f; //Distance in units that the arc will simulate to
 
         // Simulate trajectory
@@ -180,65 +181,6 @@ public class Throw : MonoBehaviour
             indicator.SetActive(false);
         }
     }
-
-    /*void AimIndicator(float projectileSpeed) //legacy function, works well but the hitbox is not accounted for
-    {
-        Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        RaycastHit hit;
-
-        if (Physics.Raycast(ray, out hit))
-        {
-            destination = hit.point;
-        }
-        else
-        {
-            destination = ray.GetPoint(1000);
-        }
-
-        Vector3 velocity = (destination - starSpawnPoint.position).normalized * projectileSpeed;
-
-        float simulationTimeStep = 0.05f; //Simulation increment, make larger for less accurate increments and smaller for more accurate increments
-        float maxSimulationDistance = 100f; //Distance in units that the arc will simulate to
-
-        // Simulate trajectory
-        List<Vector3> trajectoryPoints = new List<Vector3>();
-        Vector3 currentPosition = lineStartPos.position;
-
-        for (int i = 0; i < maxSimulationDistance; i++)
-        {
-            trajectoryPoints.Add(currentPosition);
-
-            // Apply physics to calculate next position
-            currentPosition += velocity * simulationTimeStep;
-            velocity += Physics.gravity * simulationTimeStep; // Adjust for gravity
-
-            //Stop simulating arc if aiming at object
-            if (Physics.Raycast(currentPosition, velocity, out hit, velocity.magnitude * simulationTimeStep))
-            {
-                trajectoryPoints.Add(hit.point); // Add the hit point
-                indicator.transform.rotation = Quaternion.LookRotation(-hit.normal) * Quaternion.Euler(90f, 0f, 45f);
-                break; // Stop simulating on collision
-            }
-        }
-
-        // Apply the calculated trajectory points to the LineRenderer
-        lineRenderer.positionCount = trajectoryPoints.Count;
-        lineRenderer.SetPositions(trajectoryPoints.ToArray());
-
-        // Show/hide indicator
-        if (trajectoryPoints.Count > 1)
-        {
-            indicator.SetActive(true);
-            indicator.transform.position = trajectoryPoints[trajectoryPoints.Count - 1]; // Position indicator at the last point
-            lineRenderer.enabled = true;
-        }
-        else
-        {
-            lineRenderer.enabled = false;
-            indicator.SetActive(false);
-        }
-    }*/
-
 
     void SetIndicatorObjectsActive()
     {
