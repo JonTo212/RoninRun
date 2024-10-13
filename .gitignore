@@ -3,12 +3,12 @@
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
 [Ll]ibrary/
-/[Tt]emp/
+[Tt]emp/
 /[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/
-/[Ll]ogs/
-/[Uu]ser[Ss]ettings/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
@@ -149,3 +149,7 @@ ArcherFPS/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 ArcherFPS/Temp/FSTimeGet-56491e9c8eb266f45b95e8f50f7e3da1
 ArcherFPS/Temp/FSTimeGet-6a70c660b39124949bd645de0e679d16
 ArcherFPS/Temp/FSTimeGet-cde41de6b4966b947aa719081d40d5fb
+ArcherFPS/Temp/FSTimeGet-141a915b6d906604ab44ec4171c25528
+ArcherFPS/Temp/FSTimeGet-e59910fd0db179e458e240e5bf5dc511
+ArcherFPS/Logs/shadercompiler-UnityShaderCompiler.exe1.log
+ArcherFPS/Logs/shadercompiler-UnityShaderCompiler.exe2.log

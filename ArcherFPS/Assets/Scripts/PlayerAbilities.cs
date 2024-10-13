@@ -38,7 +38,7 @@ public class PlayerAbilities : MonoBehaviour
     //WallRun variables
     float wallDistance = 1f;
     public float minimumJumpHeight = 2f;
-    public float wallJumpForce = 15f;
+    public Vector2 wallJumpForce;
     Vector3 wallRunJumpDirection;
     Vector3 jumpAccel;
     Vector3 wallStick;
@@ -52,7 +52,7 @@ public class PlayerAbilities : MonoBehaviour
     public bool wallHit;
     public bool wallRunning;
 
-    float camTilt = 15f;
+    public float camTilt = 15f;
     float desiredTilt;
     public float tiltSpeed = 25f;
     public float currentTilt;
@@ -64,6 +64,7 @@ public class PlayerAbilities : MonoBehaviour
     {
         playerController = GetComponent<PlayerControllerV2>();
         characterController = GetComponent<CharacterController>();
+        canUpdraft = true;
     }
     void Update()
     {
@@ -311,13 +312,17 @@ public class PlayerAbilities : MonoBehaviour
         //Walljumping
         if (!hasWallBounced && Input.GetKeyDown(KeyCode.Space)) // change to GetKeyUp for space hold
         {
-            wallRunJumpDirection = transform.up + wallNormal;
-            jumpAccel = wallRunJumpDirection * wallJumpForce;
+            Vector3 wallJumpHorizontal = wallNormal * wallJumpForce.x; // Horizontal component based on wall normal
+            Vector3 wallJumpVertical = transform.up * wallJumpForce.y;
+
+            jumpAccel = wallJumpHorizontal + wallJumpVertical;
+
+            Vector3 wallParallelVelocity = Vector3.ProjectOnPlane(playerController.playerVelocity, wallNormal);
 
             // Cancel out previous velocity if it's in the opposite direction of the jump
             CancelOpposingVelocity(ref playerController.playerVelocity, jumpAccel);
 
-            playerController.playerVelocity += jumpAccel;
+            playerController.playerVelocity = wallParallelVelocity + jumpAccel;
             canWallBounce = false;
             hasWallBounced = true;
             wallRunning = false;
@@ -326,13 +331,9 @@ public class PlayerAbilities : MonoBehaviour
 
     void CancelOpposingVelocity(ref Vector3 velocity, Vector3 jumpAcceleration)
     {
-        if (Mathf.Sign(velocity.x) != Mathf.Sign(jumpAcceleration.x) && Mathf.Abs(jumpAcceleration.x) > 0.01f)
+        if (Vector3.Dot(velocity, jumpAcceleration) < 0) // If velocity is in the opposite direction of jumpAcceleration
         {
-            velocity.x = 0;
-        }
-        if (Mathf.Sign(velocity.z) != Mathf.Sign(jumpAcceleration.z) && Mathf.Abs(jumpAcceleration.z) > 0.01f)
-        {
-            velocity.z = 0;
+            velocity = Vector3.ProjectOnPlane(velocity, jumpAcceleration.normalized); // Cancel perpendicular velocity
         }
     }
     #endregion

@@ -105,7 +105,8 @@ public class Shuriken : MonoBehaviour
         }
         else
         {
-            boxCol.size *= 2;
+            transform.localScale *= 2;
+            //boxCol.size *= 2;
         }
 
         //StartCoroutine(DelayedDestroy());

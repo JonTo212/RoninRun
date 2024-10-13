@@ -18,7 +18,6 @@ public class PlayerControllerV2 : MonoBehaviour
     public float runAcceleration = 7.5f;         // Ground accel
     float runDeacceleration = 7.5f;       // Deacceleration that occurs when running on the ground
     float airAcceleration = 2.5f;          // Air accel
-    float airDeceleration = 2.5f;
     float airControl = 0.3f;               // How precise air control is
     float sideStrafeAcceleration = 50f;  // How fast acceleration occurs to get up to sideStrafeSpeed
     float sideStrafeSpeed = 1.0f;          // Max speed to generate when side strafing
@@ -366,16 +365,8 @@ public class PlayerControllerV2 : MonoBehaviour
         wishspeed *= moveSpeed;
 
         //Accelerate if strafing in same direction, decelerate if different
-        float wishspeed2 = wishspeed;
+        float wishspeedOriginal = wishspeed;
         float accel;
-        if (Vector3.Dot(playerVelocity, wishdir) < 0)
-        {
-            accel = airDeceleration;
-        }
-        else
-        {
-            accel = airAcceleration;
-        }
 
         //Change acceleration value if there is sideways input for sideways strafing
         if (inputVector.x != 0)
@@ -383,6 +374,10 @@ public class PlayerControllerV2 : MonoBehaviour
             if (wishspeed > sideStrafeSpeed)
                 wishspeed = sideStrafeSpeed;
             accel = sideStrafeAcceleration;
+        }
+        else
+        {
+            accel = airAcceleration;
         }
 
         if (crouched && playerVelocity.magnitude < 0.5f)
@@ -395,7 +390,7 @@ public class PlayerControllerV2 : MonoBehaviour
         }
 
         if (airControl > 0)
-            AirControl(wishdir, wishspeed2);
+            AirControl(wishdir, wishspeedOriginal);
 
     }
 
@@ -406,7 +401,7 @@ public class PlayerControllerV2 : MonoBehaviour
      */
     void AirControl(Vector3 wishdir, float wishspeed)
     {
-        float zspeed;
+        float yVel;
         float speed;
         float dot;
         float k;
@@ -414,14 +409,15 @@ public class PlayerControllerV2 : MonoBehaviour
         // Can't control movement if not moving forward or backward
         if (Mathf.Abs(inputVector.z) < 0.001 || Mathf.Abs(wishspeed) < 0.001)
             return;
-        zspeed = playerVelocity.y;
+
+        // Only use horizontal velocity
+        yVel = playerVelocity.y;
         playerVelocity.y = 0;
-        // Next two lines are equivalent to idTech's VectorNormalize()
         speed = playerVelocity.magnitude;
         playerVelocity.Normalize();
 
         dot = Vector3.Dot(playerVelocity, wishdir);
-        k = 32;
+        k = 32; //idk I found this online lol
         k *= airControl * dot * dot * Time.deltaTime;
 
         // Change direction while slowing down
@@ -436,7 +432,7 @@ public class PlayerControllerV2 : MonoBehaviour
         }
 
         playerVelocity.x *= speed;
-        playerVelocity.y = zspeed; // Note this line
+        playerVelocity.y = yVel; // Reset y velocity
         playerVelocity.z *= speed;
     }
     #endregion
