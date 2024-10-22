@@ -19,6 +19,7 @@ public class AnimationControllerV2 : MonoBehaviour
         anim.SetFloat("xInput", playerController.animXInput);
         anim.SetFloat("zInput", playerController.animZInput);
         anim.SetBool("isCrouching", playerController.crouched);
+        anim.SetBool("isSliding", playerController.slide || playerController.slopeSlide);
         anim.SetBool("isUpdrafting", playerAbilities.isUpdrafting);
         anim.SetBool("isDashing", playerAbilities.isDashing);
         anim.SetBool("isWallRunning", playerAbilities.wallRunning);

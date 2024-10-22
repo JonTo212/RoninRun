@@ -29,6 +29,7 @@ public class PlayerControllerV2 : MonoBehaviour
     //Crouching/sliding
     public float slideForce = 0.5f;
     public float slideJumpForce = 0.25f;
+    public float boostDuration;
     bool canSlideJump;
     public bool crouched;
     bool hasSlid;
@@ -61,6 +62,7 @@ public class PlayerControllerV2 : MonoBehaviour
     float slopeForce;
     Vector3 slopeNormal;
     float slopeAngle;
+    public bool slopeSlide;
 
     RaycastHit roofHit;
 
@@ -121,6 +123,10 @@ public class PlayerControllerV2 : MonoBehaviour
         if (OnSlope())
         {
             HandleSlope();
+        }
+        else
+        {
+            slopeSlide = false;
         }
 
         xzVel = Vector3.ClampMagnitude(new Vector3(playerVelocity.x, 0, playerVelocity.z), maxVelocity);
@@ -256,6 +262,7 @@ public class PlayerControllerV2 : MonoBehaviour
                 playerVelocity.x += playerVelocity.x * slideJumpForce;
                 playerVelocity.z += playerVelocity.z * slideJumpForce;
                 canSlideJump = false;
+                slide = false;
             }
             wishJump = false;
         }
@@ -270,7 +277,6 @@ public class PlayerControllerV2 : MonoBehaviour
     #region Crouching/sliding
     void Crouch()
     {
-        slide = false;
         //Check for crouching input
         crouched = Input.GetKey(KeyCode.LeftControl);
 
@@ -282,40 +288,45 @@ public class PlayerControllerV2 : MonoBehaviour
             //Check if player can slide boost
             if (xzVel.magnitude > 0.5 && !hasSlid && xzVel.magnitude < maxVelocity)
             {
-                if (isGrounded)
+                if (isGrounded && inputVector.z > 0)
                 {
-                    SlideBoost();
+                    slide = true;
+                    StartCoroutine(SlideBoost());
                 }
             }
         }
 
         //Reset collider height if there is no crouch input
-        else if (CanStandUp())
+        else if (CanStandUp() && !crouched)
         {
             characterController.height = Mathf.Lerp(1.8f, playerHeight, Time.deltaTime);
             hasSlid = false;
+            slide = false;
         }
 
         capsule.height = characterController.height;
     }
 
     //Movespeed boost if sliding
-    void SlideBoost()
+    IEnumerator SlideBoost()
     {
-        if (inputVector.z > 0)
-        {
-            playerVelocity += xzVel * slideForce;
-            hasSlid = true;
-            canSlideJump = true;
-            slide = true;
-        }
+        playerVelocity += xzVel * slideForce;
+        hasSlid = true;
+        canSlideJump = true;
+
+        yield return new WaitForSeconds(boostDuration);
+
+        slide = false;
     }
 
     void HandleSlope()
     {
         float slopeAccel = 0.5f * Mathf.Sin(slopeAngle * Mathf.Deg2Rad); //Accelerate faster depending on slope angle
+
         if (crouched)
         {
+            slopeSlide = true;
+
             if (slopeNormal.z != 0)
             {
                 if (slopeNormal.z > 0)
@@ -338,6 +349,10 @@ public class PlayerControllerV2 : MonoBehaviour
                     playerVelocity.x -= slopeAccel;
                 }
             }
+        }
+        else
+        {
+            slopeSlide = false;
         }
         playerVelocity.y = slopeForce;
     }

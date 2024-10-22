@@ -127,26 +127,6 @@ public class PlayerAbilities : MonoBehaviour
             OnStartDash();
             dashCooldown = 0;
         }
-
-        if (isDashing)
-        {
-            if (Time.time - dashStartTime <= 0.4f)
-            {
-                if (currentVel.Equals(Vector3.zero))
-                {
-                    //No input, dash forward
-                    characterController.Move(currentForward * dashPower * Time.deltaTime);
-                }
-                else
-                {
-                    characterController.Move(currentVel * dashPower * Time.deltaTime);
-                }
-            }
-            else
-            {
-                OnDashEnd();
-            }
-        }
     }
 
     void ResetDash()
@@ -165,7 +145,29 @@ public class PlayerAbilities : MonoBehaviour
         hasDashed = true;
         canUpdraft = true;
         PlayDashParticles();
+        StartCoroutine(Dash());
+    }
 
+    IEnumerator Dash()
+    {
+        float dashDuration = 0.4f;
+
+        while (Time.time - dashStartTime <= dashDuration)
+        {
+            if (currentVel.Equals(Vector3.zero))
+            {
+                //Dash forward when 0 input
+                characterController.Move(currentForward * dashPower * Time.deltaTime);
+            }
+            else
+            {
+                characterController.Move(currentVel * dashPower * Time.deltaTime);
+            }
+
+            yield return null;
+        }
+
+        OnDashEnd();
     }
 
     void OnDashEnd()
