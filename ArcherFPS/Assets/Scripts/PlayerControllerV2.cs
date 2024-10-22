@@ -425,14 +425,15 @@ public class PlayerControllerV2 : MonoBehaviour
         if (Mathf.Abs(inputVector.z) < 0.001 || Mathf.Abs(wishspeed) < 0.001)
             return;
 
-        // Only use horizontal velocity
+        //Only use horizontal velocity
         yVel = playerVelocity.y;
         playerVelocity.y = 0;
         speed = playerVelocity.magnitude;
         playerVelocity.Normalize();
 
+        //all of this I found online lol
         dot = Vector3.Dot(playerVelocity, wishdir);
-        k = 32; //idk I found this online lol
+        k = 32;
         k *= airControl * dot * dot * Time.deltaTime;
 
         // Change direction while slowing down

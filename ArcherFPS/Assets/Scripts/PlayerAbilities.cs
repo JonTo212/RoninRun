@@ -16,9 +16,6 @@ public class PlayerAbilities : MonoBehaviour
     //Dashing variables
     public bool isDashing;
     public bool dashCooldownActive;
-    float dashStartTime;
-    Vector3 currentForward;
-    Vector3 currentVel;
     public float dashPower = 30f;
     public float dashDelay = 2;
     public float dashCooldown = 0;
@@ -27,7 +24,6 @@ public class PlayerAbilities : MonoBehaviour
     //Updraft variables
     public bool canUpdraft;
     public bool isUpdrafting;
-    float updraftStartTime = 0f;
     public float updraftHeight = 15f;
     public bool updraftInput;
 
@@ -39,7 +35,6 @@ public class PlayerAbilities : MonoBehaviour
     float wallDistance = 1f;
     public float minimumJumpHeight = 2f;
     public Vector2 wallJumpForce;
-    Vector3 wallRunJumpDirection;
     Vector3 jumpAccel;
     Vector3 wallStick;
     public bool canWallBounce;
@@ -138,9 +133,6 @@ public class PlayerAbilities : MonoBehaviour
     {
         playerController.playerVelocity.z = 0;
         isDashing = true;
-        dashStartTime = Time.time;
-        currentForward = transform.forward;
-        currentVel = playerController.wishdir;
         dashCooldownActive = false;
         hasDashed = true;
         canUpdraft = true;
@@ -151,18 +143,21 @@ public class PlayerAbilities : MonoBehaviour
     IEnumerator Dash()
     {
         float dashDuration = 0.4f;
+        float elapsedTime = 0f;
 
-        while (Time.time - dashStartTime <= dashDuration)
+        while (elapsedTime <= dashDuration)
         {
-            if (currentVel.Equals(Vector3.zero))
+            if (playerController.wishdir == Vector3.zero)
             {
                 //Dash forward when 0 input
-                characterController.Move(currentForward * dashPower * Time.deltaTime);
+                characterController.Move(transform.forward * dashPower * Time.deltaTime);
             }
             else
             {
-                characterController.Move(currentVel * dashPower * Time.deltaTime);
+                characterController.Move(playerController.wishdir * dashPower * Time.deltaTime);
             }
+
+            elapsedTime += Time.deltaTime;
 
             yield return null;
         }
@@ -173,7 +168,6 @@ public class PlayerAbilities : MonoBehaviour
     void OnDashEnd()
     {
         isDashing = false;
-        dashStartTime = 0;
         dashCooldownActive = true;
     }
 
@@ -220,31 +214,29 @@ public class PlayerAbilities : MonoBehaviour
         {
             OnUpdraftStart();
         }
-
-        if (isUpdrafting)
-        {
-            if (Time.time - updraftStartTime < 0.4f)
-            {
-                Updraft();
-            }
-            else
-            {
-                OnUpdraftEnd();
-            }
-        }
     }
 
-    void Updraft()
+    IEnumerator Updraft()
     {
-        playerController.playerVelocity.y = updraftHeight;
+        float updraftDuration = 0.4f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime <= updraftDuration)
+        {
+            playerController.playerVelocity.y = updraftHeight;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        OnUpdraftEnd();
     }
 
     void OnUpdraftStart()
     {
         isUpdrafting = true;
-        updraftStartTime = Time.time;
         updraftParticles.Play();
         canUpdraft = false;
+        StartCoroutine(Updraft());
     }
 
     void OnUpdraftEnd()
