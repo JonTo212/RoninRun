@@ -145,15 +145,19 @@ public class PlayerAbilities : MonoBehaviour
         float dashDuration = 0.4f;
         float elapsedTime = 0f;
 
+        Vector3 forwardDir = transform.forward;
+
         while (elapsedTime <= dashDuration)
         {
             if (playerController.wishdir == Vector3.zero)
             {
                 //Dash forward when 0 input
-                characterController.Move(transform.forward * dashPower * Time.deltaTime);
+                //playerController.playerVelocity = transform.forward * dashPower;
+                characterController.Move(forwardDir * dashPower * Time.deltaTime);
             }
             else
             {
+                //playerController.playerVelocity = playerController.wishdir * dashPower;
                 characterController.Move(playerController.wishdir * dashPower * Time.deltaTime);
             }
 

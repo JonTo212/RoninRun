@@ -302,13 +302,14 @@ MonoBehaviour:
   rb: {fileID: -2244408426735211293}
   wallRunMat: {fileID: 2100000, guid: 4c6e7f41b680a68448f8f6bfe58fd33c, type: 2}
   player: {fileID: 0}
+  hit: 0
   canGrapple: 0
   wallRunStar: 0
   teleportStar: 1
   grappleStar: 0
   spinRate: 10
   finalPos: {x: 0, y: 0, z: 0}
-  smokePuff: {fileID: 104829970813648393, guid: d3015b7eea383f64d8b81f965cc466e7, type: 3}
+  smokePuff: {fileID: 265766274217486953, guid: d3015b7eea383f64d8b81f965cc466e7, type: 3}
 --- !u!136 &-2146115025240708690
 CapsuleCollider:
   m_ObjectHideFlags: 0

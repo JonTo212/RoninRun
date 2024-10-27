@@ -26,6 +26,7 @@ public class ShurikenPickup : MonoBehaviour
         //detect number of each shuriken for text
         int wallRunCount = 0;
         int grappleCount = 0;
+        int slingshotCount = 0;
         int platformCount = 0;
 
         // Loop through the colliders to find any Shuriken objects
@@ -45,6 +46,10 @@ public class ShurikenPickup : MonoBehaviour
                 {
                     grappleCount++;
                 }
+                else if (shuriken.slingshotStar)
+                {
+                    slingshotCount++;
+                }
                 else
                 {
                     platformCount++;
@@ -62,6 +67,8 @@ public class ShurikenPickup : MonoBehaviour
                 pickupMessage += $"{wallRunCount} Wall-Run Shuriken\n";
             if (grappleCount > 0)
                 pickupMessage += $"{grappleCount} Grapple Shuriken\n";
+            if (slingshotCount > 0)
+                pickupMessage += $"{slingshotCount} Slingshot Shuriken\n";
             if (platformCount > 0)
                 pickupMessage += $"{platformCount} Platform Shuriken\n";
 

@@ -46,7 +46,6 @@ public class PlayerControllerV2 : MonoBehaviour
     public float rotX;
     public float rotY;
 
-    Vector3 moveDirectionNorm = Vector3.zero;
     public Vector3 playerVelocity = Vector3.zero;
     public float playerTopVelocity = 0.0f;
     public Vector3 xzVel;
@@ -152,7 +151,7 @@ public class PlayerControllerV2 : MonoBehaviour
 
         if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + groundRayDistance, ~shurikenLayer)) //ignore shurikens because of the box collider edges
         {
-            if (Mathf.Abs(slopeHit.normal.y) < 0.9f)
+            if (Mathf.Abs(slopeHit.normal.y) < 0.99f)
             {
                 slopeNormal = slopeHit.normal;
                 slopeAngle = Vector3.Angle(transform.up, slopeNormal);
@@ -286,7 +285,7 @@ public class PlayerControllerV2 : MonoBehaviour
             characterController.height = Mathf.Lerp(0.6f, playerHeight, Time.deltaTime);
 
             //Check if player can slide boost
-            if (xzVel.magnitude > 0.5 && !hasSlid && xzVel.magnitude < maxVelocity)
+            if (xzVel.magnitude > 1f && !hasSlid && xzVel.magnitude < maxVelocity)
             {
                 if (isGrounded && inputVector.z > 0)
                 {
@@ -314,7 +313,7 @@ public class PlayerControllerV2 : MonoBehaviour
         hasSlid = true;
         canSlideJump = true;
 
-        yield return new WaitForSeconds(boostDuration);
+        yield return new WaitForSeconds(boostDuration); //for animation
 
         slide = false;
     }
@@ -368,26 +367,23 @@ public class PlayerControllerV2 : MonoBehaviour
             wishdir = new Vector3(inputVector.x, 0, 0);
         }
 
-        //Set the direction of the desired direction vector to be the local direction of the player
-        wishdir = transform.TransformDirection(wishdir);
-
-        //Retain direction of direction vector but set magnitude to 1
-        wishdir.Normalize();
-        moveDirectionNorm = wishdir;
+        //Set the direction of the desired direction vector to be the local direction of the player and save the directional vector
+        wishdir = transform.TransformDirection(wishdir).normalized;
 
         //Save direction vector magnitude value, multiplying it by the movespeed for acceleration value
-        float wishspeed = wishdir.magnitude;
-        wishspeed *= moveSpeed;
-
-        //Accelerate if strafing in same direction, decelerate if different
+        float wishspeed = wishdir.magnitude * moveSpeed;
         float wishspeedOriginal = wishspeed;
+
+        //Adjust speed for sideways strafing
         float accel;
 
         //Change acceleration value if there is sideways input for sideways strafing
         if (inputVector.x != 0)
         {
             if (wishspeed > sideStrafeSpeed)
+            {
                 wishspeed = sideStrafeSpeed;
+            }
             accel = sideStrafeAcceleration;
         }
         else
@@ -405,7 +401,9 @@ public class PlayerControllerV2 : MonoBehaviour
         }
 
         if (airControl > 0)
+        {
             AirControl(wishdir, wishspeedOriginal);
+        }
 
     }
 
@@ -416,40 +414,30 @@ public class PlayerControllerV2 : MonoBehaviour
      */
     void AirControl(Vector3 wishdir, float wishspeed)
     {
-        float yVel;
-        float speed;
-        float dot;
-        float k;
-
         // Can't control movement if not moving forward or backward
         if (Mathf.Abs(inputVector.z) < 0.001 || Mathf.Abs(wishspeed) < 0.001)
             return;
 
-        //Only use horizontal velocity
-        yVel = playerVelocity.y;
+        float yVel = playerVelocity.y;
         playerVelocity.y = 0;
-        speed = playerVelocity.magnitude;
+        float speed = playerVelocity.magnitude; //only take the XZ velocity
         playerVelocity.Normalize();
 
-        //all of this I found online lol
-        dot = Vector3.Dot(playerVelocity, wishdir);
-        k = 32;
-        k *= airControl * dot * dot * Time.deltaTime;
+        float dot = Vector3.Dot(playerVelocity, wishdir);
+        float airControlCoefficient = 32f * airControl * dot * dot * Time.deltaTime;
 
-        // Change direction while slowing down
+        //this readjusts the player velocity directional vector based on the strafe
         if (dot > 0)
         {
-            playerVelocity.x = playerVelocity.x * speed + wishdir.x * k;
-            playerVelocity.y = playerVelocity.y * speed + wishdir.y * k;
-            playerVelocity.z = playerVelocity.z * speed + wishdir.z * k;
+            playerVelocity.x = playerVelocity.x * speed + wishdir.x * airControlCoefficient;
+            playerVelocity.z = playerVelocity.z * speed + wishdir.z * airControlCoefficient;
 
             playerVelocity.Normalize();
-            moveDirectionNorm = playerVelocity;
         }
 
         playerVelocity.x *= speed;
-        playerVelocity.y = yVel; // Reset y velocity
         playerVelocity.z *= speed;
+        playerVelocity.y = yVel; //reapply y velocity (unaffected by strafing)
     }
     #endregion
 
@@ -473,17 +461,11 @@ public class PlayerControllerV2 : MonoBehaviour
             ApplyFriction(0);
         }
 
-
-        //Save movement vector direction, but set magnitude to 1
-        wishdir.Normalize();
-        moveDirectionNorm = wishdir;
-
         //Required for orientation purposes
         wishdir = transform.TransformDirection(wishdir);
 
         //Get magnitude of input (-1, 0, or 1) and multiply it by the movespeed
-        float wishspeed = wishdir.magnitude;
-        wishspeed *= moveSpeed;
+        float wishspeed = wishdir.magnitude * moveSpeed;
 
         if (!crouched || OnSlope())
         {
@@ -505,11 +487,9 @@ public class PlayerControllerV2 : MonoBehaviour
     {
         Vector3 horizontalVel = new Vector3(playerVelocity.x, 0, playerVelocity.z); //Get player's horizontal velocity
         float speed = horizontalVel.magnitude; //Player velocity magnitude
-        float newSpeed; //speed - drop
         float control = speed < runDeacceleration ? runDeacceleration : speed; //If velocity > deceleration, then friction is higher, otherwise this value = deceleration
         float drop = control * friction * Time.deltaTime * frictionRate; // Deceleration * friction * Time required to reach 0 (friction and decel compound)
-
-        newSpeed = speed - drop;
+        float newSpeed = speed - drop; //speed - drop
 
         if (newSpeed < 0)
         {

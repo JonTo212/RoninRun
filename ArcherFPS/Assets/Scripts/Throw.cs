@@ -37,6 +37,7 @@ public class Throw : MonoBehaviour
     public int selectionIndex;
     public Vector3 finalPos;
     public bool noThrow;
+    float originalGrav;
 
     void Start()
     {
@@ -51,6 +52,7 @@ public class Throw : MonoBehaviour
         indicator.transform.GetChild(selectionIndex).gameObject.SetActive(true);
         excludedLayers = playerMask | ignoreRaycastMask | thrownObjectMask;
         excludedLayers = ~excludedLayers;
+        originalGrav = playerController.gravity;
     }
 
     void Update()
@@ -64,6 +66,7 @@ public class Throw : MonoBehaviour
             cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, 60f, Time.deltaTime * zoomSpeed);
             throwPower = (startingFOV - cam.fieldOfView) * 2f;
             AimIndicator(throwPower);
+            playerController.gravity = originalGrav / 2;
         }
         else if (fire)
         {
@@ -78,6 +81,7 @@ public class Throw : MonoBehaviour
                 noThrow = true;
                 print("out of this type of shuriken");
             }
+            playerController.gravity = originalGrav;
         }
         else
         {
@@ -96,18 +100,21 @@ public class Throw : MonoBehaviour
         else if(Input.GetMouseButtonUp(1)) //for animator
         {
             noThrow = false;
+            playerController.gravity = originalGrav;
         }
 
         if (Input.GetMouseButtonUp(0) && isAiming)
         {
             isAiming = false;
             fire = true;
+            playerController.gravity = originalGrav;
         }
         else if(Input.GetMouseButtonDown(1) && isAiming) //for animator
         {
             isAiming = false;
             fire = false;
             noThrow = true;
+            playerController.gravity = originalGrav;
         }
     }
 
@@ -137,26 +144,26 @@ public class Throw : MonoBehaviour
         float simulationTimeStep = 0.01f; //Simulation increment, make larger for less accurate increments and smaller for more accurate increments
         float maxSimulationDistance = 200f; //Distance in units that the arc will simulate to
 
-        // Simulate trajectory
+        //simulate trajectory
         List<Vector3> trajectoryPoints = new List<Vector3>();
         Vector3 currentPosition = lineStartPos.position;
-        Quaternion currentRotation = Quaternion.Euler(90, 0, 45); // Initial rotation
+        Quaternion currentRotation = Quaternion.Euler(90, 0, 45); //initial rotation
 
         for (int i = 0; i < maxSimulationDistance; i++)
         {
             trajectoryPoints.Add(currentPosition);
 
-            // Apply physics to calculate next position
+            //apply physics to calculate next position
             currentPosition += velocity * simulationTimeStep;
-            velocity += Physics.gravity * simulationTimeStep; // Adjust for gravity
-            currentRotation *= Quaternion.Euler(predictedAngularVelocity * simulationTimeStep); // Simulate rotation
+            velocity += Physics.gravity * simulationTimeStep; //adjust for gravity
+            currentRotation *= Quaternion.Euler(predictedAngularVelocity * simulationTimeStep); //Simulate rotation
 
-            // Check for collision with a box collider
-            if (Physics.CheckBox(currentPosition, new Vector3(0.45f, 0.45f, 0.075f), currentRotation, excludedLayers)) //added extra size to detection checkbox for more accuracy
+            //check for collision with a box collider
+            if (Physics.CheckBox(currentPosition, new Vector3(0.3f, 0.3f, 0.05f), currentRotation, excludedLayers)) //simulated box collider
             {
-                trajectoryPoints.Add(currentPosition); //idk if I should keep this, it sometimes adds an extra point which makes it inaccurate
+                trajectoryPoints.Add(currentPosition);
                 finalPos = currentPosition;
-                break; // Stop simulating on collision
+                break; //stop simulating on collision
             }
             else
             {
@@ -164,11 +171,11 @@ public class Throw : MonoBehaviour
             }
         }
 
-        // Apply the calculated trajectory points to the LineRenderer
+        //apply the calculated trajectory points to the LineRenderer
         lineRenderer.positionCount = trajectoryPoints.Count;
         lineRenderer.SetPositions(trajectoryPoints.ToArray());
 
-        // Show/hide indicator
+        //show/hide indicator
         if (trajectoryPoints.Count > 1)
         {
             indicator.SetActive(true);

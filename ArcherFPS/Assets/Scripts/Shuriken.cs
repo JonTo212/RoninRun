@@ -10,6 +10,7 @@ public class Shuriken : MonoBehaviour
     public GameObject player;
     public bool hit;
     public bool canGrapple;
+    public bool canSlingshot;
     BoxCollider boxCol;
     int originalLayer;
     Material originalMat;
@@ -17,6 +18,7 @@ public class Shuriken : MonoBehaviour
     public bool wallRunStar;
     public bool teleportStar;
     public bool grappleStar;
+    public bool slingshotStar;
     float additionalSpin;
     [SerializeField] float spinRate;
     public Vector3 finalPos;
@@ -51,13 +53,12 @@ public class Shuriken : MonoBehaviour
         Quaternion initialRotation = Quaternion.Euler(90, 0, 45);
         Quaternion targetRotation = Quaternion.LookRotation(fallDirection, Vector3.up) * initialRotation;
 
-        if (!grappleStar)
+        if (!grappleStar && !slingshotStar)
         {
             Quaternion additionalRot = Quaternion.Euler(0, 0, additionalSpin);
             transform.rotation = targetRotation * additionalRot;
             additionalSpin += spinRate;
         }
-
         else
         {
             transform.rotation = targetRotation;
@@ -96,6 +97,11 @@ public class Shuriken : MonoBehaviour
         else if(grappleStar)
         {
             canGrapple = true;
+            boxCol.enabled = false;
+        }
+        else if(slingshotStar)
+        {
+            canSlingshot = true;
             boxCol.enabled = false;
         }
         else if (wallRunStar)
@@ -144,4 +150,51 @@ public class Shuriken : MonoBehaviour
         player.GetComponent<CharacterController>().enabled = true;
         Destroy(gameObject);
     }
+
+    /*
+    void TeleportStar()
+    {
+        if (!isBlinking)
+        {
+            StartCoroutine(BlinkPlayer());
+        }
+    }
+
+    IEnumerator BlinkPlayer()
+    {
+        smokePuff.Play();
+
+        // Disable the CharacterController to prevent movement inputs during the blink
+        CharacterController controller = player.GetComponent<CharacterController>();
+        controller.enabled = false;
+
+        Vector3 startPosition = player.transform.position;
+        Vector3 targetPosition = transform.position;
+
+        float distance = Vector3.Distance(startPosition, targetPosition);
+        float travelTime = distance / blinkSpeed; // Calculate how long it should take based on speed
+
+        float elapsedTime = 0f;
+        isBlinking = true;
+
+        // Move the player smoothly to the target position
+        while (elapsedTime < travelTime)
+        {
+            // Calculate the new position based on time elapsed
+            player.transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / travelTime);
+
+            elapsedTime += Time.deltaTime;
+            yield return null; // Wait for the next frame
+        }
+
+        // Ensure the player ends up exactly at the target position
+        player.transform.position = targetPosition;
+
+        // Re-enable the CharacterController and destroy the blink object
+        controller.enabled = true;
+        Destroy(gameObject);
+
+        isBlinking = false;
+    }
+    */
 }

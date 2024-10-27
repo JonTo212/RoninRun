@@ -6,23 +6,25 @@ public class GrapplingHook : MonoBehaviour
     public float grapplingRange = 50f;
     public float hookSpeed = 30f;
     PlayerControllerV2 playerController;
-    bool isGrappling;
+    public bool isGrappling;
     Vector3 grapplePoint;
     LineRenderer lineRenderer;
     float originalGrav;
     [SerializeField] float releaseJumpForce;
     [SerializeField] Transform lineRendererStartPos;
+    Slingshot slingshot;
 
     private void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
         playerController = GetComponent<PlayerControllerV2>();
+        slingshot = GetComponent<Slingshot>();
         originalGrav = playerController.gravity;
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1) && !isGrappling && !playerController.isGrounded)
+        if (Input.GetMouseButtonDown(1) && !isGrappling && !playerController.isGrounded && !slingshot.isGrappling)
         {
             CheckForGrapple();
         }
@@ -40,7 +42,7 @@ public class GrapplingHook : MonoBehaviour
         {
             Swing();
         }
-        else
+        else if(isGrappling && Vector3.Distance(transform.position, grapplePoint) > grapplingRange)
         {
             StopGrapple();
         }
