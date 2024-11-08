@@ -133,10 +133,9 @@ public class Throw : MonoBehaviour
         }
 
         Vector3 velocity = (destination - starSpawnPoint.position).normalized * projectileSpeed;
-
-        // Predicted angular velocity (same as what will be applied to the object after instantiation)
         Vector3 predictedAngularVelocity = Vector3.zero;
-        if (selectionIndex != 3)
+
+        if (selectionIndex != 3 && selectionIndex != 4) //Grapple and slingshot shurikens do not have angular velocity because they fire forward
         {
             predictedAngularVelocity = starPrefab[selectionIndex].transform.forward * projectileSpeed;
         }
@@ -144,7 +143,7 @@ public class Throw : MonoBehaviour
         float simulationTimeStep = 0.01f; //Simulation increment, make larger for less accurate increments and smaller for more accurate increments
         float maxSimulationDistance = 200f; //Distance in units that the arc will simulate to
 
-        //simulate trajectory
+        //Simulate trajectory
         List<Vector3> trajectoryPoints = new List<Vector3>();
         Vector3 currentPosition = lineStartPos.position;
         Quaternion currentRotation = Quaternion.Euler(90, 0, 45); //initial rotation
@@ -153,17 +152,17 @@ public class Throw : MonoBehaviour
         {
             trajectoryPoints.Add(currentPosition);
 
-            //apply physics to calculate next position
+            //Apply physics to calculate next position
             currentPosition += velocity * simulationTimeStep;
             velocity += Physics.gravity * simulationTimeStep; //adjust for gravity
             currentRotation *= Quaternion.Euler(predictedAngularVelocity * simulationTimeStep); //Simulate rotation
 
-            //check for collision with a box collider
-            if (Physics.CheckBox(currentPosition, new Vector3(0.3f, 0.3f, 0.05f), currentRotation, excludedLayers)) //simulated box collider
+            //Check for collision with a simulated box collider
+            if (Physics.CheckBox(currentPosition, new Vector3(0.3f, 0.3f, 0.05f), currentRotation, excludedLayers))
             {
                 trajectoryPoints.Add(currentPosition);
                 finalPos = currentPosition;
-                break; //stop simulating on collision
+                break; //Stop simulating on collision, save final position to ensure consistent attachment point
             }
             else
             {

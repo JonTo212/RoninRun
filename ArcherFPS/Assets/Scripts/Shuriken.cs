@@ -72,21 +72,7 @@ public class Shuriken : MonoBehaviour
             return;
         }
 
-        hit = true;
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
-        rb.isKinematic = true;
-
-        //Rotate shuriken to be perpendicular to wall
-        ContactPoint contact = collision.contacts[0];
-        Vector3 collisionNormal = contact.normal;
-        Quaternion targetRotation = Quaternion.LookRotation(-collisionNormal);
-        transform.rotation = targetRotation * Quaternion.Euler(90f, 0f, 45f);
-
-        if (finalPos != Vector3.zero)
-        {
-            transform.position = finalPos;
-        }
+        AttachToWall(collision);
 
         if (teleportStar)
         {
@@ -125,6 +111,27 @@ public class Shuriken : MonoBehaviour
         collidedObj.GetComponent<Renderer>().material = originalMat;
         Destroy(gameObject);
     }*/
+
+    void AttachToWall(Collision collision)
+    {
+        hit = true;
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        rb.isKinematic = true;
+
+        //Rotate shuriken to be perpendicular to wall
+        ContactPoint contact = collision.contacts[0];
+        Vector3 collisionNormal = contact.normal;
+        Quaternion targetRotation = Quaternion.LookRotation(-collisionNormal);
+        transform.rotation = targetRotation * Quaternion.Euler(90f, 0f, 45f);
+
+
+        if (finalPos != Vector3.zero)
+        {
+            transform.position = finalPos;
+        }
+    }
+
 
     public void ResetWallRunObj()
     {
