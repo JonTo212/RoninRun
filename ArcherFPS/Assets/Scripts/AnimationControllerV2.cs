@@ -26,7 +26,7 @@ public class AnimationControllerV2 : MonoBehaviour
         anim.SetBool("wallLeft", playerAbilities.wallLeft);
         anim.SetBool("wallRight", playerAbilities.wallRight);
         anim.SetBool("isAiming", shurikenThrow.isAiming);
-        anim.SetBool("noThrow", shurikenThrow.noThrow);
+        anim.SetBool("stopThrow", shurikenThrow.stopThrow);
 
         //Detect if the player is pressing the jump key and hasn't landed yet
         if (Input.GetKey(KeyCode.Space) && !playerController.isGrounded)

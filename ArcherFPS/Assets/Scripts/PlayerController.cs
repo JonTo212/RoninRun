@@ -224,7 +224,7 @@ public class PlayerController : MonoBehaviour
         if (unlockMouse)
         {
             //Lock vertical mouse movement if 3rd person
-            if (camSwap.cam == 0)
+            if (camSwap.FirstPersonCamera.activeInHierarchy)
             {
                 rotX -= Input.GetAxisRaw("Mouse Y") * xMouseSensitivity * 0.02f;
 
@@ -234,7 +234,7 @@ public class PlayerController : MonoBehaviour
                 else if (rotX > 90)
                     rotX = 90;
             }
-            else if (camSwap.cam == 1)
+            else if (camSwap.ThirdPersonCamera.activeInHierarchy)
             {
                 rotX = 15;
             }

@@ -23,7 +23,6 @@ public class PlayerControllerV2 : MonoBehaviour
     float sideStrafeSpeed = 1.0f;          // Max speed to generate when side strafing
     public float jumpSpeed = 10.0f;                // The speed at which the character's up axis gains when hitting jump
 
-    public bool unlockMouse = true;
     public Vector3 inputVector = Vector3.zero;
 
     //Crouching/sliding
@@ -74,7 +73,7 @@ public class PlayerControllerV2 : MonoBehaviour
 
     void Start()
     {
-        // Hide the cursor
+        //Hide the cursor
         Cursor.visible = false;
 
         //Set camera
@@ -95,9 +94,6 @@ public class PlayerControllerV2 : MonoBehaviour
 
     void Update()
     {
-        //Set camera
-        playerView = Camera.main.gameObject.transform;
-
         CameraMovement();
         SetMovementDir();
 
@@ -212,37 +208,34 @@ public class PlayerControllerV2 : MonoBehaviour
     }
     void CameraMovement()
     {
-        if (unlockMouse)
+        rotX -= Input.GetAxisRaw("Mouse Y") * xMouseSensitivity * 0.02f;
+
+        //Lock vertical mouse movement if 3rd person
+        if (camSwap.FirstPersonCamera.activeInHierarchy)
         {
-            rotX -= Input.GetAxisRaw("Mouse Y") * xMouseSensitivity * 0.02f;
-
-            //Lock vertical mouse movement if 3rd person
-            if (camSwap.cam == 0)
-            {
-                // Clamp vertical rotation of camera
-                if (rotX < -90)
-                    rotX = -90;
-                else if (rotX > 90)
-                    rotX = 90;
-            }
-            else if (camSwap.cam == 1)
-            {
-                if (rotX < 0)
-                    rotX = 0;
-                else if (rotX > 30)
-                    rotX = 30;
-            }
-
-            //Get horizontal mouse movement
-            rotY += Input.GetAxisRaw("Mouse X") * yMouseSensitivity * 0.02f;
-
-            //Rotate player
-            this.transform.rotation = Quaternion.Euler(0, rotY, 0);
-
-            float cameraTilt = playerAbilities.currentTilt;
-            //Rotate camera
-            playerView.rotation = Quaternion.Euler(rotX, rotY, cameraTilt);
+            // Clamp vertical rotation of camera
+            if (rotX < -90)
+                rotX = -90;
+            else if (rotX > 90)
+                rotX = 90;
         }
+        else if (camSwap.ThirdPersonCamera.activeInHierarchy)
+        {
+            if (rotX < 0)
+                rotX = 0;
+            else if (rotX > 30)
+                rotX = 30;
+        }
+
+        //Get horizontal mouse movement
+        rotY += Input.GetAxisRaw("Mouse X") * yMouseSensitivity * 0.02f;
+
+        //Rotate player
+        this.transform.rotation = Quaternion.Euler(0, rotY, 0);
+
+        float cameraTilt = playerAbilities.currentTilt;
+        //Rotate camera
+        playerView.rotation = Quaternion.Euler(rotX, rotY, cameraTilt);
     }
     #endregion
 

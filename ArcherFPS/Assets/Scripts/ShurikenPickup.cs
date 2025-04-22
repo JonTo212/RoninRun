@@ -98,6 +98,10 @@ public class ShurikenPickup : MonoBehaviour
             {
                 starThrow.starCount[3]++;
             }
+            else if (shuriken.slingshotStar)
+            {
+                starThrow.starCount[4]++;
+            }
             else
             {
                 starThrow.starCount[0]++;

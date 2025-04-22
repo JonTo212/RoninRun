@@ -36,11 +36,13 @@ public class Throw : MonoBehaviour
     public int[] starCount;
     public int selectionIndex;
     public Vector3 finalPos;
-    public bool noThrow;
+    public bool stopThrow;
     float originalGrav;
+    public bool canThrow;
 
     void Start()
     {
+        canThrow = true;
         cam = Camera.main;
         startingFOV = cam.fieldOfView;
         Cursor.lockState = CursorLockMode.Locked;
@@ -57,37 +59,44 @@ public class Throw : MonoBehaviour
 
     void Update()
     {
-        GetAimInput();
-        ChooseShurikenType();
-        SetIndicatorObjectsActive();
+        if (canThrow)
+        {
+            GetAimInput();
+            ChooseShurikenType();
+            SetIndicatorObjectsActive();
 
-        if (isAiming)
-        {
-            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, 60f, Time.deltaTime * zoomSpeed);
-            throwPower = (startingFOV - cam.fieldOfView) * 2f;
-            AimIndicator(throwPower);
-            playerController.gravity = originalGrav / 2;
-        }
-        else if (fire)
-        {
-            if (starCount[selectionIndex] > 0)
+            if (isAiming)
             {
-                FireShuriken(throwPower);
+                cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, 60f, Time.deltaTime * zoomSpeed);
+                throwPower = (startingFOV - cam.fieldOfView) * 2f;
+                AimIndicator(throwPower);
+                playerController.gravity = originalGrav / 2;
+            }
+            else if (fire)
+            {
+                if (starCount[selectionIndex] > 0)
+                {
+                    FireShuriken(throwPower);
+                }
+                else
+                {
+                    fire = false;
+                    isAiming = false;
+                    stopThrow = true;
+                    print("out of this type of shuriken");
+                }
+                playerController.gravity = originalGrav;
             }
             else
             {
-                fire = false;
-                isAiming = false;
-                noThrow = true;
-                print("out of this type of shuriken");
+                cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, startingFOV, 0.1f);
+                indicator.SetActive(false);
+                lineRenderer.enabled = false;
             }
-            playerController.gravity = originalGrav;
         }
         else
         {
-            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, startingFOV, 0.1f);
-            indicator.SetActive(false);
-            lineRenderer.enabled = false;
+            ResetThrowingInput();
         }
     }
 
@@ -99,7 +108,7 @@ public class Throw : MonoBehaviour
         }
         else if(Input.GetMouseButtonUp(1)) //for animator
         {
-            noThrow = false;
+            stopThrow = false;
             playerController.gravity = originalGrav;
         }
 
@@ -113,7 +122,7 @@ public class Throw : MonoBehaviour
         {
             isAiming = false;
             fire = false;
-            noThrow = true;
+            stopThrow = true;
             playerController.gravity = originalGrav;
         }
     }
@@ -247,7 +256,7 @@ public class Throw : MonoBehaviour
 
     void ChooseShurikenType()
     {
-        // Check if any shuriken is available
+        //check if you have any shurikens of said type
         bool shurikenAvailable = false;
         for (int i = 0; i < starCount.Length; i++)
         {
@@ -258,11 +267,20 @@ public class Throw : MonoBehaviour
             }
         }
 
-        // If no shuriken is available, break
+        //break if no shurikens
         if (!shurikenAvailable)
         {
             print("out of shurikens");
             return;
+        }
+
+        for (int i = 0; i < starCount.Length; i++)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1 + i) && starCount[i] > 0)
+            {
+                selectionIndex = i;
+                break;
+            }
         }
 
         // Cycle through available shuriken types
@@ -274,5 +292,16 @@ public class Throw : MonoBehaviour
             }
             while (starCount[selectionIndex] == 0);
         }
+    }
+
+    void ResetThrowingInput()
+    {
+        isAiming = false;
+        fire = false;
+        stopThrow = true;
+        playerController.gravity = originalGrav;
+        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, startingFOV, 0.1f);
+        indicator.SetActive(false);
+        lineRenderer.enabled = false;
     }
 }
