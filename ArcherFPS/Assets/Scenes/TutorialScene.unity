@@ -228,6 +228,111 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4750871}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &8558122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8558126}
+  - component: {fileID: 8558125}
+  - component: {fileID: 8558124}
+  - component: {fileID: 8558123}
+  m_Layer: 0
+  m_Name: Cube
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &8558123
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8558122}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &8558124
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8558122}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &8558125
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8558122}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &8558126
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8558122}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.8, y: 2.6, z: 47.22}
+  m_LocalScale: {x: 8.1879, y: 1, z: 8.7221}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &36550909
 GameObject:
   m_ObjectHideFlags: 0
@@ -27883,32 +27988,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b21bfcfccb276034eb21541cad85c232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 9
+  maxVelocity: 15
+  runAcceleration: 10
+  airAcceleration: 2.5
+  airControl: 0.3
+  sideStrafeAcceleration: 50
+  sideStrafeSpeed: 1
+  inputVector: {x: 0, y: 0, z: 0}
+  wishdir: {x: 0, y: 0, z: 0}
+  slideForce: 0.5
+  slideJumpForce: 0.25
+  slideBoostDuration: 0
+  crouched: 0
+  slide: 0
+  timeToZero: 2
+  timeToMaxSpeed: 1.5
+  frictionValue: 0
+  apexHeight: 3
+  apexTime: 0.45
+  isGrounded: 0
+  gravity: 25
+  holdToBHop: 0
+  canWallRun: 0
   playerView: {fileID: 1754409049}
   xMouseSensitivity: 30
   yMouseSensitivity: 30
-  gravity: 25
-  friction: 7.5
-  moveSpeed: 9
-  maxVelocity: 15
-  runAcceleration: 7.5
-  jumpSpeed: 10
-  unlockMouse: 1
-  inputVector: {x: 0, y: 0, z: 0}
-  slideForce: 0.5
-  slideJumpForce: 0.25
-  boostDuration: 0.5
-  crouched: 0
-  slide: 0
-  wishdir: {x: 0, y: 0, z: 0}
-  canWallRun: 0
-  rotX: 0
-  rotY: 0
+  slopeSlide: 0
   playerVelocity: {x: 0, y: 0, z: 0}
   playerTopVelocity: 0
-  xzVel: {x: 0, y: 0, z: 0}
-  wishJump: 0
-  isGrounded: 0
-  slopeSlide: 0
+  clampedVel: {x: 0, y: 0, z: 0}
   camSwap: {fileID: 947756672}
   playerAbilities: {fileID: 947756668}
   shurikenLayer:
@@ -27930,7 +28039,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ThirdPersonCamera: {fileID: 632867013}
   FirstPersonCamera: {fileID: 1754409048}
-  cam: 0
   invisShadowMat: {fileID: 2100000, guid: 576de63327bef3a43963fe66a8456532, type: 2}
   originalMat: {fileID: 6451819849983214741, guid: ff11ed4c46868804aa117070d15cf2dc, type: 3}
   hatObj: {fileID: 7905833557835670720}
@@ -28041,7 +28149,8 @@ MonoBehaviour:
   starCount: 0a0000000a0000000a0000000a0000000a000000
   selectionIndex: 0
   finalPos: {x: 0, y: 0, z: 0}
-  noThrow: 0
+  stopThrow: 0
+  canThrow: 0
 --- !u!114 &947756677
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61208,7 +61317,7 @@ Transform:
   m_GameObject: {fileID: 2054677580}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 6.2604e-27, w: 1}
-  m_LocalPosition: {x: 0.100000024, y: -0.15000008, z: 1.5000001}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -82000,3 +82109,4 @@ SceneRoots:
   - {fileID: 962634241}
   - {fileID: 36550912}
   - {fileID: 7073423347075312365}
+  - {fileID: 8558126}

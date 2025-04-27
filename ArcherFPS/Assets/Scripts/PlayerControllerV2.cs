@@ -4,115 +4,110 @@ using UnityEngine;
 
 public class PlayerControllerV2 : MonoBehaviour
 {
-    public Transform playerView;     // Camera
+    [Header("Movement Variables")]
+    [SerializeField] private float moveSpeed = 10.0f;              //Ground move speed
+    [SerializeField] private float maxVelocity = 15.0f;
+    [SerializeField] private float runAcceleration = 7.5f;         //Ground accel
+    //[SerializeField] private float runDeceleration = 7.5f;         //Ground decel
+    [SerializeField] private float airAcceleration = 2.5f;         //Air accel
+    [SerializeField] [Range(0, 1)] private float airControl = 0.3f;              //Air control precision multipler (0-1)
+    [SerializeField] private float sideStrafeAcceleration = 50f;  // How fast acceleration occurs to get up to sideStrafeSpeed
+    [SerializeField] private float sideStrafeSpeed = 1.0f;          // Max speed to generate when side strafing
+    //[SerializeField] private float jumpSpeed = 10.0f;
+    [HideInInspector] public Vector3 inputVector = Vector3.zero; //used for dash, wishdir is local space
+    [HideInInspector] public Vector3 wishdir;
+
+    [Header("Crouching/Sliding Variables")]
+    [SerializeField] private float slideForce = 0.5f;
+    [SerializeField] private float slideJumpForce = 0.25f;
+    [SerializeField] private float slideBoostDuration;
+    private bool canSlideJump;
+    [HideInInspector] public bool crouched;
+    private bool hasSlid;
+    [HideInInspector] public bool slide;
+    private bool wasCrouchingLastFrame;
+
+    [Header("Gravity, Friction, JumpHeight")]
+    [SerializeField] private float timeToZero;
+    [SerializeField] private float timeToMaxSpeed;
+    [SerializeField] private float frictionValue;
+    [SerializeField] private float apexHeight;
+    [SerializeField] private float apexTime;
+    public float gravity;
+    public bool isGrounded;
+    private float playerHeight;
+    private bool wishJump = false;
+    private float jumpVel;
+    //public float gravity = 25f;
+    //[SerializeField] private float friction = 7.5f; //Default friction
+
+    [Header("Misc")]
+    public bool holdToBHop;
+    public bool canWallRun;
+    private float standHeight = 1.8f;
+    private float crouchHeight = 0.6f;
+    public Transform playerView; //Camera
     public float xMouseSensitivity = 30.0f;
     public float yMouseSensitivity = 30.0f;
-    //
-    /*Frame occuring factors*/
-    public float gravity = 25f;
-    public float friction = 7.5f; //Ground friction
-
-    /* Movement stuff */
-    public float moveSpeed = 10.0f;                // Ground move speed
-    public float maxVelocity = 15.0f;
-    public float runAcceleration = 7.5f;         // Ground accel
-    float runDeacceleration = 7.5f;       // Deacceleration that occurs when running on the ground
-    float airAcceleration = 2.5f;          // Air accel
-    float airControl = 0.3f;               // How precise air control is
-    float sideStrafeAcceleration = 50f;  // How fast acceleration occurs to get up to sideStrafeSpeed
-    float sideStrafeSpeed = 1.0f;          // Max speed to generate when side strafing
-    public float jumpSpeed = 10.0f;                // The speed at which the character's up axis gains when hitting jump
-
-    public Vector3 inputVector = Vector3.zero;
-
-    //Crouching/sliding
-    public float slideForce = 0.5f;
-    public float slideJumpForce = 0.25f;
-    public float boostDuration;
-    bool canSlideJump;
-    public bool crouched;
-    bool hasSlid;
-    public bool slide;
-    public Vector3 wishdir;
-    public bool canWallRun;
-
-    Vector3 udp;
-
-    CharacterController characterController;
-    CapsuleCollider capsule;
-
-    // Camera rotations
-    public float rotX;
-    public float rotY;
-
-    public Vector3 playerVelocity = Vector3.zero;
-    public float playerTopVelocity = 0.0f;
-    public Vector3 xzVel;
-
-    // Queue the next jump just before you hit the ground
-    public bool wishJump = false;
-    public bool isGrounded;
-    float playerHeight;
 
     //Slope variables
-    float groundRayDistance = 1f;
-    RaycastHit slopeHit;
-    float slopeForce;
-    Vector3 slopeNormal;
-    float slopeAngle;
-    public bool slopeSlide;
+    private float groundRayDistance = 1f;
+    private RaycastHit slopeHit;
+    private float slopeForce;
+    private Vector3 slopeNormal;
+    private float slopeAngle;
+    [HideInInspector] public bool slopeSlide;
 
-    RaycastHit roofHit;
+    //Camera rotations
+    private float rotX;
+    private float rotY;
 
-    [SerializeField] CameraSwap camSwap;
-    [SerializeField] PlayerAbilities playerAbilities;
-    [SerializeField] LayerMask shurikenLayer;
-
-    public float animXInput;
-    public float animZInput;
+    //UI, anim and components
+    private Vector3 uiMaxVel; //for UI top speed display
+    private CharacterController characterController;
+    private CapsuleCollider capsule;
+    [HideInInspector] public Vector3 playerVelocity = Vector3.zero;
+    [HideInInspector] public float playerTopVelocity = 0.0f; //for UI
+    [HideInInspector] public Vector3 clampedVel; //for UI
+    [SerializeField] private CameraSwap camSwap;
+    [SerializeField] private PlayerAbilities playerAbilities;
+    [SerializeField] private LayerMask shurikenLayer;
+    [HideInInspector] public float animXInput;
+    [HideInInspector] public float animZInput;
 
     void Start()
     {
+        gravity = 2 * apexHeight / Mathf.Pow(apexTime, 2);
+        jumpVel = 2 * apexHeight / apexTime;
+        frictionValue = maxVelocity / timeToZero;
+        runAcceleration = maxVelocity / timeToMaxSpeed;
+
         //Hide the cursor
         Cursor.visible = false;
 
         //Set camera
-        if (playerView == null)
+        if (playerView == null && Camera.main != null)
         {
-            Camera mainCamera = Camera.main;
-            if (mainCamera != null)
-                playerView = mainCamera.gameObject.transform;
+            playerView = Camera.main.transform;
         }
 
         //Set up static variables
         characterController = GetComponent<CharacterController>();
         capsule = GetComponent<CapsuleCollider>();
         camSwap = GetComponent<CameraSwap>();
-        slopeForce = 3f * -jumpSpeed;
+        slopeForce = -3f * jumpVel;
+        //slopeForce = -3f * jumpSpeed;
         canWallRun = true;
     }
 
     void Update()
     {
-        CameraMovement();
-        SetMovementDir();
+        HandleCameraMovement();
+        HandleMovementInput();
+        QueueJump();
 
         isGrounded = characterController.isGrounded;
         playerHeight = characterController.height;
-
-        //Movement
-        QueueJump();
-        if (isGrounded)
-        {
-            GroundMove();
-            Jump();
-        }
-        else if (!isGrounded)
-        {
-            AirMove();
-        }
-        Gravity();
-        Crouch();
 
         //Apply downward force to smooth slope movement
         if (OnSlope())
@@ -124,26 +119,37 @@ public class PlayerControllerV2 : MonoBehaviour
             slopeSlide = false;
         }
 
-        xzVel = Vector3.ClampMagnitude(new Vector3(playerVelocity.x, 0, playerVelocity.z), maxVelocity);
-        xzVel.y = playerVelocity.y;
+        //Movement
+        if (isGrounded)
+        {
+            GroundMove();
+            Jump();
+        }
+        else if (!isGrounded)
+        {
+            AirMove();
+            //hasSlid = false; //enable for repeated slide boosts
+        }
 
-        characterController.Move(xzVel * Time.deltaTime);
+        Gravity();
+        Crouch();
+
+        clampedVel = Vector3.ClampMagnitude(new Vector3(playerVelocity.x, 0, playerVelocity.z), maxVelocity);
+        clampedVel.y = playerVelocity.y;
+
+        characterController.Move(clampedVel * Time.deltaTime);
 
         /* Calculate top velocity */
-        udp = xzVel;
-        udp.y = 0.0f;
-        if (udp.magnitude > playerTopVelocity)
-            playerTopVelocity = udp.magnitude;
+        uiMaxVel = clampedVel;
+        uiMaxVel.y = 0.0f;
+        playerTopVelocity = Mathf.Max(playerTopVelocity, uiMaxVel.magnitude);
 
     }
 
     #region Detection 
     private bool OnSlope()
     {
-        if (!isGrounded)
-        {
-            return false;
-        }
+        if (!isGrounded) return false;
 
         if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + groundRayDistance, ~shurikenLayer)) //ignore shurikens because of the box collider edges
         {
@@ -159,83 +165,61 @@ public class PlayerControllerV2 : MonoBehaviour
 
     public bool CanStandUp()
     {
-        if (Physics.SphereCast(transform.position, 1f, transform.up, out roofHit, 1f))
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        Vector3 checkPosition = transform.position + Vector3.up * standHeight;
+
+        return !Physics.CheckSphere(checkPosition, 0.1f, ~shurikenLayer);
     }
     #endregion
 
     #region Input
     //Set movement direction based on player input
-    void SetMovementDir()
+    void HandleMovementInput()
     {
         inputVector.z = Input.GetAxisRaw("Vertical");
         inputVector.x = Input.GetAxisRaw("Horizontal");
         wishdir = new Vector3(inputVector.x, 0, inputVector.z);
 
-        // Smoothed input for animation
-        float animationSmoothSpeed = 3f;  // Adjust for desired animation smoothness
-
-        // Smooth out the input values for animations using Lerp
-        float smoothZInput = Mathf.Lerp(animZInput, inputVector.z, Time.deltaTime * animationSmoothSpeed);
-        float smoothXInput = Mathf.Lerp(animXInput, inputVector.x, Time.deltaTime * animationSmoothSpeed);
-
-        // Update previous input values for the next frame
-        animZInput = smoothZInput;
-        animXInput = smoothXInput;
+        //Smooth input for animation transitions, instead of -1/0/1 from GetAxisRaw
+        float animationSmoothSpeed = 3f;
+        animZInput = Mathf.Lerp(animZInput, inputVector.z, Time.deltaTime * animationSmoothSpeed);
+        animXInput = Mathf.Lerp(animXInput, inputVector.x, Time.deltaTime * animationSmoothSpeed);
     }
 
     //Queues jumps to allow for bhopping
     void QueueJump()
     {
-        if (Input.GetButtonDown("Jump") && !wishJump)
+        bool jumpInput = holdToBHop ? Input.GetButton("Jump") : Input.GetButtonDown("Jump");
+
+        if (jumpInput && !wishJump) //queue jump with jump input
         {
             wishJump = true;
-            slopeForce = jumpSpeed;
+            slopeForce = jumpVel;
             canWallRun = true;
         }
-        if (Input.GetButtonUp("Jump"))
+        if (Input.GetButtonUp("Jump")) //this block is needed because it kills the jump input, so players can't just spam jump midair and bhop 'easily'
         {
             wishJump = false;
-            slopeForce = 3f * -jumpSpeed;
+            slopeForce = 3f * -jumpVel;
             canWallRun = false;
         }
     }
-    void CameraMovement()
+    void HandleCameraMovement()
     {
         rotX -= Input.GetAxisRaw("Mouse Y") * xMouseSensitivity * 0.02f;
+        rotY += Input.GetAxisRaw("Mouse X") * yMouseSensitivity * 0.02f;
 
-        //Lock vertical mouse movement if 3rd person
+        //Lock vertical mouse movement if 3rd person, clamp it so you can't look past your feet and straight up
         if (camSwap.FirstPersonCamera.activeInHierarchy)
         {
-            // Clamp vertical rotation of camera
-            if (rotX < -90)
-                rotX = -90;
-            else if (rotX > 90)
-                rotX = 90;
+            rotX = Mathf.Clamp(rotX, -90f, 90f);
         }
         else if (camSwap.ThirdPersonCamera.activeInHierarchy)
         {
-            if (rotX < 0)
-                rotX = 0;
-            else if (rotX > 30)
-                rotX = 30;
+            rotX = Mathf.Clamp(rotX, 0f, 30f);
         }
 
-        //Get horizontal mouse movement
-        rotY += Input.GetAxisRaw("Mouse X") * yMouseSensitivity * 0.02f;
-
-        //Rotate player
-        this.transform.rotation = Quaternion.Euler(0, rotY, 0);
-
-        float cameraTilt = playerAbilities.currentTilt;
-        //Rotate camera
-        playerView.rotation = Quaternion.Euler(rotX, rotY, cameraTilt);
+        transform.rotation = Quaternion.Euler(0, rotY, 0);
+        playerView.rotation = Quaternion.Euler(rotX, rotY, playerAbilities.currentTilt); //currentTilt is wall-running tilt
     }
     #endregion
 
@@ -248,21 +232,39 @@ public class PlayerControllerV2 : MonoBehaviour
     {
         if (wishJump)
         {
-            playerVelocity.y = jumpSpeed;
+            playerVelocity.y = jumpVel;
+            //playerVelocity.y = jumpSpeed;
             if (canSlideJump && crouched)
             {
-                playerVelocity.x += playerVelocity.x * slideJumpForce;
-                playerVelocity.z += playerVelocity.z * slideJumpForce;
-                canSlideJump = false;
-                slide = false;
+                SlideJump();
             }
             wishJump = false;
+            slopeForce = 3f * -jumpVel;
+            //slopeForce = 3f * -jumpSpeed;
         }
+    }
+
+    void SlideJump()
+    {
+        playerVelocity.x += playerVelocity.x * slideJumpForce;
+        playerVelocity.z += playerVelocity.z * slideJumpForce;
+        canSlideJump = false;
+        slide = false;
     }
 
     void Gravity()
     {
-        playerVelocity.y -= gravity * Time.deltaTime;
+        if (!isGrounded)
+        {
+            playerVelocity.y -= gravity * Time.deltaTime;
+        }
+        else //don't apply grav when grounded, otherwise it builds up over time
+        {
+            if (playerVelocity.y < 0)
+            {
+                playerVelocity.y = 0;
+            }
+        }
     }
     #endregion
 
@@ -270,17 +272,25 @@ public class PlayerControllerV2 : MonoBehaviour
     void Crouch()
     {
         //Check for crouching input
-        crouched = Input.GetKey(KeyCode.LeftControl);
+        bool crouchInput = Input.GetKey(KeyCode.LeftControl);
+        bool crouchPressedThisFrame = crouchInput && !wasCrouchingLastFrame;
+        wasCrouchingLastFrame = crouchInput;
+
+        if (crouchInput) crouched = true;
+        else if (CanStandUp()) crouched = false;
 
         //If crouch input is detected, set collider height
         if (crouched)
         {
-            characterController.height = Mathf.Lerp(0.6f, playerHeight, Time.deltaTime);
+            characterController.height = Mathf.Lerp(crouchHeight, playerHeight, Time.deltaTime);
 
-            //Check if player can slide boost
-            if (xzVel.magnitude > 1f && !hasSlid && xzVel.magnitude < maxVelocity)
+            if (crouchPressedThisFrame)
             {
-                if (isGrounded && inputVector.z > 0)
+                Vector3 xzVel = new Vector3(playerVelocity.x, 0, playerVelocity.z);
+                bool hasProperSpeed = xzVel.magnitude >= moveSpeed - 0.5f && xzVel.magnitude < maxVelocity; //under max velocity & close to default run speed (i.e. not accelerating)
+                bool canSlide = hasProperSpeed && !hasSlid && isGrounded && inputVector.z > 0;
+
+                if (canSlide)
                 {
                     slide = true;
                     StartCoroutine(SlideBoost());
@@ -291,7 +301,7 @@ public class PlayerControllerV2 : MonoBehaviour
         //Reset collider height if there is no crouch input
         else if (CanStandUp() && !crouched)
         {
-            characterController.height = Mathf.Lerp(1.8f, playerHeight, Time.deltaTime);
+            characterController.height = Mathf.Lerp(standHeight, playerHeight, Time.deltaTime);
             hasSlid = false;
             slide = false;
         }
@@ -302,13 +312,13 @@ public class PlayerControllerV2 : MonoBehaviour
     //Movespeed boost if sliding
     IEnumerator SlideBoost()
     {
-        playerVelocity += xzVel * slideForce;
+        playerVelocity += clampedVel * slideForce;
         hasSlid = true;
         canSlideJump = true;
 
-        yield return new WaitForSeconds(boostDuration); //for animation
+        yield return new WaitForSeconds(slideBoostDuration); 
 
-        slide = false;
+        slide = false;//for animation
     }
 
     void HandleSlope()
@@ -321,31 +331,18 @@ public class PlayerControllerV2 : MonoBehaviour
 
             if (slopeNormal.z != 0)
             {
-                if (slopeNormal.z > 0)
-                {
-                    playerVelocity.z += slopeAccel;
-                }
-                else if (slopeNormal.z < 0)
-                {
-                    playerVelocity.z -= slopeAccel;
-                }
+                playerVelocity.z += slopeNormal.z > 0 ? slopeAccel : -slopeAccel; //if normal > 0, + accel otherwise - accel
             }
             if (slopeNormal.x != 0)
             {
-                if (slopeNormal.x > 0)
-                {
-                    playerVelocity.x += slopeAccel;
-                }
-                else if (slopeNormal.x < 0)
-                {
-                    playerVelocity.x -= slopeAccel;
-                }
+                playerVelocity.x += slopeNormal.x > 0 ? slopeAccel : -slopeAccel;
             }
         }
         else
         {
             slopeSlide = false;
         }
+
         playerVelocity.y = slopeForce;
     }
     #endregion
@@ -367,37 +364,26 @@ public class PlayerControllerV2 : MonoBehaviour
         float wishspeed = wishdir.magnitude * moveSpeed;
         float wishspeedOriginal = wishspeed;
 
-        //Adjust speed for sideways strafing
-        float accel;
+        //Default air acceleration
+        float accel = airAcceleration;
 
         //Change acceleration value if there is sideways input for sideways strafing
         if (inputVector.x != 0)
         {
-            if (wishspeed > sideStrafeSpeed)
-            {
+            if(wishspeed > sideStrafeSpeed)
                 wishspeed = sideStrafeSpeed;
-            }
             accel = sideStrafeAcceleration;
         }
-        else
-        {
-            accel = airAcceleration;
-        }
 
-        if (crouched && playerVelocity.magnitude < 0.5f)
-        {
-            Accelerate(wishdir, wishspeed / 3, runAcceleration);
-        }
-        else
-        {
-            Accelerate(wishdir, wishspeed, accel);
-        }
+        float modifiedWishspeed = crouched ? wishspeed / 3f : wishspeed; //if you're crouched, your desired speed and acceleration are cut in 1/3
+        float modifiedAccel = crouched ? accel / 3f : accel;
+
+        Accelerate(wishdir, modifiedWishspeed, modifiedAccel);
 
         if (airControl > 0)
         {
             AirControl(wishdir, wishspeedOriginal);
         }
-
     }
 
     /**
@@ -414,12 +400,24 @@ public class PlayerControllerV2 : MonoBehaviour
         float yVel = playerVelocity.y;
         playerVelocity.y = 0;
         float speed = playerVelocity.magnitude; //only take the XZ velocity
-        playerVelocity.Normalize();
+        playerVelocity.Normalize(); //change to unit vector to compare to wishdir, which is also normalized
+
+        /*
+         * Most important part - Dot product compares similarity in direction between desired direction (which is the input translated to local space, which changes based on camera rotation)
+         * and current velocity direction.
+         * 
+         * 32 is a scaling factor to make the value more significant, I just found it online lol
+         * 
+         * Dot is squared so it's only aligned to the forward direction -> e.g. Dot(45 degrees) = 0.707 * 0.707 = 0.5, therefore 45 degrees = 0.5 (half).
+         * Perfect forward = 1, 90 degrees = 0 
+         * This means that, without strafing, players' air control is lower (e.g. if you want to move 45 degrees from your current facing direction, you only get 50% of the acceleration)
+         */
 
         float dot = Vector3.Dot(playerVelocity, wishdir);
-        float airControlCoefficient = 32f * airControl * dot * dot * Time.deltaTime;
+        float airControlCoefficient = 32f * airControl * dot * Time.deltaTime;
 
-        //this readjusts the player velocity directional vector based on the strafe
+
+        //The 2nd normalize ensures that it's still a direction vector. You add the desired direction * air control factor, which changes direction of velocity
         if (dot > 0)
         {
             playerVelocity.x = playerVelocity.x * speed + wishdir.x * airControlCoefficient;
@@ -428,6 +426,7 @@ public class PlayerControllerV2 : MonoBehaviour
             playerVelocity.Normalize();
         }
 
+        //Reapply the previous speed with the newly adjusted direction
         playerVelocity.x *= speed;
         playerVelocity.z *= speed;
         playerVelocity.y = yVel; //reapply y velocity (unaffected by strafing)
@@ -440,37 +439,24 @@ public class PlayerControllerV2 : MonoBehaviour
      */
     void GroundMove()
     {
-        // Do not apply friction if the player is queueing up the next jump - Allows for bhopping
+        //No friction midair, full friction on ground, 25% friction crouched
+        float frictionRate = 0f;
+
         if (!wishJump && !crouched)
-        {
-            ApplyFriction(1.0f);
-        }
+            frictionRate = 1f;
         else if (crouched)
-        {
-            ApplyFriction(0.25f);
-        }
-        else
-        {
-            ApplyFriction(0);
-        }
+            frictionRate = 0.25f;
+
+        ApplyFriction(frictionRate);
 
         //Required for orientation purposes
-        wishdir = transform.TransformDirection(wishdir);
+        wishdir = transform.TransformDirection(wishdir).normalized;
 
         //Get magnitude of input (-1, 0, or 1) and multiply it by the movespeed
         float wishspeed = wishdir.magnitude * moveSpeed;
+        float speedFactor = (crouched && !OnSlope()) ? 0.5f : 1f; //if you're crouched and not on a slope, your speed gets cut in half
 
-        if (!crouched || OnSlope())
-        {
-            Accelerate(wishdir, wishspeed, runAcceleration);
-        }
-        else if (crouched && !OnSlope())
-        {
-            Accelerate(wishdir, wishspeed / 2, runAcceleration);
-        }
-
-        //Reset gravity velocity to smooth falling
-        playerVelocity.y = -gravity * Time.deltaTime;
+        Accelerate(wishdir, wishspeed * speedFactor, runAcceleration);
     }
 
     /**
@@ -478,9 +464,10 @@ public class PlayerControllerV2 : MonoBehaviour
      */
     public void ApplyFriction(float frictionRate)
     {
+        /*
         Vector3 horizontalVel = new Vector3(playerVelocity.x, 0, playerVelocity.z); //Get player's horizontal velocity
         float speed = horizontalVel.magnitude; //Player velocity magnitude
-        float control = speed < runDeacceleration ? runDeacceleration : speed; //If velocity > deceleration, then friction is higher, otherwise this value = deceleration
+        float control = speed < runDeceleration ? runDeceleration : speed; //If velocity > deceleration, then friction is higher, otherwise this value = deceleration
         float drop = control * friction * Time.deltaTime * frictionRate; // Deceleration * friction * Time required to reach 0 (friction and decel compound)
         float newSpeed = speed - drop; //speed - drop
 
@@ -496,6 +483,10 @@ public class PlayerControllerV2 : MonoBehaviour
 
         playerVelocity.x *= newSpeed;
         playerVelocity.z *= newSpeed;
+        */
+
+        playerVelocity.x -= frictionValue * frictionRate * playerVelocity.x * Time.deltaTime;
+        playerVelocity.z -= frictionValue * frictionRate * playerVelocity.z * Time.deltaTime;
     }
     #endregion
 

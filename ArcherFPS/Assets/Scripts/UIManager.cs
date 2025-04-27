@@ -88,7 +88,7 @@ public class UIManager : MonoBehaviour
         else if(playerControllerV2 != null)
         {
             //Velocity
-            var playerVel = playerControllerV2.xzVel;
+            var playerVel = playerControllerV2.clampedVel;
             playerVel.y = 0;
             speedText.text = "Velocity: " + (Mathf.Round(playerVel.magnitude * 100) / 100).ToString();
 
