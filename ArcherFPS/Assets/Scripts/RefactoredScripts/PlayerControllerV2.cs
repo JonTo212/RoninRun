@@ -70,7 +70,7 @@ public class PlayerControllerV2 : MonoBehaviour
     [HideInInspector] public float playerTopVelocity = 0.0f; //for UI
     [HideInInspector] public Vector3 clampedVel; //for UI
     [SerializeField] private CameraSwap camSwap;
-    [SerializeField] private PlayerAbilities playerAbilities;
+    [SerializeField] private WallRun wallRun;
     [SerializeField] private LayerMask shurikenLayer;
     [HideInInspector] public float animXInput;
     [HideInInspector] public float animZInput;
@@ -131,6 +131,7 @@ public class PlayerControllerV2 : MonoBehaviour
             //hasSlid = false; //enable for repeated slide boosts
         }
 
+        KillVelocityIfHitHead();
         Gravity();
         Crouch();
 
@@ -219,7 +220,7 @@ public class PlayerControllerV2 : MonoBehaviour
         }
 
         transform.rotation = Quaternion.Euler(0, rotY, 0);
-        playerView.rotation = Quaternion.Euler(rotX, rotY, playerAbilities.currentTilt); //currentTilt is wall-running tilt
+        playerView.rotation = Quaternion.Euler(rotX, rotY, wallRun.currentTilt); //currentTilt is wall-running tilt
     }
     #endregion
 
@@ -266,6 +267,15 @@ public class PlayerControllerV2 : MonoBehaviour
             }
         }
     }
+
+    void KillVelocityIfHitHead()
+    {
+        if ((characterController.collisionFlags & CollisionFlags.Above) != 0 && playerVelocity.y > 0f)
+        {
+            playerVelocity.y = 0f;
+        }
+    }
+
     #endregion
 
     #region Crouching/sliding

@@ -7,6 +7,8 @@ public class AnimationControllerV2 : MonoBehaviour
     [SerializeField] Animator anim;
     [SerializeField] PlayerControllerV2 playerController;
     [SerializeField] PlayerAbilities playerAbilities;
+    [SerializeField] SlowMotionDash dash;
+    [SerializeField] WallRun wallRun;
     [SerializeField] Throw shurikenThrow;
 
     void Update()
@@ -21,10 +23,10 @@ public class AnimationControllerV2 : MonoBehaviour
         anim.SetBool("isCrouching", playerController.crouched);
         anim.SetBool("isSliding", playerController.slide || playerController.slopeSlide);
         anim.SetBool("isUpdrafting", playerAbilities.isUpdrafting);
-        anim.SetBool("isDashing", playerAbilities.isDashing);
-        anim.SetBool("isWallRunning", playerAbilities.wallRunning);
-        anim.SetBool("wallLeft", playerAbilities.wallLeft);
-        anim.SetBool("wallRight", playerAbilities.wallRight);
+        anim.SetBool("isDashing", playerAbilities.isDashing || dash.isDashing);
+        anim.SetBool("isWallRunning", wallRun.wallRunning);
+        anim.SetBool("wallLeft", wallRun.wallLeft);
+        anim.SetBool("wallRight", wallRun.wallRight);
         anim.SetBool("isAiming", shurikenThrow.isAiming);
         anim.SetBool("stopThrow", shurikenThrow.stopThrow);
 
