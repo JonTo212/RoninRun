@@ -2,14 +2,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+[RequireComponent(typeof(ShurikenManager))]
 public class ShurikenPickup : MonoBehaviour
 {
-    [SerializeField] Throw starThrow;
+    /*
+     * 0 - Platform
+     * 1 - WallRun
+     * 2 - Teleport
+     * 3 - Grapple
+     * 4 - Slingshot
+     */
+
+    [SerializeField] ShurikenManager manager;
     [SerializeField] TMP_Text pickupText;
     [SerializeField] float pickupRadius = 5f;
     private void Start()
     {
         pickupText.gameObject.SetActive(false);
+        manager = GetComponent<ShurikenManager>();
     }
 
     private void Update()
@@ -21,7 +31,7 @@ public class ShurikenPickup : MonoBehaviour
     {
         //spherecast for shurikens within radius
         Collider[] colliders = Physics.OverlapSphere(transform.position, pickupRadius);
-        List<Shuriken> nearbyShurikens = new List<Shuriken>();
+        List<ShurikenBaseClass> nearbyShurikens = new List<ShurikenBaseClass>();
         
         //detect number of each shuriken for text
         int wallRunCount = 0;
@@ -32,25 +42,25 @@ public class ShurikenPickup : MonoBehaviour
         // Loop through the colliders to find any Shuriken objects
         foreach (Collider collider in colliders)
         {
-            Shuriken shuriken = collider.gameObject.GetComponent<Shuriken>();
+            ShurikenBaseClass shuriken = collider.gameObject.GetComponent<ShurikenBaseClass>();
             if (shuriken != null && collider is CapsuleCollider && shuriken.hit)
             {
                 nearbyShurikens.Add(shuriken);
 
                 // Count each type of shuriken
-                if (shuriken.wallRunStar)
+                if (shuriken is WallRunShuriken)
                 {
                     wallRunCount++;
                 }
-                else if (shuriken.grappleStar)
+                else if (shuriken is GrappleShuriken)
                 {
                     grappleCount++;
                 }
-                else if (shuriken.slingshotStar)
+                else if (shuriken is SlingshotShuriken)
                 {
                     slingshotCount++;
                 }
-                else
+                else if (shuriken is PlatformShuriken)
                 {
                     platformCount++;
                 }
@@ -85,26 +95,26 @@ public class ShurikenPickup : MonoBehaviour
         }
     }
 
-    private void PickupShurikens(List<Shuriken> shurikens)
+    private void PickupShurikens(List<ShurikenBaseClass> shurikens)
     {
-        foreach (Shuriken shuriken in shurikens)
+        foreach (ShurikenBaseClass shuriken in shurikens)
         {
-            if (shuriken.wallRunStar)
+            if (shuriken is PlatformShuriken)
             {
-                starThrow.starCount[1]++;
-                shuriken.ResetWallRunObj(); // Reset any special properties of the shuriken
+                manager.AddShuriken(0, 1);
             }
-            else if (shuriken.grappleStar)
+            else if (shuriken is WallRunShuriken wallRun)
             {
-                starThrow.starCount[3]++;
+                manager.AddShuriken(1, 1);
+                wallRun.ResetWallRunObject();
             }
-            else if (shuriken.slingshotStar)
+            else if (shuriken is GrappleShuriken)
             {
-                starThrow.starCount[4]++;
+                manager.AddShuriken(3, 1);
             }
-            else
+            else if(shuriken is SlingshotShuriken)
             {
-                starThrow.starCount[0]++;
+                manager.AddShuriken(4, 1);
             }
 
             // Destroy the picked-up shuriken

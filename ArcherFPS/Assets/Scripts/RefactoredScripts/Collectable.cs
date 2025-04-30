@@ -16,7 +16,7 @@ public class Collectable : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<Throw>().starCount[typeIndex] += value;
+            other.gameObject.GetComponent<ShurikenManager>().AddShuriken(typeIndex, value);
             Destroy(gameObject);
         }
     }

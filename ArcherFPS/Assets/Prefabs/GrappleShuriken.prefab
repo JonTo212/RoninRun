@@ -243,9 +243,9 @@ GameObject:
   - component: {fileID: 5246372888971771473}
   - component: {fileID: -2244408426735211293}
   - component: {fileID: -5439663654181060691}
-  - component: {fileID: -6379778384828028065}
   - component: {fileID: -3542230975851107249}
   - component: {fileID: 2311293750640806684}
+  - component: {fileID: 2408826434515757066}
   m_Layer: 8
   m_Name: GrappleShuriken
   m_TagString: Shuriken
@@ -318,29 +318,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6, y: 0.6, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-6379778384828028065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4865309214770636011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 059c5c1e59fcdf545996534b2d4ddbdf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: -2244408426735211293}
-  wallRunMat: {fileID: 2100000, guid: 4c6e7f41b680a68448f8f6bfe58fd33c, type: 2}
-  player: {fileID: 0}
-  canGrapple: 0
-  originalLayer: 0
-  originalMat: {fileID: 0}
-  collidedObj: {fileID: 0}
-  wallRunStar: 0
-  teleportStar: 0
-  grappleStar: 1
-  spinRate: 10
 --- !u!136 &-3542230975851107249
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -380,3 +357,18 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 1
+--- !u!114 &2408826434515757066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4865309214770636011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b50abd1bb8a52e646839032fc4b32626, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hit: 0
+  spinRate: 0
+  finalPos: {x: 0, y: 0, z: 0}

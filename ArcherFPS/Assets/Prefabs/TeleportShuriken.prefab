@@ -212,9 +212,9 @@ GameObject:
   - component: {fileID: 5246372888971771473}
   - component: {fileID: -2244408426735211293}
   - component: {fileID: -5439663654181060691}
-  - component: {fileID: -6379778384828028065}
   - component: {fileID: -2146115025240708690}
   - component: {fileID: 448902471393317560}
+  - component: {fileID: 1873055708527795796}
   m_Layer: 8
   m_Name: TeleportShuriken
   m_TagString: Shuriken
@@ -287,29 +287,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6, y: 0.6, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-6379778384828028065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4865309214770636011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 059c5c1e59fcdf545996534b2d4ddbdf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: -2244408426735211293}
-  wallRunMat: {fileID: 2100000, guid: 4c6e7f41b680a68448f8f6bfe58fd33c, type: 2}
-  player: {fileID: 0}
-  hit: 0
-  canGrapple: 0
-  wallRunStar: 0
-  teleportStar: 1
-  grappleStar: 0
-  spinRate: 10
-  finalPos: {x: 0, y: 0, z: 0}
-  smokePuff: {fileID: 265766274217486953, guid: d3015b7eea383f64d8b81f965cc466e7, type: 3}
 --- !u!136 &-2146115025240708690
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -349,6 +326,21 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 1
+--- !u!114 &1873055708527795796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4865309214770636011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5e9562671495c1458bbbf2fb6d0886d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hit: 0
+  spinRate: 10
+  finalPos: {x: 0, y: 0, z: 0}
 --- !u!1 &5088024539903419152
 GameObject:
   m_ObjectHideFlags: 0

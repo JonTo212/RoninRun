@@ -98,4 +98,13 @@ public class UIManager : MonoBehaviour
         }
     }
     #endregion
+
+    #region Ability icons
+
+    #endregion
+
+    #region Shuriken counts
+
+
+    #endregion
 }

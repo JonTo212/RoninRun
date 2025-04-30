@@ -5,7 +5,7 @@ public abstract class ShurikenBaseClass : MonoBehaviour
 {
     protected Rigidbody rb;
     protected BoxCollider boxCol;
-    protected bool hit;
+    public bool hit;
     [SerializeField] protected float spinRate;
     protected float additionalSpin;
     public Vector3 finalPos;

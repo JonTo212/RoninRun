@@ -2,8 +2,15 @@ using UnityEngine;
 
 public class TeleportShuriken : ShurikenBaseClass
 {
-    [SerializeField] private GameObject player;
-    [SerializeField] private ParticleSystem smokePuff;
+    private GameObject player;
+    private ParticleSystem smokePuff;
+
+    public void Initialize(GameObject playerRef, ParticleSystem puff)
+    {
+        player = playerRef;
+        smokePuff = puff;
+    }
+
     protected override void Update()
     {
         base.Update();

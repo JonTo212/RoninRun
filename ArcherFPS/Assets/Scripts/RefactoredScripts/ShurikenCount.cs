@@ -5,33 +5,29 @@ using UnityEngine.UI;
 public class ShurikenCount : MonoBehaviour
 {
     [SerializeField] Button fadeOut;
-    [SerializeField] Throw shurikenThrow;
+    [SerializeField] ShurikenManager manager;
     [SerializeField] TMP_Text shurikenCountText;
     [SerializeField] TMP_Text shurikenTypeText;
     [SerializeField] Image currentImage;
-    int[] starCounts;
+    int[] originalStarCounts;
     [SerializeField] Sprite[] shurikenImages;
     [SerializeField] string[] shurikenTypes;
 
     // Start is called before the first frame update
     void Start()
     {
-        starCounts = new int[shurikenThrow.starCount.Length];
-        for(int i = 0; i < starCounts.Length; i++)
-        {
-            starCounts[i] = shurikenThrow.starCount[i];
-        }
+        originalStarCounts = (int[])manager.shurikenCounts.Clone();
     }
 
     // Update is called once per frame
     void Update()
     {
-        shurikenCountText.text = $"{shurikenThrow.starCount[shurikenThrow.selectionIndex]} / {starCounts[shurikenThrow.selectionIndex]}";
-        shurikenTypeText.text = $"{ shurikenTypes[shurikenThrow.selectionIndex]} Shuriken";
-        currentImage.sprite = shurikenImages[shurikenThrow.selectionIndex];
+        shurikenCountText.text = $"{manager.shurikenCounts[manager.selectedIndex]} / {originalStarCounts[manager.selectedIndex]}";
+        shurikenTypeText.text = $"{ shurikenTypes[manager.selectedIndex]} Shuriken";
+        currentImage.sprite = shurikenImages[manager.selectedIndex];
         currentImage.SetNativeSize();
 
-        if (shurikenThrow.starCount[shurikenThrow.selectionIndex] <= 0)
+        if (manager.shurikenCounts[manager.selectedIndex] <= 0)
         {
             fadeOut.interactable = false;
         }

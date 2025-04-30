@@ -27820,10 +27820,11 @@ GameObject:
   - component: {fileID: 947756673}
   - component: {fileID: 947756672}
   - component: {fileID: 947756669}
-  - component: {fileID: 947756676}
+  - component: {fileID: 947756686}
   - component: {fileID: 947756677}
+  - component: {fileID: 947756676}
+  - component: {fileID: 947756684}
   - component: {fileID: 947756679}
-  - component: {fileID: 947756681}
   - component: {fileID: 947756682}
   - component: {fileID: 947756683}
   - component: {fileID: 947756668}
@@ -28002,12 +28003,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67e3edaccf5de914fba53b946c1fd970, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starPrefab:
-  - {fileID: -6379778384828028065, guid: 4a073176773c80743b8f4eaab13b8126, type: 3}
-  - {fileID: -6379778384828028065, guid: 7e6080dddae62d145aca194e6a3d0f58, type: 3}
-  - {fileID: -6379778384828028065, guid: 37556d5284fdc7d488123238c16c96bd, type: 3}
-  - {fileID: -6379778384828028065, guid: 9d56eafc309870c409c1bc37dc3bb1ab, type: 3}
-  - {fileID: -6379778384828028065, guid: 0212874e8e9516f48a208902181fca56, type: 3}
   starSpawnPoint: {fileID: 1420647361}
   zoomSpeed: 3
   playerController: {fileID: 947756669}
@@ -28025,10 +28020,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   smokePuff: {fileID: 3219814171448987613}
-  isAiming: 0
-  starCount: 0a0000000a0000000a0000000a0000000a000000
-  selectionIndex: 0
+  shurikenManager: {fileID: 947756686}
   finalPos: {x: 0, y: 0, z: 0}
+  isAiming: 0
   stopThrow: 0
   canThrow: 0
 --- !u!114 &947756677
@@ -28043,7 +28037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b255e95d166dff045ad2dd81bf9f8233, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starThrow: {fileID: 947756676}
+  manager: {fileID: 947756686}
   pickupText: {fileID: 242772851}
   pickupRadius: 2
 --- !u!120 &947756679
@@ -28150,25 +28144,6 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
---- !u!114 &947756681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 947756667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5265c0669d185a14dbe7c724396d03c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  grapplingRange: 25
-  swingHookSpeed: 25
-  slingshotHookSpeed: 4
-  releaseJumpForce: 5
-  aimAssistRadius: 10
-  playerCamera: {fileID: 1754409052}
-  lineRendererStartPos: {fileID: 2116284817}
 --- !u!114 &947756682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28217,6 +28192,45 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   autoRunForce: 5
+--- !u!114 &947756684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947756667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8679be1866cfa084782414915704a6d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grapplingRange: 25
+  swingHookSpeed: 25
+  slingshotHookSpeed: 4
+  releaseJumpForce: 5
+  aimAssistRadius: 10
+  playerCamera: {fileID: 1754409052}
+  lineRendererStartPos: {fileID: 2116284817}
+--- !u!114 &947756686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947756667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e04c49354974934fbcf55c2389d47c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shurikenPrefabs:
+  - {fileID: 8069571940197649557, guid: 4a073176773c80743b8f4eaab13b8126, type: 3}
+  - {fileID: 7233068992757720405, guid: 7e6080dddae62d145aca194e6a3d0f58, type: 3}
+  - {fileID: 1873055708527795796, guid: 37556d5284fdc7d488123238c16c96bd, type: 3}
+  - {fileID: 2408826434515757066, guid: 9d56eafc309870c409c1bc37dc3bb1ab, type: 3}
+  - {fileID: 6121293048436411428, guid: 0212874e8e9516f48a208902181fca56, type: 3}
+  shurikenCounts: 0a0000000a0000000a0000000a0000000a000000
+  selectedIndex: 0
 --- !u!1 &954995603
 GameObject:
   m_ObjectHideFlags: 0
@@ -81604,7 +81618,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeOut: {fileID: 7140064898369181380}
-  shurikenThrow: {fileID: 947756676}
+  manager: {fileID: 947756686}
   shurikenCountText: {fileID: 1901986716}
   shurikenTypeText: {fileID: 751935533}
   currentImage: {fileID: 6488582741494949086}
