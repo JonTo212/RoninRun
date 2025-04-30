@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -17,16 +18,32 @@ public class UIManager : MonoBehaviour
     //Speed components
     public TMP_Text speedText;
     public TMP_Text maxSpeedText;
-    public PlayerController playerController;
     public PlayerControllerV2 playerControllerV2;
+
+    //Abilities
+    [SerializeField] Image dashCooldownImage;
+    [SerializeField] Button updraftFadeOut;
+    [SerializeField] PlayerAbilities playerAbilities;
+
+    //Shurikens
+    [SerializeField] Button shurikenFadeOut;
+    [SerializeField] ShurikenManager manager;
+    [SerializeField] TMP_Text shurikenCountText;
+    [SerializeField] TMP_Text shurikenTypeText;
+    [SerializeField] Image currentImage;
+    int[] originalStarCounts;
+    [SerializeField] Sprite[] shurikenImages;
+    [SerializeField] string[] shurikenTypes;
 
     bool gameStart = true;
 
-    /*void Start()
+    void Start()
     {
-        Time.timeScale = 0;
-        gameStart = false;
-    }*/
+        /*Time.timeScale = 0;
+        gameStart = false;*/
+
+        originalStarCounts = (int[])manager.shurikenCounts.Clone();
+    }
 
     void Update()
     {
@@ -40,6 +57,10 @@ public class UIManager : MonoBehaviour
             RunTimer();
             FPSDisplay();
             SpeedDisplays();
+
+            DashCooldown();
+            UpdraftCooldown();
+            UpdateShurikenIcon();
         }
         if (Time.timeScale == 1)
         {
@@ -74,7 +95,7 @@ public class UIManager : MonoBehaviour
 
     void SpeedDisplays()
     {
-        if (playerController != null)
+        /*if (playerController != null)
         {
             //Velocity
             var playerVel = playerController.playerVelocity;
@@ -84,8 +105,8 @@ public class UIManager : MonoBehaviour
             //Max velocity
             var maxVel = playerController.playerTopVelocity;
             maxSpeedText.text = "Max Velocity: " + (Mathf.Round(maxVel * 100) / 100).ToString();
-        }
-        else if(playerControllerV2 != null)
+        }*/
+        if(playerControllerV2 != null)
         {
             //Velocity
             var playerVel = playerControllerV2.clampedVel;
@@ -101,10 +122,43 @@ public class UIManager : MonoBehaviour
 
     #region Ability icons
 
+    void DashCooldown()
+    {
+        dashCooldownImage.fillAmount = playerAbilities.dashCooldown / playerAbilities.dashDelay;
+    }
+
+    void UpdraftCooldown()
+    {
+        if (playerAbilities.canUpdraft)
+        {
+            updraftFadeOut.interactable = true;
+        }
+        else
+        {
+            updraftFadeOut.interactable = false;
+        }
+    }
+
     #endregion
 
     #region Shuriken counts
 
+    void UpdateShurikenIcon()
+    {
+        shurikenCountText.text = $"{manager.shurikenCounts[manager.selectedIndex]} / {originalStarCounts[manager.selectedIndex]}";
+        shurikenTypeText.text = $"{shurikenTypes[manager.selectedIndex]} Shuriken";
+        currentImage.sprite = shurikenImages[manager.selectedIndex];
+        currentImage.SetNativeSize();
+
+        if (manager.shurikenCounts[manager.selectedIndex] <= 0)
+        {
+            shurikenFadeOut.interactable = false;
+        }
+        else
+        {
+            shurikenFadeOut.interactable = true;
+        }
+    }
 
     #endregion
 }

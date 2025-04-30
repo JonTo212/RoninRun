@@ -12130,7 +12130,6 @@ GameObject:
   - component: {fileID: 268579385}
   - component: {fileID: 268579384}
   - component: {fileID: 268579383}
-  - component: {fileID: 268579382}
   m_Layer: 5
   m_Name: UpdraftIcon
   m_TagString: Untagged
@@ -12158,22 +12157,6 @@ RectTransform:
   m_AnchoredPosition: {x: 647.5, y: -442.8}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &268579382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 268579380}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 642e7744d9005124980e1dc9d76dea00, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  updraftCount: {fileID: 2110880729}
-  fadeOut: {fileID: 268579383}
-  abilityController: {fileID: 0}
-  playerAbilities: {fileID: 947756668}
 --- !u!114 &268579383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -45150,8 +45133,8 @@ GameObject:
   - component: {fileID: 1858296507}
   - component: {fileID: 1858296506}
   m_Layer: 0
-  m_Name: GameManager
-  m_TagString: GameManager
+  m_Name: UIManager
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45172,8 +45155,27 @@ MonoBehaviour:
   timerText: {fileID: 1631148650}
   speedText: {fileID: 1539035803}
   maxSpeedText: {fileID: 842789026}
-  playerController: {fileID: 0}
   playerControllerV2: {fileID: 947756669}
+  dashCooldownImage: {fileID: 4129273177952133356}
+  updraftFadeOut: {fileID: 268579383}
+  playerAbilities: {fileID: 947756668}
+  shurikenFadeOut: {fileID: 7140064898369181380}
+  manager: {fileID: 947756686}
+  shurikenCountText: {fileID: 1901986716}
+  shurikenTypeText: {fileID: 751935533}
+  currentImage: {fileID: 6488582741494949086}
+  shurikenImages:
+  - {fileID: 21300000, guid: da97b851b62742f4db3e69fb7438c9e5, type: 3}
+  - {fileID: 21300000, guid: 6b284462c180f3b4881152596ae2101b, type: 3}
+  - {fileID: 21300000, guid: ef5b13655084535498879eb7b339e7a3, type: 3}
+  - {fileID: 21300000, guid: 7042ac80e16ec504b84037ac9e2dcdbf, type: 3}
+  - {fileID: 21300000, guid: b01ced59dfa2aac4d985314c8352ab3b, type: 3}
+  shurikenTypes:
+  - Platform
+  - Wall-Run
+  - Teleport
+  - Grapple
+  - Slingshot
 --- !u!4 &1858296507
 Transform:
   m_ObjectHideFlags: 0
@@ -45183,7 +45185,7 @@ Transform:
   m_GameObject: {fileID: 1858296505}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 84.375885, y: 28.018803, z: -38.01972}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -69264,7 +69266,6 @@ GameObject:
   - component: {fileID: 7908756830344619668}
   - component: {fileID: 5615430007132550312}
   - component: {fileID: 23829173376914166}
-  - component: {fileID: 7927141744233177049}
   m_Layer: 5
   m_Name: DashIcon
   m_TagString: Untagged
@@ -80589,22 +80590,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1962445996311540760}
   m_CullTransparentMesh: 1
---- !u!114 &7927141744233177049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1962445996311540760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0cd9b3596c757447a5e875a0c6f8c9f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  imageCooldown: {fileID: 4129273177952133356}
-  fadeOut: {fileID: 23829173376914166}
-  abilityController: {fileID: 0}
-  playerAbilities: {fileID: 947756668}
 --- !u!33 &7963441818766668592
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -81597,7 +81582,6 @@ GameObject:
   - component: {fileID: 1045890492464194214}
   - component: {fileID: 3363116233009377434}
   - component: {fileID: 7140064898369181380}
-  - component: {fileID: 8682431624952066091}
   m_Layer: 5
   m_Name: ShurikenIcon
   m_TagString: Untagged
@@ -81605,35 +81589,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8682431624952066091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8682431624952066090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d22d08bc98c00b4f96734af8ceefb6e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fadeOut: {fileID: 7140064898369181380}
-  manager: {fileID: 947756686}
-  shurikenCountText: {fileID: 1901986716}
-  shurikenTypeText: {fileID: 751935533}
-  currentImage: {fileID: 6488582741494949086}
-  shurikenImages:
-  - {fileID: 21300000, guid: da97b851b62742f4db3e69fb7438c9e5, type: 3}
-  - {fileID: 21300000, guid: 6b284462c180f3b4881152596ae2101b, type: 3}
-  - {fileID: 21300000, guid: ef5b13655084535498879eb7b339e7a3, type: 3}
-  - {fileID: 21300000, guid: 7042ac80e16ec504b84037ac9e2dcdbf, type: 3}
-  - {fileID: 21300000, guid: b01ced59dfa2aac4d985314c8352ab3b, type: 3}
-  shurikenTypes:
-  - Platform
-  - Wall-Run
-  - Teleport
-  - Grapple
-  - Slingshot
 --- !u!4 &8696123534039686420
 Transform:
   m_ObjectHideFlags: 0
