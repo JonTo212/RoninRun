@@ -88,7 +88,11 @@ public class PlayerGrapple : MonoBehaviour
         if (target != null)
         {
             activeShuriken = target;
-            grapplePoint = target.transform.position;
+
+            grapplePoint = (target as GrappleShuriken)?.grapplePoint.position
+                    ?? (target as SlingshotShuriken)?.grapplePoint.position
+                    ?? target.transform.position;
+
             playerController.playerVelocity.y = 0;
             isGrappling = true;
         }

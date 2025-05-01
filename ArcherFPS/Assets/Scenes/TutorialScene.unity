@@ -27855,18 +27855,18 @@ MonoBehaviour:
   moveSpeed: 9
   maxVelocity: 15
   runAcceleration: 10
-  airAcceleration: 2.5
+  airAcceleration: 5
   airControl: 0.3
   sideStrafeAcceleration: 50
   sideStrafeSpeed: 1
   inputVector: {x: 0, y: 0, z: 0}
   wishdir: {x: 0, y: 0, z: 0}
-  slideForce: 0.5
+  slideForce: 0.25
   slideJumpForce: 0.25
-  slideBoostDuration: 0
+  slideBoostDuration: 0.25
   crouched: 0
   slide: 0
-  timeToZero: 2
+  timeToZero: 1.5
   timeToMaxSpeed: 1.5
   frictionValue: 0
   apexHeight: 3
@@ -28167,6 +28167,7 @@ MonoBehaviour:
   canWallBounce: 0
   wallLeft: 0
   wallRight: 0
+  wallBack: 0
   wallHit: 0
   wallRunning: 0
   camTilt: 15
@@ -28188,8 +28189,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grapplingRange: 25
-  swingHookSpeed: 25
-  slingshotHookSpeed: 4
+  swingHookSpeed: 30
+  slingshotHookSpeed: 5
   releaseJumpForce: 5
   aimAssistRadius: 10
   playerCamera: {fileID: 1754409052}
@@ -44826,7 +44827,6 @@ GameObject:
   - component: {fileID: 1842893276}
   - component: {fileID: 1842893275}
   - component: {fileID: 1842893274}
-  - component: {fileID: 1842893273}
   m_Layer: 0
   m_Name: target
   m_TagString: Untagged
@@ -44834,19 +44834,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1842893273
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1842893272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73f63073c42a67e489557ff91c415892, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  value: 2
 --- !u!65 &1842893274
 BoxCollider:
   m_ObjectHideFlags: 0

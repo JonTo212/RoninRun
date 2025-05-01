@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class GrappleShuriken : ShurikenBaseClass
 {
+    public Transform grapplePoint;
     public void ApplySwing(PlayerControllerV2 player, float swingSpeed, float gravity)
     {
         Vector3 dirToGrapple = transform.position - player.transform.position;

@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 1362394243930259734}
   - component: {fileID: 4482141849155321494}
   m_Layer: 8
-  m_Name: ShurikenPickup
+  m_Name: PlatformShurikenPickup
   m_TagString: Shuriken
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

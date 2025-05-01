@@ -14,15 +14,17 @@ public class WallRun : MonoBehaviour
 
     [HideInInspector] public bool wallLeft;
     [HideInInspector] public bool wallRight;
+    [HideInInspector] public bool wallBack;
     private RaycastHit leftWallHit;
     private RaycastHit rightWallHit;
+    private RaycastHit backWallHit;
     [HideInInspector] public bool wallHit;
     [HideInInspector] public bool wallRunning;
     private Vector3 wallNormal;
     private Vector3 wallForward;
 
     public float camTilt = 15f;
-    private float desiredTilt;
+    private float desiredTilt = 0;
     private float tiltSpeed = 25f;
     [HideInInspector] public float currentTilt;
     public LayerMask wallMask;
@@ -82,7 +84,9 @@ public class WallRun : MonoBehaviour
         wallLeft = Physics.Raycast(transform.position, -transform.right, out leftWallHit, wallDistance, wallMask);
         wallRight = Physics.Raycast(transform.position, transform.right, out rightWallHit, wallDistance, wallMask);
 
-        return wallHit = wallLeft || wallRight;
+        wallBack = Physics.Raycast(transform.position, -transform.forward, out backWallHit, wallDistance, wallMask);
+
+        return wallHit = wallLeft || wallRight || wallBack;
     }
 
     void HandleWallRun()
@@ -105,7 +109,11 @@ public class WallRun : MonoBehaviour
         }
 
         CalculateWallValues();
-        HandleWallAutoMovement();
+
+        if (!wallBack)
+        {
+            HandleWallAutoMovement();
+        }
 
         if (!hasWallBounced && Input.GetKeyDown(KeyCode.Space)) // change to GetKeyUp for space hold
         {
@@ -114,14 +122,23 @@ public class WallRun : MonoBehaviour
     }
     void CalculateWallValues()
     {
-        wallNormal = wallRight ? rightWallHit.normal : leftWallHit.normal;
+        if (wallBack)
+        {
+            wallNormal = backWallHit.normal;
+            desiredTilt = 0; 
+        }
+        else
+        {
+            wallNormal = wallRight ? rightWallHit.normal : leftWallHit.normal;
+            desiredTilt = wallLeft ? -camTilt : camTilt;
+        }
+
         wallForward = Vector3.Cross(wallNormal, transform.up);
     }
 
     void HandleWallAutoMovement()
     {
         //Tilt + auto-run
-        desiredTilt = wallLeft ? -camTilt : camTilt;
         float forwardDir = wallLeft ? 1 : -1; //if there's a wall on the left, apply force in +Z, if right, -Z
         playerController.playerVelocity += forwardDir * wallForward * autoRunForce * Time.deltaTime;
 

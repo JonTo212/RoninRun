@@ -20,6 +20,7 @@ public class PlayerAbilities : MonoBehaviour
     public float dashDelay = 2;
     [HideInInspector] public float dashCooldown = 0;
     [HideInInspector] public bool hasDashed;
+    private Vector3 dashDir;
 
     //Updraft variables
     [HideInInspector] public bool canUpdraft;
@@ -82,20 +83,21 @@ public class PlayerAbilities : MonoBehaviour
         float dashDuration = 0.4f;
         float elapsedTime = 0f;
 
-        Vector3 forwardDir = transform.forward;
+        dashDir = (playerController.wishdir == Vector3.zero ? transform.forward : playerController.wishdir).normalized;
+        playerController.playerVelocity = dashDir.normalized * dashPower;
 
         while (elapsedTime <= dashDuration)
         {
-            if (playerController.wishdir == Vector3.zero)
+            if (dashDir == Vector3.zero)
             {
                 //Dash forward when 0 input
                 //playerController.playerVelocity = transform.forward * dashPower;
-                characterController.Move(forwardDir * dashPower * Time.deltaTime);
+                characterController.Move(transform.forward * dashPower * Time.deltaTime);
             }
             else
             {
                 //playerController.playerVelocity = playerController.wishdir * dashPower;
-                characterController.Move(playerController.wishdir * dashPower * Time.deltaTime);
+                characterController.Move(dashDir * dashPower * Time.deltaTime);
             }
 
             elapsedTime += Time.deltaTime;
@@ -110,6 +112,10 @@ public class PlayerAbilities : MonoBehaviour
     {
         isDashing = false;
         dashCooldownActive = true;
+        if (dashDir != Vector3.zero)
+            playerController.playerVelocity = dashDir * dashPower;
+        else
+            playerController.playerVelocity = transform.forward * dashPower;
     }
 
     void PlayDashParticles()

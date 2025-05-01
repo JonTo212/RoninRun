@@ -57,6 +57,7 @@ public class PlayerControllerV2 : MonoBehaviour
     private Vector3 slopeNormal;
     private float slopeAngle;
     [HideInInspector] public bool slopeSlide;
+    private bool slideQueue;
 
     //Camera rotations
     private float rotX;
@@ -109,6 +110,8 @@ public class PlayerControllerV2 : MonoBehaviour
         isGrounded = characterController.isGrounded;
         playerHeight = characterController.height;
 
+        Gravity(); //Needs to be before slope handling
+
         //Apply downward force to smooth slope movement
         if (OnSlope())
         {
@@ -128,11 +131,10 @@ public class PlayerControllerV2 : MonoBehaviour
         else if (!isGrounded)
         {
             AirMove();
-            //hasSlid = false; //enable for repeated slide boosts
+            hasSlid = false; //enable for repeated slide boosts
         }
 
         KillVelocityIfHitHead();
-        Gravity();
         Crouch();
 
         clampedVel = Vector3.ClampMagnitude(new Vector3(playerVelocity.x, 0, playerVelocity.z), maxVelocity);
@@ -170,6 +172,14 @@ public class PlayerControllerV2 : MonoBehaviour
 
         return !Physics.CheckSphere(checkPosition, 0.1f, ~shurikenLayer);
     }
+
+    private bool ExtendedGroundCheck()
+    {
+        float checkDistance = 0.1f; // extend as needed
+        Vector3 origin = transform.position + Vector3.up * 0.1f; // small offset to avoid self-hit
+        return Physics.Raycast(origin, Vector3.down, out RaycastHit hit, checkDistance, shurikenLayer);
+    }
+
     #endregion
 
     #region Input
@@ -261,10 +271,7 @@ public class PlayerControllerV2 : MonoBehaviour
         }
         else //don't apply grav when grounded, otherwise it builds up over time
         {
-            if (playerVelocity.y < 0)
-            {
-                playerVelocity.y = 0;
-            }
+            playerVelocity.y = -gravity * Time.deltaTime;
         }
     }
 
@@ -296,12 +303,18 @@ public class PlayerControllerV2 : MonoBehaviour
 
             if (crouchPressedThisFrame)
             {
-                Vector3 xzVel = new Vector3(playerVelocity.x, 0, playerVelocity.z);
-                bool hasProperSpeed = xzVel.magnitude >= moveSpeed - 0.5f && xzVel.magnitude < maxVelocity; //under max velocity & close to default run speed (i.e. not accelerating)
-                bool canSlide = hasProperSpeed && !hasSlid && isGrounded && inputVector.z > 0;
+                slideQueue = true;
+            }
 
-                if (canSlide)
+            Vector3 xzVel = new Vector3(playerVelocity.x, 0, playerVelocity.z);
+            bool hasProperSpeed = xzVel.magnitude > 1f && xzVel.magnitude < maxVelocity; //under max velocity & close to default run speed (i.e. not accelerating)
+            bool canSlide = hasProperSpeed && !hasSlid && inputVector.z > 0;
+
+            if (canSlide)
+            {
+                if (isGrounded && slideQueue)
                 {
+                    print("working");
                     slide = true;
                     StartCoroutine(SlideBoost());
                 }
@@ -325,7 +338,7 @@ public class PlayerControllerV2 : MonoBehaviour
         playerVelocity += clampedVel * slideForce;
         hasSlid = true;
         canSlideJump = true;
-
+        slideQueue = false;
         yield return new WaitForSeconds(slideBoostDuration); 
 
         slide = false;//for animation
@@ -455,7 +468,7 @@ public class PlayerControllerV2 : MonoBehaviour
         if (!wishJump && !crouched)
             frictionRate = 1f;
         else if (crouched)
-            frictionRate = 0.25f;
+            frictionRate = 0.1f;
 
         ApplyFriction(frictionRate);
 
