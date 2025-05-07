@@ -400,13 +400,13 @@ public class PlayerControllerV2 : MonoBehaviour
 
         float modifiedWishspeed = crouched ? wishspeed / 3f : wishspeed; //if you're crouched, your desired speed and acceleration are cut in 1/3
         float modifiedAccel = crouched ? accel / 3f : accel;
-
-        Accelerate(wishdir, modifiedWishspeed, modifiedAccel);
-
+        
         if (airControl > 0)
         {
             AirControl(wishdir, wishspeedOriginal);
         }
+
+        Accelerate(wishdir, modifiedWishspeed, modifiedAccel);
     }
 
     /**
@@ -416,9 +416,10 @@ public class PlayerControllerV2 : MonoBehaviour
      */
     void AirControl(Vector3 wishdir, float wishspeed)
     {
-        // Can't control movement if not moving forward or backward
-        if (Mathf.Abs(inputVector.z) < 0.001 || Mathf.Abs(wishspeed) < 0.001)
+        if (wishspeed == 0 || Mathf.Abs(inputVector.z) == 0) 
+        {
             return;
+        }
 
         float yVel = playerVelocity.y;
         playerVelocity.y = 0;

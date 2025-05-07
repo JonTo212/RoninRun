@@ -9,7 +9,7 @@ public class PlatformShuriken : ShurikenBaseClass
         transform.localScale *= 2f;
         
         //offset it a bit because of the size change
-        float offsetAmount = GetComponentInChildren<Renderer>().bounds.extents.magnitude * 0.125f;
+        float offsetAmount = GetComponentInChildren<Renderer>().bounds.extents.magnitude * 0.175f;
         transform.position += offsetAmount * collision.contacts[0].normal;
 
         //additional rotation so it is a more effective platform

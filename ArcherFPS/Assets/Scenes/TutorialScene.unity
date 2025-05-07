@@ -27855,7 +27855,7 @@ MonoBehaviour:
   moveSpeed: 9
   maxVelocity: 15
   runAcceleration: 10
-  airAcceleration: 5
+  airAcceleration: 3
   airControl: 0.3
   sideStrafeAcceleration: 50
   sideStrafeSpeed: 1
@@ -28165,6 +28165,7 @@ MonoBehaviour:
   minimumJumpHeight: 2
   wallJumpForce: {x: 15, y: 10}
   canWallBounce: 0
+  backWallJumpMultiplier: 1.5
   wallLeft: 0
   wallRight: 0
   wallBack: 0

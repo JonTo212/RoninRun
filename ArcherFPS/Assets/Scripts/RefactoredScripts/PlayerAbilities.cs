@@ -112,6 +112,8 @@ public class PlayerAbilities : MonoBehaviour
     {
         isDashing = false;
         dashCooldownActive = true;
+
+        //maybe disable this for dashes to allow players to drop onto platforms
         if (dashDir != Vector3.zero)
             playerController.playerVelocity = dashDir * dashPower;
         else

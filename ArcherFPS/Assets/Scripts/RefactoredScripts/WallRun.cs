@@ -11,6 +11,7 @@ public class WallRun : MonoBehaviour
     public Vector2 wallJumpForce;
     [HideInInspector] public bool canWallBounce;
     private bool hasWallBounced;
+    [SerializeField] [Range(1,2)] private float backWallJumpMultiplier;
 
     [HideInInspector] public bool wallLeft;
     [HideInInspector] public bool wallRight;
@@ -151,13 +152,21 @@ public class WallRun : MonoBehaviour
 
     void WallJump()
     {
-        Vector3 wallJumpHorizontal = wallNormal * wallJumpForce.x; // Horizontal component based on wall normal
-        Vector3 wallJumpVertical = transform.up * wallJumpForce.y;
+        Vector2 force = wallJumpForce;
+        
+        if(wallBack)
+        {
+            force.x = wallJumpForce.x * backWallJumpMultiplier;
+            force.y = wallJumpForce.y * backWallJumpMultiplier;
+        }
+
+        Vector3 wallJumpHorizontal = wallNormal * force.x; //Horizontal component based on wall normal
+        Vector3 wallJumpVertical = transform.up * force.y;
 
         Vector3 jumpAccel = wallJumpHorizontal + wallJumpVertical;
         Vector3 wallParallelVelocity = Vector3.ProjectOnPlane(playerController.playerVelocity, wallNormal);
 
-        // Cancel out previous velocity if it's in the opposite direction of the jump
+        //Cancel out previous velocity if it's in the opposite direction of the jump
         CancelOpposingVelocity(ref playerController.playerVelocity, jumpAccel);
 
         playerController.playerVelocity = wallParallelVelocity + jumpAccel;
@@ -168,9 +177,9 @@ public class WallRun : MonoBehaviour
 
     void CancelOpposingVelocity(ref Vector3 velocity, Vector3 jumpAcceleration)
     {
-        if (Vector3.Dot(velocity, jumpAcceleration) < 0) // If velocity is in the opposite direction of jumpAcceleration
+        if (Vector3.Dot(velocity, jumpAcceleration) < 0) //If velocity is in the opposite direction of jumpAcceleration
         {
-            velocity = Vector3.ProjectOnPlane(velocity, jumpAcceleration.normalized); // Cancel perpendicular velocity
+            velocity = Vector3.ProjectOnPlane(velocity, jumpAcceleration.normalized); //Cancel perpendicular velocity
         }
     }
 }
