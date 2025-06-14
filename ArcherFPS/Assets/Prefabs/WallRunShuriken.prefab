@@ -289,7 +289,7 @@ MonoBehaviour:
   spinRate: 10
   finalPos: {x: 0, y: 0, z: 0}
   wallRunMaterial: {fileID: 2100000, guid: 4c6e7f41b680a68448f8f6bfe58fd33c, type: 2}
-  oneWallAtATime: 1
+  oneWallAtATime: 0
 --- !u!1 &5088024539903419152
 GameObject:
   m_ObjectHideFlags: 0

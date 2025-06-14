@@ -327,7 +327,7 @@ Transform:
   m_GameObject: {fileID: 8558122}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.8, y: 2.6, z: 47.22}
+  m_LocalPosition: {x: 2.8, y: 3.82, z: 47.22}
   m_LocalScale: {x: 8.1879, y: 1, z: 8.7221}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25649,6 +25649,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 665649343}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &682885867
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 682885868}
+  m_Layer: 6
+  m_Name: LedgeGrabDetectionR
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &682885868
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 682885867}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.4, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 947756675}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &694380506
 GameObject:
   m_ObjectHideFlags: 0
@@ -26825,6 +26856,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 796667272}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &802836982
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 802836983}
+  m_Layer: 6
+  m_Name: LedgeGrabDetectionL
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &802836983
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 802836982}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.4, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 947756675}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &806616239
 GameObject:
   m_ObjectHideFlags: 0
@@ -27811,6 +27873,7 @@ GameObject:
   - component: {fileID: 947756682}
   - component: {fileID: 947756683}
   - component: {fileID: 947756668}
+  - component: {fileID: 947756687}
   m_Layer: 6
   m_Name: Player (2)
   m_TagString: Player
@@ -27855,6 +27918,7 @@ MonoBehaviour:
   moveSpeed: 9
   maxVelocity: 15
   runAcceleration: 10
+  runDeceleration: 3
   airAcceleration: 3
   airControl: 0.3
   sideStrafeAcceleration: 50
@@ -27866,8 +27930,8 @@ MonoBehaviour:
   slideBoostDuration: 0.25
   crouched: 0
   slide: 0
-  timeToZero: 1.5
-  timeToMaxSpeed: 1.5
+  timeToZero: 2
+  timeToMaxSpeed: 2
   frictionValue: 0
   apexHeight: 3
   apexTime: 0.45
@@ -27965,13 +28029,15 @@ Transform:
   m_GameObject: {fileID: 947756667}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.9, y: 1.5, z: 44}
+  m_LocalPosition: {x: 2.9, y: 1.5, z: 38.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2229574330193789646}
   - {fileID: 1754409049}
   - {fileID: 632867017}
+  - {fileID: 802836983}
+  - {fileID: 682885868}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &947756676
@@ -28216,6 +28282,35 @@ MonoBehaviour:
   - {fileID: 6121293048436411428, guid: 0212874e8e9516f48a208902181fca56, type: 3}
   shurikenCounts: 0a0000000a0000000a0000000a0000000a000000
   selectedIndex: 0
+--- !u!114 &947756687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947756667}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e0656103c281f649baa1ea8f2e0ea16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ledgeHangTime: 1.5
+  ledgeJumpMultiplier: 15
+  vaultForwardBoost: 10
+  climbSpeed: 7.5
+  maxClimbTime: 0.75
+  wallClimbCheckRadius: 0.5
+  wallClimbCheckDistance: 0.6
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 0
+  grabCooldown: 0.2
+  leftHandCheck: {fileID: 802836983}
+  rightHandCheck: {fileID: 682885868}
+  handRayLength: 0.7
+  jumpBufferWindow: 0.15
+  predictiveRayLength: 1.2
+  ledgeDetectAngle: -15
 --- !u!1 &954995603
 GameObject:
   m_ObjectHideFlags: 0

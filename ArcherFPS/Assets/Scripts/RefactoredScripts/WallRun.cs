@@ -96,27 +96,30 @@ public class WallRun : MonoBehaviour
 
         playerController.inputVector.x = 0; //cancel sideways input so you don't unstick randomly
 
-        //cut effects of gravity in half
-        if (playerController.playerVelocity.y < 0)
+        if (playerController.canWallRun)
         {
-            float newGrav = playerController.playerVelocity.y / 2;
-            playerController.playerVelocity = new Vector3(playerController.playerVelocity.x, newGrav, playerController.playerVelocity.z);
+            //cut effects of gravity in half
+            if (playerController.playerVelocity.y < 0)
+            {
+                float newGrav = playerController.playerVelocity.y / 2;
+                playerController.playerVelocity = new Vector3(playerController.playerVelocity.x, newGrav, playerController.playerVelocity.z);
+            }
+
+            //apply friction if there's no movement input
+            if (playerController.wishdir == Vector3.zero)
+            {
+                playerController.ApplyFriction(0.1f);
+            }
+
+            CalculateWallValues();
+
+            if (!wallBack)
+            {
+                HandleWallAutoMovement();
+            }
         }
 
-        //apply friction if there's no movement input
-        if (playerController.wishdir == Vector3.zero)
-        {
-            playerController.ApplyFriction(0.1f);
-        }
-
-        CalculateWallValues();
-
-        if (!wallBack)
-        {
-            HandleWallAutoMovement();
-        }
-
-        if (!hasWallBounced && Input.GetKeyDown(KeyCode.Space)) // change to GetKeyUp for space hold
+        if (!hasWallBounced && Input.GetKeyUp(KeyCode.Space)) // change to GetKeyUp for space hold
         {
             WallJump();
         }

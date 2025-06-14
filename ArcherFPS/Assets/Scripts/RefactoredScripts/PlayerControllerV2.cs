@@ -8,9 +8,9 @@ public class PlayerControllerV2 : MonoBehaviour
     [SerializeField] private float moveSpeed = 10.0f;              //Ground move speed
     [SerializeField] private float maxVelocity = 15.0f;
     [SerializeField] private float runAcceleration = 7.5f;         //Ground accel
-    //[SerializeField] private float runDeceleration = 7.5f;         //Ground decel
+    [SerializeField] private float runDeceleration = 5f;         //Ground decel
     [SerializeField] private float airAcceleration = 2.5f;         //Air accel
-    [SerializeField] [Range(0, 1)] private float airControl = 0.3f;              //Air control precision multipler (0-1)
+    [SerializeField][Range(0, 1)] private float airControl = 0.3f;              //Air control precision multipler (0-1)
     [SerializeField] private float sideStrafeAcceleration = 50f;  // How fast acceleration occurs to get up to sideStrafeSpeed
     [SerializeField] private float sideStrafeSpeed = 1.0f;          // Max speed to generate when side strafing
     //[SerializeField] private float jumpSpeed = 10.0f;
@@ -314,7 +314,6 @@ public class PlayerControllerV2 : MonoBehaviour
             {
                 if (isGrounded && slideQueue)
                 {
-                    print("working");
                     slide = true;
                     StartCoroutine(SlideBoost());
                 }
@@ -339,7 +338,7 @@ public class PlayerControllerV2 : MonoBehaviour
         hasSlid = true;
         canSlideJump = true;
         slideQueue = false;
-        yield return new WaitForSeconds(slideBoostDuration); 
+        yield return new WaitForSeconds(slideBoostDuration);
 
         slide = false;//for animation
     }
@@ -393,14 +392,14 @@ public class PlayerControllerV2 : MonoBehaviour
         //Change acceleration value if there is sideways input for sideways strafing
         if (inputVector.x != 0)
         {
-            if(wishspeed > sideStrafeSpeed)
+            if (wishspeed > sideStrafeSpeed)
                 wishspeed = sideStrafeSpeed;
             accel = sideStrafeAcceleration;
         }
 
         float modifiedWishspeed = crouched ? wishspeed / 3f : wishspeed; //if you're crouched, your desired speed and acceleration are cut in 1/3
         float modifiedAccel = crouched ? accel / 3f : accel;
-        
+
         if (airControl > 0)
         {
             AirControl(wishdir, wishspeedOriginal);
@@ -416,7 +415,7 @@ public class PlayerControllerV2 : MonoBehaviour
      */
     void AirControl(Vector3 wishdir, float wishspeed)
     {
-        if (wishspeed == 0 || Mathf.Abs(inputVector.z) == 0) 
+        if (wishspeed == 0 || Mathf.Abs(inputVector.z) == 0)
         {
             return;
         }
@@ -463,8 +462,11 @@ public class PlayerControllerV2 : MonoBehaviour
      */
     void GroundMove()
     {
-        //No friction midair, full friction on ground, 25% friction crouched
+        //No friction midair, full friction on ground, 10% friction crouched
         float frictionRate = 0f;
+
+        Vector3 horizontalVel = new Vector3(playerVelocity.x, 0, playerVelocity.z); //Get player's horizontal velocity
+        float speed = horizontalVel.magnitude;
 
         if (!wishJump && !crouched)
             frictionRate = 1f;
@@ -488,11 +490,10 @@ public class PlayerControllerV2 : MonoBehaviour
      */
     public void ApplyFriction(float frictionRate)
     {
-        /*
         Vector3 horizontalVel = new Vector3(playerVelocity.x, 0, playerVelocity.z); //Get player's horizontal velocity
         float speed = horizontalVel.magnitude; //Player velocity magnitude
-        float control = speed < runDeceleration ? runDeceleration : speed; //If velocity > deceleration, then friction is higher, otherwise this value = deceleration
-        float drop = control * friction * Time.deltaTime * frictionRate; // Deceleration * friction * Time required to reach 0 (friction and decel compound)
+        float control = speed < moveSpeed ? runDeceleration : speed; //If velocity > deceleration, then friction is higher, otherwise this value = deceleration -> slow down quickly when over max run speed
+        float drop = control * frictionValue * Time.deltaTime * frictionRate; // Deceleration * friction * Time required to reach 0 (friction and decel compound)
         float newSpeed = speed - drop; //speed - drop
 
         if (newSpeed < 0)
@@ -507,10 +508,9 @@ public class PlayerControllerV2 : MonoBehaviour
 
         playerVelocity.x *= newSpeed;
         playerVelocity.z *= newSpeed;
-        */
 
-        playerVelocity.x -= frictionValue * frictionRate * playerVelocity.x * Time.deltaTime;
-        playerVelocity.z -= frictionValue * frictionRate * playerVelocity.z * Time.deltaTime;
+        //playerVelocity.x -= frictionValue * frictionRate * playerVelocity.x * Time.deltaTime;
+        //playerVelocity.z -= frictionValue * frictionRate * playerVelocity.z * Time.deltaTime;
     }
     #endregion
 
