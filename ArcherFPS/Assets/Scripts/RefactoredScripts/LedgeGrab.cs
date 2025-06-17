@@ -8,188 +8,134 @@ public class LedgeGrab : MonoBehaviour
     public float ledgeHangTime = 1.5f;
     public float ledgeJumpMultiplier = 2f;
     public float vaultForwardBoost = 5f;
-    public float climbSpeed = 2f;
-    public float maxClimbTime = 1.2f;
-    public float wallClimbCheckRadius = 0.5f;
-    public float wallClimbCheckDistance = 0.6f;
-    public LayerMask wallMask;
-
+    private bool canGrab;
+    private bool grabInput;
     private bool isGrabbingLedge;
     private bool ledgeJustGrabbed;
-    private bool isClimbingWall;
-    private bool wallClimbed;
-    private bool canGrab;
+    private Coroutine bufferCoroutine;
 
-    private float ledgeGrabTimer;
-    private float grabCooldownTimer = 0f;
-    private float jumpBufferedTime = -1f;
-    private float climbTimer = 0f;
+    private float ledgeHangTimer;
     private float originalGrav;
-
-    public float grabCooldown = 0.2f;
+    public float jumpBufferTime = 0.2f;
+    private float jumpBufferTimer = 0f;
+    private bool vaultBuffered = false;
+    private Vector3 handOffset;
 
     [SerializeField] private Transform leftHandCheck;
     [SerializeField] private Transform rightHandCheck;
-    [SerializeField] private float handRayLength = 1.0f;
-    [SerializeField] private float jumpBufferWindow = 0.2f;
-    [SerializeField] private float predictiveRayLength = 1.2f;
-    [SerializeField] private float ledgeDetectAngle = 35f;
+    [SerializeField] private float grabRange = 0.1f;
+    [SerializeField] private float vaultDetectRange = 0.6f;
+    [SerializeField] private float handCheckRadius = 0.3f;
 
     void Awake()
     {
         playerController = GetComponent<PlayerControllerV2>();
         originalGrav = playerController.gravity;
+        handOffset = (leftHandCheck.localPosition + rightHandCheck.localPosition) / 2f;
     }
 
     void Update()
     {
-        canGrab = Input.GetKey(KeyCode.Space);
+        GetInput();
 
-        if(playerController.isGrounded)
+        if(CheckForVault() && vaultBuffered)
         {
-            wallClimbed = false;
-            grabCooldownTimer = 0f;
-            ledgeJustGrabbed = false;
-            grabCooldownTimer = 0f;
+            LedgeJump();
         }
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        else if (CheckForLedge(grabRange, Vector3.down))
         {
-            jumpBufferedTime = Time.time;
-        }
-
-        if (ledgeJustGrabbed)
-        {
-            grabCooldownTimer += Time.deltaTime;
-            if (grabCooldownTimer >= grabCooldown)
+            if (!isGrabbingLedge)
             {
-                ledgeJustGrabbed = false;
-                grabCooldownTimer = 0f;
+                StartLedgeGrab();
             }
-            return;
-        }
-
-        if (!isGrabbingLedge && !isClimbingWall)
-        {
-            CheckForWallClimb();
-            CheckForLedge();
-        }
-        else if (isGrabbingLedge)
-        {
-            HandleLedgeHang();
-        }
-        else if (isClimbingWall)
-        {
-            HandleWallClimb();
+            else if (grabInput)
+            {
+                HandleLedgeHang();
+            }
+            else
+            {
+                Detach();
+            }
         }
     }
 
-    void CheckForWallClimb()
+    Vector3 ledgePoint;
+    RaycastHit leftHit, rightHit;
+
+    bool CheckForLedge(float range, Vector3 down)
     {
-        if (!Input.GetKey(KeyCode.Space)) return;
-        if (playerController.isGrounded) return;
+        RaycastHit leftTopHit, rightTopHit;
 
-        Vector3 origin = transform.position + Vector3.up * 1.0f;
+        bool leftValid = Physics.Raycast(leftHandCheck.position, down, out leftHit, range) && !Physics.SphereCast(leftHandCheck.position, handCheckRadius, Vector3.up, out leftTopHit);
+        bool rightValid = Physics.Raycast(rightHandCheck.position, down, out rightHit, range) && !Physics.SphereCast(rightHandCheck.position, handCheckRadius, Vector3.up, out rightTopHit);
 
-        if (Physics.SphereCast(origin, wallClimbCheckRadius, transform.forward, out RaycastHit hit, wallClimbCheckDistance) && !wallClimbed)
+        if (!leftValid || !rightValid) return false;
+
+        ledgePoint = ((leftHit.point - leftHandCheck.position + rightHit.point - rightHandCheck.position) / 2) + new Vector3(0, 0.2f, 0);
+
+        return true;
+    }
+
+    bool CheckForVault()
+    {
+        float forwardSpeed = Vector3.Dot(playerController.playerVelocity, transform.forward);
+        float blendAmount = Mathf.Clamp01(forwardSpeed / playerController.playerTopVelocity);
+        Vector3 angledDown = Vector3.Slerp(Vector3.down, (Vector3.down + transform.forward).normalized, blendAmount);
+
+        return CheckForLedge(vaultDetectRange, angledDown);
+    }
+
+    void GetInput()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
         {
-            StartWallClimb();
+            grabInput = true;
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            grabInput = false;
+            vaultBuffered = true;
+            if (bufferCoroutine != null)
+            {
+                StopCoroutine(bufferCoroutine);
+            }
+
+            bufferCoroutine = StartCoroutine(VaultBuffer());
         }
     }
 
-    void StartWallClimb()
+    private IEnumerator VaultBuffer()
     {
-        isClimbingWall = true;
-        climbTimer = 0f;
-        playerController.gravity = 0f;
-        playerController.playerVelocity = Vector3.zero;
-    }
-
-    void HandleWallClimb()
-    {
-        if (!Input.GetKey(KeyCode.Space))
-        {
-            DetachFromLedge();
-            return;
-        }
-
-        climbTimer += Time.deltaTime;
-        if (climbTimer >= maxClimbTime)
-        {
-            LedgeJump();
-            return;
-        }
-
-        Vector3 origin = transform.position + Vector3.up * 1.0f;
-        if (!Physics.SphereCast(origin, wallClimbCheckRadius, transform.forward, out RaycastHit hit, wallClimbCheckDistance))
-        {
-            LedgeJump();
-            return;
-        }
-
-        playerController.playerVelocity = new Vector3(playerController.playerVelocity.x, climbSpeed, playerController.playerVelocity.z);
-    }
-
-    void CheckForLedge()
-    {
-        RaycastHit leftHit, rightHit;
-        bool isBufferedJump = Time.time - jumpBufferedTime <= jumpBufferWindow;
-
-        Vector3 leftDir, rightDir;
-        float rayLength;
-
-        if (isBufferedJump)
-        {
-            Vector3 angledDir = Quaternion.AngleAxis(ledgeDetectAngle, transform.right) * -transform.up;
-            Vector3 predictiveDir = (angledDir + transform.forward * 0.3f).normalized;
-            leftDir = rightDir = predictiveDir;
-            rayLength = predictiveRayLength;
-        }
-        else
-        {
-            leftDir = rightDir = Vector3.down;
-            rayLength = handRayLength;
-        }
-
-        bool leftDetected = Physics.Raycast(leftHandCheck.position, leftDir, out leftHit, rayLength);
-        bool rightDetected = Physics.Raycast(rightHandCheck.position, rightDir, out rightHit, rayLength);
-
-        if (!leftDetected || !rightDetected) return;
-
-        if (isBufferedJump)
-        {
-            LedgeJump();
-            return;
-        }
-
-        StartLedgeGrab();
+        yield return new WaitForSeconds(jumpBufferTime);
+        vaultBuffered = false;
+        bufferCoroutine = null;
     }
 
     void StartLedgeGrab()
     {
+        ledgeHangTimer = 0f;
+        canGrab = true;
         isGrabbingLedge = true;
-        ledgeJustGrabbed = true;
-        ledgeGrabTimer = 0f;
-        playerController.gravity = 0;
-        playerController.playerVelocity = Vector3.zero;
-    }
 
+        playerController.enabled = false;
+        Vector3 ledgeSnapPoint = (leftHandCheck.position + rightHandCheck.position) / 2f;
+        transform.position = new Vector3(transform.position.x, ledgeSnapPoint.y - 0.8f - grabRange, ledgeSnapPoint.z - transform.forward.z * 0.8f) + ledgePoint;
+        playerController.enabled = true;
+    }
     void HandleLedgeHang()
     {
-        ledgeGrabTimer += Time.deltaTime;
+        playerController.gravity = 0;
+        playerController.playerVelocity = Vector3.zero;
 
-        if (playerController.playerVelocity.y < 0)
+        ledgeHangTimer += Time.deltaTime;
+
+        if (ledgeHangTimer > ledgeHangTime || playerController.wishdir.z < 0)
         {
-            playerController.playerVelocity = new Vector3(playerController.playerVelocity.x, 0, playerController.playerVelocity.z);
+            Detach();
+            //return;
         }
 
-        if (ledgeGrabTimer > ledgeHangTime || playerController.wishdir.z < 0)
-        {
-            DetachFromLedge();
-            return;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!canGrab)
         {
             LedgeJump();
         }
@@ -198,23 +144,20 @@ public class LedgeGrab : MonoBehaviour
     void LedgeJump()
     {
         Vector3 jumpDir = Vector3.up * ledgeJumpMultiplier;
-        bool canVault = playerController.wishdir.z > 0.1f;
 
-        if (canVault)
+        if (playerController.wishdir.z > 0.1f)
         {
             jumpDir += transform.forward * vaultForwardBoost;
         }
 
         playerController.playerVelocity = jumpDir;
-        DetachFromLedge();
+        vaultBuffered = false;
+        Detach();
     }
 
-    void DetachFromLedge()
+    void Detach()
     {
         isGrabbingLedge = false;
-        ledgeJustGrabbed = true;
-        isClimbingWall = false;
-        wallClimbed = true;
         playerController.gravity = originalGrav;
     }
 
@@ -222,20 +165,22 @@ public class LedgeGrab : MonoBehaviour
     {
         if (!leftHandCheck || !rightHandCheck) return;
 
+        float blendAmount = Application.isPlaying && playerController
+            ? Mathf.Clamp01(Vector3.Dot(playerController.playerVelocity, transform.forward) / playerController.playerTopVelocity)
+            : 0f;
+
+        Vector3 angledDownDebug = Vector3.Slerp(Vector3.down, (Vector3.down + transform.forward).normalized, blendAmount);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(leftHandCheck.position, Vector3.down * grabRange);
+        Gizmos.DrawRay(rightHandCheck.position, Vector3.down * grabRange);
+
         Gizmos.color = Color.green;
-        Gizmos.DrawRay(leftHandCheck.position, Vector3.down * handRayLength);
-        Gizmos.DrawRay(rightHandCheck.position, Vector3.down * handRayLength);
-
-        Vector3 angledDir = Quaternion.AngleAxis(ledgeDetectAngle, transform.right) * -transform.up;
-        Vector3 predictiveDir = (angledDir + transform.forward * 0.3f).normalized;
-
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawRay(leftHandCheck.position, predictiveDir * predictiveRayLength);
-        Gizmos.DrawRay(rightHandCheck.position, predictiveDir * predictiveRayLength);
+        Gizmos.DrawRay(leftHandCheck.position, angledDownDebug * vaultDetectRange);
+        Gizmos.DrawRay(rightHandCheck.position, angledDownDebug * vaultDetectRange);
 
         Gizmos.color = Color.cyan;
-        Vector3 sphereOrigin = transform.position + Vector3.up * 1.0f;
-        Gizmos.DrawRay(sphereOrigin, transform.forward * wallClimbCheckDistance);
-        Gizmos.DrawWireSphere(sphereOrigin + transform.forward * wallClimbCheckDistance, wallClimbCheckRadius);
+        Gizmos.DrawWireSphere(leftHandCheck.position + Vector3.up * handCheckRadius, handCheckRadius);
+        Gizmos.DrawWireSphere(rightHandCheck.position + Vector3.up * handCheckRadius, handCheckRadius);
     }
 }

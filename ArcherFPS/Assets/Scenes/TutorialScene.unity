@@ -327,7 +327,7 @@ Transform:
   m_GameObject: {fileID: 8558122}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.8, y: 3.82, z: 47.22}
+  m_LocalPosition: {x: 2.8, y: 3.98, z: 47.22}
   m_LocalScale: {x: 8.1879, y: 1, z: 8.7221}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -28289,7 +28289,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 947756667}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9e0656103c281f649baa1ea8f2e0ea16, type: 3}
   m_Name: 
@@ -28297,20 +28297,11 @@ MonoBehaviour:
   ledgeHangTime: 1.5
   ledgeJumpMultiplier: 15
   vaultForwardBoost: 10
-  climbSpeed: 7.5
-  maxClimbTime: 0.75
-  wallClimbCheckRadius: 0.5
-  wallClimbCheckDistance: 0.6
-  wallMask:
-    serializedVersion: 2
-    m_Bits: 0
   grabCooldown: 0.2
+  jumpBufferTime: 0.2
   leftHandCheck: {fileID: 802836983}
   rightHandCheck: {fileID: 682885868}
-  handRayLength: 0.7
-  jumpBufferWindow: 0.15
-  predictiveRayLength: 1.2
-  ledgeDetectAngle: -15
+  handRayLength: 0.4
 --- !u!1 &954995603
 GameObject:
   m_ObjectHideFlags: 0

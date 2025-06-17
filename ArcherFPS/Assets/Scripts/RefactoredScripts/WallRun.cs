@@ -94,8 +94,6 @@ public class WallRun : MonoBehaviour
     {
         wallRunning = true;
 
-        playerController.inputVector.x = 0; //cancel sideways input so you don't unstick randomly
-
         if (playerController.canWallRun)
         {
             //cut effects of gravity in half

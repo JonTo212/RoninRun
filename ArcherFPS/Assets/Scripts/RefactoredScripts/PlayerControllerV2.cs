@@ -65,7 +65,7 @@ public class PlayerControllerV2 : MonoBehaviour
 
     //UI, anim and components
     private Vector3 uiMaxVel; //for UI top speed display
-    private CharacterController characterController;
+    [HideInInspector] public CharacterController characterController;
     private CapsuleCollider capsule;
     [HideInInspector] public Vector3 playerVelocity = Vector3.zero;
     [HideInInspector] public float playerTopVelocity = 0.0f; //for UI
@@ -186,8 +186,12 @@ public class PlayerControllerV2 : MonoBehaviour
     //Set movement direction based on player input
     void HandleMovementInput()
     {
+        if (wallRun.wallRunning)
+            inputVector.x = 0;
+        else
+            inputVector.x = Input.GetAxisRaw("Horizontal");
+
         inputVector.z = Input.GetAxisRaw("Vertical");
-        inputVector.x = Input.GetAxisRaw("Horizontal");
         wishdir = new Vector3(inputVector.x, 0, inputVector.z);
 
         //Smooth input for animation transitions, instead of -1/0/1 from GetAxisRaw
