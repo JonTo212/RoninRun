@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 public class WallRun : MonoBehaviour
 {
@@ -10,16 +11,12 @@ public class WallRun : MonoBehaviour
     public float minimumJumpHeight = 2f;
     public Vector2 wallJumpForce;
     [HideInInspector] public bool canWallBounce;
-    private bool hasWallBounced;
     [SerializeField] [Range(1,2)] private float backWallJumpMultiplier;
 
-    [HideInInspector] public bool wallLeft;
-    [HideInInspector] public bool wallRight;
-    [HideInInspector] public bool wallBack;
-    private RaycastHit leftWallHit;
-    private RaycastHit rightWallHit;
-    private RaycastHit backWallHit;
-    [HideInInspector] public bool wallHit;
+    RaycastHit closestWall;
+    public Vector3 closestWallNormal;
+    [HideInInspector] public bool wallLeft; //anim
+    [HideInInspector] public bool wallRight; //anim
     [HideInInspector] public bool wallRunning;
     private Vector3 wallNormal;
     private Vector3 wallForward;
@@ -40,15 +37,14 @@ public class WallRun : MonoBehaviour
     {
         WallBounceReset();
         WallCheck();
-        CameraTilt();
+        ApplyCameraTilt();
     }
 
     private void WallBounceReset()
     {
-        if (playerController.isGrounded || !wallHit)
+        if (playerController.isGrounded || !CheckWall())
         {
             canWallBounce = false;
-            hasWallBounced = false;
         }
     }
 
@@ -56,7 +52,13 @@ public class WallRun : MonoBehaviour
     {
         if (CanWallRun() && CheckWall())
         {
+            CalculateCameraTilt();
             HandleWallRun();
+
+            if (canWallBounce && Input.GetKeyUp(KeyCode.Space))
+            {
+                WallJump();
+            }
         }
         else
         {
@@ -70,7 +72,7 @@ public class WallRun : MonoBehaviour
         desiredTilt = 0;
     }
 
-    private void CameraTilt()
+    private void ApplyCameraTilt()
     {
         currentTilt = Mathf.MoveTowards(currentTilt, desiredTilt, tiltSpeed * Time.deltaTime);
     }
@@ -82,18 +84,37 @@ public class WallRun : MonoBehaviour
 
     bool CheckWall()
     {
-        wallLeft = Physics.Raycast(transform.position, -transform.right, out leftWallHit, wallDistance, wallMask);
-        wallRight = Physics.Raycast(transform.position, transform.right, out rightWallHit, wallDistance, wallMask);
+        Vector3[] directions = 
+        {
+            transform.forward,
+            -transform.forward,
+            -transform.right,
+            transform.right
+        };
 
-        wallBack = Physics.Raycast(transform.position, -transform.forward, out backWallHit, wallDistance, wallMask);
+        float closest = Mathf.Infinity;
+        bool wallDetected = false;
+        Vector3 closestDir = Vector3.zero;
 
-        return wallHit = wallLeft || wallRight || wallBack;
+        //raycast all 4 directions, if hit then save 
+        foreach (var dir in directions)
+        {
+            if (Physics.Raycast(transform.position, dir, out RaycastHit tempHit, wallDistance, wallMask) && tempHit.distance < closest)
+            {
+                wallDetected = true;
+                closest = tempHit.distance;
+                closestWall = tempHit;
+                wallNormal = tempHit.normal;
+                wallForward = Vector3.Cross(wallNormal, transform.up);
+                closestDir = dir;
+            }
+        }
+
+        return wallDetected;
     }
 
     void HandleWallRun()
     {
-        wallRunning = true;
-
         if (playerController.canWallRun)
         {
             //cut effects of gravity in half
@@ -106,42 +127,45 @@ public class WallRun : MonoBehaviour
             //apply friction if there's no movement input
             if (playerController.wishdir == Vector3.zero)
             {
-                playerController.ApplyFriction(0.1f);
-            }
-
-            CalculateWallValues();
-
-            if (!wallBack)
-            {
-                HandleWallAutoMovement();
+                playerController.ApplyFriction(0.5f);
             }
         }
 
-        if (!hasWallBounced && Input.GetKeyUp(KeyCode.Space)) // change to GetKeyUp for space hold
-        {
-            WallJump();
-        }
+        canWallBounce = true;
     }
-    void CalculateWallValues()
+
+    void CalculateCameraTilt()
     {
-        if (wallBack)
+        float dotRight = Vector3.Dot(-wallNormal, transform.right);
+        float dotLeft = Vector3.Dot(-wallNormal, -transform.right);
+
+        if (dotLeft > 0.5f)
         {
-            wallNormal = backWallHit.normal;
-            desiredTilt = 0; 
+            desiredTilt = -camTilt;
+            wallLeft = true;
+            wallRight = false;
+        }
+        else if (dotRight > 0.5f)
+        {
+            desiredTilt = camTilt;
+            wallLeft = false;
+            wallRight = true;
         }
         else
         {
-            wallNormal = wallRight ? rightWallHit.normal : leftWallHit.normal;
-            desiredTilt = wallLeft ? -camTilt : camTilt;
+            desiredTilt = 0f;
+            wallLeft = false;
+            wallRight = false;
         }
-
-        wallForward = Vector3.Cross(wallNormal, transform.up);
     }
 
     void HandleWallAutoMovement()
     {
-        //Tilt + auto-run
-        float forwardDir = wallLeft ? 1 : -1; //if there's a wall on the left, apply force in +Z, if right, -Z
+        //use dot product to determine if closest wall is left or right
+        float dotLeft = Vector3.Dot(wallNormal, -transform.right);
+        float dotRight = Vector3.Dot(wallNormal, transform.right);
+
+        float forwardDir = dotLeft > dotRight ? 1f : -1f;
         playerController.playerVelocity += forwardDir * wallForward * autoRunForce * Time.deltaTime;
 
 
@@ -154,14 +178,19 @@ public class WallRun : MonoBehaviour
     void WallJump()
     {
         Vector2 force = wallJumpForce;
-        
-        if(wallBack)
+        playerController.playerVelocity = Vector3.zero;
+            
+        //dot product to determine if wall is behind you for large boost
+        if (Vector3.Dot(wallNormal, transform.forward) > 0.5f)
         {
-            force.x = wallJumpForce.x * backWallJumpMultiplier;
-            force.y = wallJumpForce.y * backWallJumpMultiplier;
+            force *= backWallJumpMultiplier;
+        }
+        else if (Vector3.Dot(wallNormal, -transform.forward) > 0.5f)
+        {
+            force = new Vector3(force.y, force.x);
         }
 
-        Vector3 wallJumpHorizontal = wallNormal * force.x; //Horizontal component based on wall normal
+        Vector3 wallJumpHorizontal = wallNormal * force.x; //horizontal component based on wall normal
         Vector3 wallJumpVertical = transform.up * force.y;
 
         Vector3 jumpAccel = wallJumpHorizontal + wallJumpVertical;
@@ -172,7 +201,6 @@ public class WallRun : MonoBehaviour
 
         playerController.playerVelocity = wallParallelVelocity + jumpAccel;
         canWallBounce = false;
-        hasWallBounced = true;
         wallRunning = false;
     }
 

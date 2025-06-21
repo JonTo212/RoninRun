@@ -27943,6 +27943,7 @@ MonoBehaviour:
   xMouseSensitivity: 30
   yMouseSensitivity: 30
   slopeSlide: 0
+  characterController: {fileID: 0}
   playerVelocity: {x: 0, y: 0, z: 0}
   playerTopVelocity: 0
   clampedVel: {x: 0, y: 0, z: 0}
@@ -28229,13 +28230,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimumJumpHeight: 2
-  wallJumpForce: {x: 15, y: 10}
+  wallJumpForce: {x: 10, y: 7.5}
   canWallBounce: 0
   backWallJumpMultiplier: 1.5
+  closestWallNormal: {x: 0, y: 0, z: 0}
   wallLeft: 0
   wallRight: 0
-  wallBack: 0
-  wallHit: 0
   wallRunning: 0
   camTilt: 15
   currentTilt: 0
@@ -28257,7 +28257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   grapplingRange: 25
   swingHookSpeed: 30
-  slingshotHookSpeed: 5
+  slingshotHookSpeed: 30
   releaseJumpForce: 5
   aimAssistRadius: 10
   playerCamera: {fileID: 1754409052}
@@ -28294,14 +28294,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e0656103c281f649baa1ea8f2e0ea16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ledgeHangTime: 1.5
-  ledgeJumpMultiplier: 15
-  vaultForwardBoost: 10
-  grabCooldown: 0.2
-  jumpBufferTime: 0.2
   leftHandCheck: {fileID: 802836983}
   rightHandCheck: {fileID: 682885868}
-  handRayLength: 0.4
+  jumpBufferTime: 0.2
+  wallMask:
+    serializedVersion: 2
+    m_Bits: 128
+  ledgeHangTime: 1
+  ledgeJumpHeight: 15
+  grabRange: 0.1
+  handCheckRadius: 0.3
+  vaultForwardBoost: 10
+  vaultDetectRange: 0.6
+  swingSpeed: 30
 --- !u!1 &954995603
 GameObject:
   m_ObjectHideFlags: 0

@@ -7,9 +7,8 @@ public class SlingshotShuriken : ShurikenBaseClass
     {
         Vector3 direction = (grapplePoint.position - player.transform.position).normalized;
         float distance = Vector3.Distance(grapplePoint.position, player.transform.position);
-        float clampedDistance = Mathf.Max(2f, distance);
 
-        player.gravity = gravity / 2f;
-        player.playerVelocity += direction * pullSpeed * clampedDistance * Time.deltaTime;
+        player.gravity = 0;
+        player.playerVelocity += direction * pullSpeed * distance * Time.deltaTime;
     }
 }
