@@ -256,9 +256,5 @@ public class LedgeGrab : MonoBehaviour
         Gizmos.DrawRay(rightHandCheck.position, angledUp * vaultDetectRange);
         Gizmos.DrawWireSphere(leftHandCheck.position + angledUp * (vaultDetectRange - handCheckRadius / 2), handCheckRadius);
         Gizmos.DrawWireSphere(rightHandCheck.position + angledUp * (vaultDetectRange - handCheckRadius / 2), handCheckRadius);
-
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(leftHandCheck.position * handCheckRadius, handCheckRadius);
-        Gizmos.DrawWireSphere(rightHandCheck.position * handCheckRadius, handCheckRadius);
     }
 }

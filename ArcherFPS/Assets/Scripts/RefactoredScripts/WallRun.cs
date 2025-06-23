@@ -186,24 +186,25 @@ public class WallRun : MonoBehaviour
     {
         CheckWall();
         Vector2 force = wallJumpForce;
+        Vector3 newVel = new Vector3(playerController.playerVelocity.x, 0, playerController.playerVelocity.z);
 
         //dot product to determine if wall is behind you for large boost
         if (Vector3.Dot(wallNormal, transform.forward) > 0.5f)
         {
             force *= backWallJumpMultiplier;
         }
-        else if (Vector3.Dot(wallNormal, -transform.forward) > 0.5f)
+        else if (!(Vector3.Dot(wallNormal, -transform.forward) > 0.5f)) //project your velocity onto the wall unless 
         {
-            force = new Vector3(force.y, force.x);
+            newVel = Vector3.ProjectOnPlane(new Vector3(playerController.playerVelocity.x, 0, playerController.playerVelocity.z), wallNormal);
         }
 
         Vector3 wallJumpHorizontal = wallNormal * force.x; //horizontal component based on wall normal
         Vector3 wallJumpVertical = transform.up * force.y;
 
         Vector3 jumpAccel = wallJumpHorizontal + wallJumpVertical;
-        CancelOpposingVelocity(ref playerController.playerVelocity, jumpAccel);
+        CancelOpposingVelocity(ref newVel, jumpAccel);
+        playerController.playerVelocity = newVel + jumpAccel;
 
-        playerController.playerVelocity += jumpAccel;
         StopWallRunning();
 
         /*Vector3 wallParallelVelocity = Vector3.ProjectOnPlane(playerController.playerVelocity, wallNormal);
@@ -218,9 +219,13 @@ public class WallRun : MonoBehaviour
 
     void CancelOpposingVelocity(ref Vector3 velocity, Vector3 jumpAcceleration)
     {
-        if (Vector3.Dot(velocity, jumpAcceleration) < 0) //If velocity is in the opposite direction of jumpAcceleration
+        Vector3 jumpDir = jumpAcceleration.normalized;
+        float dot = Vector3.Dot(velocity, jumpDir);
+
+        if (dot < 0f) //if velocity is in the opposite direction as the new jump acceleration
         {
-            velocity = Vector3.ProjectOnPlane(velocity, jumpAcceleration.normalized); //Cancel perpendicular velocity
+            Vector3 opposingComponent = jumpDir * dot;
+            velocity -= opposingComponent; //remove the part of the vector that's opposite of the accel
         }
     }
 }

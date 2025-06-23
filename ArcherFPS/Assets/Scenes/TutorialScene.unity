@@ -28231,7 +28231,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimumJumpHeight: 2
-  wallJumpForce: {x: 10, y: 7.5}
+  wallJumpForce: {x: 10, y: 10}
   canWallBounce: 0
   backWallJumpMultiplier: 1.5
   closestWallNormal: {x: 0, y: 0, z: 0}
@@ -28256,9 +28256,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8679be1866cfa084782414915704a6d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grapplingRange: 25
+  grapplingRange: 20
+  grapplingDetachRange: 3
   swingHookSpeed: 30
-  slingshotHookSpeed: 30
+  slingshotHookSpeed: 50
   releaseJumpForce: 5
   aimAssistRadius: 10
   playerCamera: {fileID: 1754409052}

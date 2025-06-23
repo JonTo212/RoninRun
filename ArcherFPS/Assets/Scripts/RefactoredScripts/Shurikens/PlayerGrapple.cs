@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerGrapple : MonoBehaviour
 {
     public float grapplingRange = 50f;
+    public float grapplingDetachRange = 5f;
     public float swingHookSpeed = 30f;
     public float slingshotHookSpeed = 30f;
     public float releaseJumpForce;
@@ -43,7 +44,7 @@ public class PlayerGrapple : MonoBehaviour
         if (isGrappling && activeShuriken != null)
         {
             float dist = Vector3.Distance(transform.position, grapplePoint);
-            if (dist > grapplingRange)
+            if (dist > grapplingRange || dist < grapplingDetachRange)
             {
                 StopGrapple();
             }
@@ -60,7 +61,7 @@ public class PlayerGrapple : MonoBehaviour
 
                 UpdateLine();
             }
-        }
+        } 
     }
 
     void TryStartGrapple()
