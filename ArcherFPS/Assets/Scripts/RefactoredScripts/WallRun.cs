@@ -33,12 +33,19 @@ public class WallRun : MonoBehaviour
         playerController = GetComponent<PlayerControllerV2>();
     }
 
+    public bool WallCheck()
+    {
+        return CanWallRun() && CheckWall();
+    }
+
+    /*
     void Update()
     {
         WallBounceReset();
         WallCheck();
         ApplyCameraTilt();
     }
+    
 
     private void WallBounceReset()
     {
@@ -64,22 +71,23 @@ public class WallRun : MonoBehaviour
         {
             StopWallRunning();
         }
-    }
+    }*/
 
-    private void StopWallRunning()
+    public void StopWallRunning()
     {
+        canWallBounce = false;
         wallRunning = false;
         desiredTilt = 0;
     }
 
-    private void ApplyCameraTilt()
+    public void ApplyCameraTilt()
     {
         currentTilt = Mathf.MoveTowards(currentTilt, desiredTilt, tiltSpeed * Time.deltaTime);
     }
 
     bool CanWallRun() //Can wall run if you're above the minimum jump height
     {
-        return !Physics.Raycast(transform.position, Vector3.down, minimumJumpHeight); //&& playerController.canWallRun; //for spacebar hold wallrunning
+        return !Physics.Raycast(transform.position, Vector3.down, minimumJumpHeight) && Input.GetKey(KeyCode.Space); //&& playerController.canWallRun; //for spacebar hold wallrunning
     }
 
     bool CheckWall()
@@ -113,28 +121,27 @@ public class WallRun : MonoBehaviour
         return wallDetected;
     }
 
-    void HandleWallRun()
+    public void HandleWallRun()
     {
-        if (playerController.canWallRun)
-        {
-            //cut effects of gravity in half
-            if (playerController.playerVelocity.y < 0)
-            {
-                float newGrav = playerController.playerVelocity.y / 2;
-                playerController.playerVelocity = new Vector3(playerController.playerVelocity.x, newGrav, playerController.playerVelocity.z);
-            }
+        wallRunning = true;
 
-            //apply friction if there's no movement input
-            if (playerController.wishdir == Vector3.zero)
-            {
-                playerController.ApplyFriction(0.5f);
-            }
+        //cut effects of gravity in half
+        if (playerController.playerVelocity.y < 0)
+        {
+            float newGrav = playerController.playerVelocity.y / 2;
+            playerController.playerVelocity = new Vector3(playerController.playerVelocity.x, newGrav, playerController.playerVelocity.z);
+        }
+
+        //apply friction if there's no movement input
+        if (playerController.wishdir == Vector3.zero)
+        {
+            playerController.ApplyFriction(0.5f);
         }
 
         canWallBounce = true;
     }
 
-    void CalculateCameraTilt()
+    public void CalculateCameraTilt()
     {
         float dotRight = Vector3.Dot(-wallNormal, transform.right);
         float dotLeft = Vector3.Dot(-wallNormal, -transform.right);
@@ -159,7 +166,7 @@ public class WallRun : MonoBehaviour
         }
     }
 
-    void HandleWallAutoMovement()
+    /*void HandleWallAutoMovement()
     {
         //use dot product to determine if closest wall is left or right
         float dotLeft = Vector3.Dot(wallNormal, -transform.right);
@@ -172,14 +179,14 @@ public class WallRun : MonoBehaviour
         //Apply small force so you don't detach from wall
         Vector3 wallStick = wallNormal * 5f * Time.deltaTime;
         playerController.playerVelocity -= wallStick;
-    }
+    }*/
 
 
-    void WallJump()
+    public void WallJump()
     {
+        CheckWall();
         Vector2 force = wallJumpForce;
-        playerController.playerVelocity = Vector3.zero;
-            
+
         //dot product to determine if wall is behind you for large boost
         if (Vector3.Dot(wallNormal, transform.forward) > 0.5f)
         {
@@ -194,14 +201,19 @@ public class WallRun : MonoBehaviour
         Vector3 wallJumpVertical = transform.up * force.y;
 
         Vector3 jumpAccel = wallJumpHorizontal + wallJumpVertical;
-        Vector3 wallParallelVelocity = Vector3.ProjectOnPlane(playerController.playerVelocity, wallNormal);
+        CancelOpposingVelocity(ref playerController.playerVelocity, jumpAccel);
+
+        playerController.playerVelocity += jumpAccel;
+        StopWallRunning();
+
+        /*Vector3 wallParallelVelocity = Vector3.ProjectOnPlane(playerController.playerVelocity, wallNormal);
 
         //Cancel out previous velocity if it's in the opposite direction of the jump
         CancelOpposingVelocity(ref playerController.playerVelocity, jumpAccel);
 
         playerController.playerVelocity = wallParallelVelocity + jumpAccel;
         canWallBounce = false;
-        wallRunning = false;
+        wallRunning = false;*/
     }
 
     void CancelOpposingVelocity(ref Vector3 velocity, Vector3 jumpAcceleration)

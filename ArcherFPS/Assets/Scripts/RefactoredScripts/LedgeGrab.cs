@@ -42,7 +42,6 @@ public class LedgeGrab : MonoBehaviour
 
     void Update()
     {
-        print(CheckForVault());
         GetInput();
 
         if (CheckForVault() && vaultBuffered)

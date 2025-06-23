@@ -27874,6 +27874,7 @@ GameObject:
   - component: {fileID: 947756683}
   - component: {fileID: 947756668}
   - component: {fileID: 947756687}
+  - component: {fileID: 947756688}
   m_Layer: 6
   m_Name: Player (2)
   m_TagString: Player
@@ -28307,6 +28308,19 @@ MonoBehaviour:
   vaultForwardBoost: 10
   vaultDetectRange: 0.6
   swingSpeed: 30
+--- !u!114 &947756688
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947756667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c90498d358ac44344b4d171414019a43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentState: 0
 --- !u!1 &954995603
 GameObject:
   m_ObjectHideFlags: 0
