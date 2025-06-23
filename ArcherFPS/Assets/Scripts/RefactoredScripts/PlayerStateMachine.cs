@@ -38,9 +38,14 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void CheckForStateSwitch()
     {
-        if(wallRun.WallCheck())
+        if (wallRun.WallCheck())
         {
             currentState = PlayerState.WallRunning;
+            return;
+        }
+        else if (grapple.CheckGrapple())
+        {
+            currentState = PlayerState.Grappling;
             return;
         }
     }
@@ -104,7 +109,14 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void HandleGrapplingState()
     {
-        
+        if(Input.GetMouseButtonUp(1) || playerController.isGrounded || !grapple.IsWithinGrappleRange())
+        {
+            grapple.StopGrapple();
+            currentState = PlayerState.Default;
+            return;
+        }
+
+        grapple.HandleGrapplePull();
     }
 
     private void HandleThrowingState()

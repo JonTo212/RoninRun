@@ -20,10 +20,6 @@ public class SlingshotShuriken : ShurikenBaseClass
         Vector3 dampingForce = player.playerVelocity * (2 * Mathf.Sqrt(pullSpeed));
 
         Vector3 acceleration = springForce - dampingForce;
-
-        print(acceleration.magnitude);
-
-        player.gravity = 0;
         player.playerVelocity += acceleration * Time.deltaTime;
     }
 }

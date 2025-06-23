@@ -38,6 +38,7 @@ public class PlayerControllerV2 : MonoBehaviour
     private float playerHeight;
     private bool wishJump = false;
     private float jumpVel;
+    public bool useGrav;
     //public float gravity = 25f;
     //[SerializeField] private float friction = 7.5f; //Default friction
 
@@ -99,6 +100,7 @@ public class PlayerControllerV2 : MonoBehaviour
         slopeForce = -3f * jumpVel;
         //slopeForce = -3f * jumpSpeed;
         canWallRun = true;
+        useGrav = true;
     }
 
     void Update()
@@ -110,7 +112,10 @@ public class PlayerControllerV2 : MonoBehaviour
         isGrounded = characterController.isGrounded;
         playerHeight = characterController.height;
 
-        Gravity(); //Needs to be before slope handling
+        if (useGrav)
+        {
+            Gravity(); //Needs to be before slope handling
+        }
 
         //Apply downward force to smooth slope movement
         if (OnSlope())

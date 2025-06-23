@@ -27955,6 +27955,7 @@ MonoBehaviour:
     m_Bits: 256
   animXInput: 0
   animZInput: 0
+  useGrav: 1
 --- !u!114 &947756672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28260,10 +28261,11 @@ MonoBehaviour:
   grapplingDetachRange: 3
   swingHookSpeed: 30
   slingshotHookSpeed: 50
-  releaseJumpForce: 5
+  releaseJumpForce: 0
   aimAssistRadius: 10
   playerCamera: {fileID: 1754409052}
   lineRendererStartPos: {fileID: 2116284817}
+  grappleFOVAngle: 30
 --- !u!114 &947756686
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class PlayerGrapple : MonoBehaviour
     public float aimAssistRadius = 5f;
     public Camera playerCamera;
     [SerializeField] private Transform lineRendererStartPos;
+    [SerializeField] float grappleFOVAngle = 30f;
 
     private PlayerControllerV2 playerController;
     private bool isGrappling;
@@ -26,6 +27,11 @@ public class PlayerGrapple : MonoBehaviour
     }
 
     private void Update()
+    {
+        print(isGrappling);
+    }
+
+    /*private void Update()
     {
         if (Input.GetMouseButtonDown(1) && !isGrappling && !playerController.isGrounded)
         {
@@ -44,12 +50,19 @@ public class PlayerGrapple : MonoBehaviour
         if (isGrappling && activeShuriken != null)
         {
             float dist = Vector3.Distance(transform.position, grapplePoint);
+
             if (dist > grapplingRange || dist < grapplingDetachRange)
             {
                 StopGrapple();
             }
             else
             {
+                if (playerController.useGrav)
+                {
+                    playerController.playerVelocity = new Vector3(playerController.playerVelocity.x, 0, playerController.playerVelocity.z);
+                    playerController.useGrav = false;
+                }
+
                 if (activeShuriken is GrappleShuriken grapple)
                 {
                     grapple.ApplySwing(playerController, swingHookSpeed, originalGravity);
@@ -62,15 +75,47 @@ public class PlayerGrapple : MonoBehaviour
                 UpdateLine();
             }
         } 
+    }*/
+
+    public bool CheckGrapple()
+    {
+        return Input.GetMouseButtonDown(1) && TryStartGrapple() && !playerController.isGrounded;
     }
 
-    void TryStartGrapple()
+    public bool IsWithinGrappleRange()
     {
-        RaycastHit[] hits = Physics.SphereCastAll(playerCamera.transform.position, aimAssistRadius, playerCamera.transform.forward, grapplingRange);
+        float dist = Vector3.Distance(transform.position, grapplePoint);
+        return dist < grapplingRange && dist > grapplingDetachRange;
+    }
+
+    public void HandleGrapplePull()
+    {
+        float dist = Vector3.Distance(transform.position, grapplePoint);
+
+        if (playerController.useGrav)
+        {
+            playerController.playerVelocity = new Vector3(playerController.playerVelocity.x, 0, playerController.playerVelocity.z);
+            playerController.useGrav = false;
+        }
+        if (activeShuriken is SlingshotShuriken slingshot)
+        {
+            slingshot.ApplyPull(playerController, slingshotHookSpeed, originalGravity);
+        }
+
+        UpdateLine();
+    }
+
+    bool TryStartGrapple()
+    {
+        isGrappling = false;
+
+        RaycastHit[] hits = Physics.SphereCastAll(playerCamera.transform.position, aimAssistRadius, playerCamera.transform.forward, grapplingRange - aimAssistRadius);
 
         float closestAngle = Mathf.Infinity;
         ShurikenBaseClass target = null;
 
+        //check if it has the shuriken base class and is the grapple/slingshot shuriken
+        //also check if the angle between your look direction and the grapple point is within the 
         foreach (var hit in hits)
         {
             if (!hit.collider.TryGetComponent<ShurikenBaseClass>(out var shuriken)) continue;
@@ -79,32 +124,45 @@ public class PlayerGrapple : MonoBehaviour
             Vector3 toTarget = (shuriken.transform.position - playerCamera.transform.position).normalized;
             float angle = Vector3.Angle(playerCamera.transform.forward, toTarget);
 
-            if (angle < closestAngle)
+            if (angle > grappleFOVAngle)
+                continue;
+
+            else if (angle < closestAngle)
             {
                 closestAngle = angle;
                 target = shuriken;
             }
         }
 
+
+        //if there's a valid shuriken, check if it's within range, then save it as the grapple point and start grappling
         if (target != null)
         {
-            activeShuriken = target;
+            Vector3 point = (target as GrappleShuriken)?.grapplePoint.position
+                     ?? (target as SlingshotShuriken)?.grapplePoint.position
+                     ?? target.transform.position;
 
-            grapplePoint = (target as GrappleShuriken)?.grapplePoint.position
-                    ?? (target as SlingshotShuriken)?.grapplePoint.position
-                    ?? target.transform.position;
+            float dist = Vector3.Distance(transform.position, point);
+            if (dist < grapplingRange && dist > grapplingDetachRange)
+            {
+                activeShuriken = target;
+                grapplePoint = point;
 
-            playerController.playerVelocity.y = 0;
-            isGrappling = true;
+                playerController.playerVelocity.y = 0;
+                isGrappling = true;
+            }
         }
+
+        return isGrappling;
     }
 
-    void StopGrapple()
+    public void StopGrapple()
     {
         isGrappling = false;
         lineRenderer.positionCount = 0;
         playerController.gravity = originalGravity;
         activeShuriken = null;
+        playerController.useGrav = true;
     }
 
     void UpdateLine()
@@ -112,5 +170,18 @@ public class PlayerGrapple : MonoBehaviour
         lineRenderer.positionCount = 2;
         lineRenderer.SetPosition(0, lineRendererStartPos.position);
         lineRenderer.SetPosition(1, grapplePoint);
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.cyan;
+        Vector3 origin = playerCamera.transform.position;
+        Vector3 forward = playerCamera.transform.forward;
+
+        Quaternion leftRot = Quaternion.AngleAxis(-grappleFOVAngle, playerCamera.transform.up);
+        Quaternion rightRot = Quaternion.AngleAxis(grappleFOVAngle, playerCamera.transform.up);
+
+        Gizmos.DrawRay(origin, leftRot * forward * grapplingRange);
+        Gizmos.DrawRay(origin, rightRot * forward * grapplingRange);
     }
 }
