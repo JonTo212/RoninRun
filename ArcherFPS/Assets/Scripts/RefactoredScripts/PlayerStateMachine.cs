@@ -36,21 +36,27 @@ public class PlayerStateMachine : MonoBehaviour
         RunStateContinuousFunctions();
     }
 
+    private void TransitionToState(PlayerState newState)
+    {
+        CancelAllOtherStates(newState);
+        currentState = newState;
+    }
+
     private void CheckForStateSwitch()
     {
-        if (wallRun.WallCheck())
+        if (wallRun.WallCheck()) // && currentState != PlayerState.WallRunning) <- this makes it stutter because it tries the new state and then restarts the current one
         {
-            currentState = PlayerState.WallRunning;
+            TransitionToState(PlayerState.WallRunning);
             return;
         }
-        else if (grapple.CheckGrapple())
+        else if (grapple.CheckGrapple()) // && currentState != PlayerState.Grappling)
         {
-            currentState = PlayerState.Grappling;
+            TransitionToState(PlayerState.Grappling);
             return;
         }
-        else if(throwSystem.CheckThrow())
+        else if(throwSystem.CheckThrow())  // && currentState != PlayerState.Throwing)
         {
-            currentState = PlayerState.Throwing;
+            TransitionToState(PlayerState.Throwing);
             return;
         }
     }
@@ -156,4 +162,10 @@ public class PlayerStateMachine : MonoBehaviour
         
     }
 
+    private void CancelAllOtherStates(PlayerState newState)
+    {
+        if (newState != PlayerState.WallRunning) wallRun.StopWallRunning();
+        if (newState != PlayerState.Grappling) grapple.StopGrapple();
+        if (newState != PlayerState.Throwing) throwSystem.StopThrow(true);
+    }
 }
