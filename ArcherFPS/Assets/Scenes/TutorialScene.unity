@@ -27938,6 +27938,7 @@ MonoBehaviour:
   apexTime: 0.45
   gravity: 25
   isGrounded: 0
+  useGrav: 1
   holdToBHop: 0
   canWallRun: 0
   playerView: {fileID: 1754409049}
@@ -27955,7 +27956,6 @@ MonoBehaviour:
     m_Bits: 256
   animXInput: 0
   animZInput: 0
-  useGrav: 1
 --- !u!114 &947756672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28074,6 +28074,8 @@ MonoBehaviour:
   smokePuff: {fileID: 3219814171448987613}
   shurikenManager: {fileID: 947756686}
   finalPos: {x: 0, y: 0, z: 0}
+  desiredFOV: 0
+  currentZoomSpeed: 0
   isAiming: 0
   stopThrow: 0
   canThrow: 0

@@ -48,11 +48,18 @@ public class PlayerStateMachine : MonoBehaviour
             currentState = PlayerState.Grappling;
             return;
         }
+        else if(throwSystem.CheckThrow())
+        {
+            currentState = PlayerState.Throwing;
+            return;
+        }
     }
 
     private void RunStateContinuousFunctions()
     {
         wallRun.ApplyCameraTilt();
+        throwSystem.ChooseShurikenType();
+        throwSystem.HandleFOV();
 
         switch (currentState)
         {
@@ -109,7 +116,13 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void HandleGrapplingState()
     {
-        if(Input.GetMouseButtonUp(1) || playerController.isGrounded || !grapple.IsWithinGrappleRange())
+        if(Input.GetMouseButtonUp(1))
+        {
+            grapple.ReleaseGrapple();
+            currentState = PlayerState.Default;
+            return;
+        }
+        else if(playerController.isGrounded || !grapple.IsInValidGrappleRange())
         {
             grapple.StopGrapple();
             currentState = PlayerState.Default;
@@ -121,7 +134,21 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void HandleThrowingState()
     {
-        
+        if(Input.GetMouseButtonDown(1))
+        {
+            throwSystem.StopThrow(true);
+            currentState = PlayerState.Default;
+            return;
+        }
+        else if(Input.GetMouseButtonUp(0))
+        {
+            throwSystem.ReleaseThrow();
+            currentState = PlayerState.Default;
+            return;
+        }
+
+        throwSystem.SetIndicatorObjectsActive();
+        throwSystem.HandleThrowPower();
     }
 
     private void HandleLedgeGrabbingState()

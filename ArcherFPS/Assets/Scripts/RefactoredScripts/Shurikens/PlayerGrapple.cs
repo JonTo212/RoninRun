@@ -82,10 +82,15 @@ public class PlayerGrapple : MonoBehaviour
         return Input.GetMouseButtonDown(1) && TryStartGrapple() && !playerController.isGrounded;
     }
 
-    public bool IsWithinGrappleRange()
+    public bool IsInValidGrappleRange()
     {
-        float dist = Vector3.Distance(transform.position, grapplePoint);
-        return dist < grapplingRange && dist > grapplingDetachRange;
+        return IsWithinGrappleRange(transform.position, grapplePoint, grapplingDetachRange, grapplingRange);
+    }
+
+    bool IsWithinGrappleRange(Vector3 from, Vector3 to, float minRange, float maxRange)
+    {
+        float dist = Vector3.Distance(from, to);
+        return dist < maxRange && dist > minRange;
     }
 
     public void HandleGrapplePull()
@@ -142,8 +147,7 @@ public class PlayerGrapple : MonoBehaviour
                      ?? (target as SlingshotShuriken)?.grapplePoint.position
                      ?? target.transform.position;
 
-            float dist = Vector3.Distance(transform.position, point);
-            if (dist < grapplingRange && dist > grapplingDetachRange)
+            if (IsWithinGrappleRange(transform.position, point, grapplingDetachRange, grapplingRange))
             {
                 activeShuriken = target;
                 grapplePoint = point;
@@ -163,6 +167,12 @@ public class PlayerGrapple : MonoBehaviour
         playerController.gravity = originalGravity;
         activeShuriken = null;
         playerController.useGrav = true;
+    }
+
+    public void ReleaseGrapple()
+    {
+        StopGrapple();
+        playerController.playerVelocity.y += releaseJumpForce;
     }
 
     void UpdateLine()

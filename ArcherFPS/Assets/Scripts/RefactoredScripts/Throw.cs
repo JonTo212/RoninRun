@@ -5,7 +5,7 @@ using UnityEngine;
 public class Throw : MonoBehaviour
 {
     [SerializeField] private Transform starSpawnPoint;
-    [SerializeField][Range(0, 3)] private float zoomSpeed;
+    [SerializeField] private float zoomSpeed;
     [SerializeField] private PlayerControllerV2 playerController;
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private Transform lineStartPos;
@@ -19,13 +19,15 @@ public class Throw : MonoBehaviour
 
     private LayerMask excludedLayers;
     private GameObject indicator;
-    private bool fire;
+    //private bool fire;
     private float throwPower;
     private Camera cam;
     private float startingFOV;
     private Vector3 destination;
     public Vector3 finalPos;
     private float originalGrav;
+    public float desiredFOV;
+    public float currentZoomSpeed;
 
     public bool isAiming;
     public bool stopThrow;
@@ -48,7 +50,7 @@ public class Throw : MonoBehaviour
         shurikenManager = GetComponent<ShurikenManager>();
     }
 
-    void Update()
+    /*void Update()
     {
         if (canThrow)
         {
@@ -89,9 +91,56 @@ public class Throw : MonoBehaviour
         {
             ResetThrowingInput();
         }
+    }*/
+
+
+    public bool CheckThrow()
+    {
+        return Input.GetMouseButtonDown(0);
     }
 
-    void GetAimInput()
+    public void ReleaseThrow()
+    {
+        if (shurikenManager.CanThrowSelected())
+        {
+            FireShuriken(throwPower);
+            StopThrow(false);
+        }
+        else
+        {
+            StopThrow(true);
+            Debug.Log("Out of this type of shuriken");
+        }
+    }
+
+    public void StopThrow(bool cancel)
+    {
+        isAiming = false;
+        stopThrow = cancel;
+        playerController.gravity = originalGrav;
+        indicator.SetActive(false);
+        lineRenderer.enabled = false;
+
+        desiredFOV = startingFOV;
+        currentZoomSpeed = 0.1f;
+    }
+
+    public void HandleThrowPower()
+    {
+        isAiming = true;
+        desiredFOV = 60f;
+        currentZoomSpeed = zoomSpeed * Time.deltaTime;
+        throwPower = (startingFOV - cam.fieldOfView) * 2f;
+        AimIndicator(throwPower);
+        playerController.gravity = originalGrav / 2;
+    }
+
+    public void HandleFOV()
+    {
+        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, desiredFOV, currentZoomSpeed);
+    }
+
+    /*void GetAimInput()
     {
         if (Input.GetMouseButtonDown(0) && !isAiming)
         {
@@ -116,7 +165,7 @@ public class Throw : MonoBehaviour
             stopThrow = true;
             playerController.gravity = originalGrav;
         }
-    }
+    }*/
 
     void AimIndicator(float projectileSpeed)
     {
@@ -177,7 +226,7 @@ public class Throw : MonoBehaviour
         }
     }
 
-    void SetIndicatorObjectsActive()
+    public void SetIndicatorObjectsActive()
     {
         int selectedIndex = shurikenManager.selectedIndex;
 
@@ -218,10 +267,10 @@ public class Throw : MonoBehaviour
         }
 
         shurikenManager.RemoveShuriken();
-        fire = false;
+        //fire = false;
     }
 
-    void ChooseShurikenType()
+    public void ChooseShurikenType()
     {
         for (int i = 0; i < 4; i++)
         {
@@ -238,14 +287,14 @@ public class Throw : MonoBehaviour
         }
     }
 
-    void ResetThrowingInput()
+    /*void ResetThrowingInput()
     {
         isAiming = false;
         fire = false;
         stopThrow = true;
         playerController.gravity = originalGrav;
-        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, startingFOV, 0.1f);
         indicator.SetActive(false);
         lineRenderer.enabled = false;
-    }
+        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, startingFOV, 0.1f);
+    }*/
 }
