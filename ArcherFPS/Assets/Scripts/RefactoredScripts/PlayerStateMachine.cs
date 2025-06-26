@@ -59,6 +59,12 @@ public class PlayerStateMachine : MonoBehaviour
             TransitionToState(PlayerState.Throwing);
             return;
         }
+        else if (ledgeGrab.CanStartLedgeGrab())
+        {
+            ledgeGrab.StartLedgeGrab();
+            TransitionToState(PlayerState.LedgeGrabbing);
+            return;
+        }
     }
 
     private void RunStateContinuousFunctions()
@@ -66,6 +72,7 @@ public class PlayerStateMachine : MonoBehaviour
         wallRun.ApplyCameraTilt();
         throwSystem.ChooseShurikenType();
         throwSystem.HandleFOV();
+        ledgeGrab.UpdateVaultBuffer();
 
         switch (currentState)
         {
@@ -98,7 +105,11 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void HandleDefaultState()
     {
-        
+        if (ledgeGrab.CanVault())
+        {
+            ledgeGrab.LedgeJump();
+            return;
+        }
     }
 
     private void HandleWallRunningState()
@@ -159,7 +170,19 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void HandleLedgeGrabbingState()
     {
-        
+        if(Input.GetKeyUp(KeyCode.Space))
+        {
+            ledgeGrab.LedgeJump();
+            currentState = PlayerState.Default;
+            return;
+        }
+        else if(!ledgeGrab.isGrabbingLedge)
+        {
+            ledgeGrab.Detach();
+            currentState = PlayerState.Default;
+        }
+
+        ledgeGrab.HandleLedgeHang();
     }
 
     private void CancelAllOtherStates(PlayerState newState)
@@ -167,5 +190,6 @@ public class PlayerStateMachine : MonoBehaviour
         if (newState != PlayerState.WallRunning) wallRun.StopWallRunning();
         if (newState != PlayerState.Grappling) grapple.StopGrapple();
         if (newState != PlayerState.Throwing) throwSystem.StopThrow(true);
+        if (newState != PlayerState.LedgeGrabbing) ledgeGrab.Detach();
     }
 }

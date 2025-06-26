@@ -28284,9 +28284,8 @@ MonoBehaviour:
   - {fileID: 8069571940197649557, guid: 4a073176773c80743b8f4eaab13b8126, type: 3}
   - {fileID: 7233068992757720405, guid: 7e6080dddae62d145aca194e6a3d0f58, type: 3}
   - {fileID: 1873055708527795796, guid: 37556d5284fdc7d488123238c16c96bd, type: 3}
-  - {fileID: 2408826434515757066, guid: 9d56eafc309870c409c1bc37dc3bb1ab, type: 3}
   - {fileID: 6121293048436411428, guid: 0212874e8e9516f48a208902181fca56, type: 3}
-  shurikenCounts: 0a0000000a0000000a0000000a0000000a000000
+  shurikenCounts: 0a0000000a0000000a0000000a000000
   selectedIndex: 0
 --- !u!114 &947756687
 MonoBehaviour:
@@ -28310,9 +28309,9 @@ MonoBehaviour:
   ledgeJumpHeight: 15
   grabRange: 0.1
   handCheckRadius: 0.3
+  isGrabbingLedge: 0
   vaultForwardBoost: 10
   vaultDetectRange: 0.6
-  swingSpeed: 30
 --- !u!114 &947756688
 MonoBehaviour:
   m_ObjectHideFlags: 0

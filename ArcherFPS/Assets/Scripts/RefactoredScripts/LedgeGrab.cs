@@ -20,7 +20,7 @@ public class LedgeGrab : MonoBehaviour
     private float grabCooldown = 0.1f;
     private bool canGrab;
     private bool grabInput;
-    private bool isGrabbingLedge;
+    public bool isGrabbingLedge;
     private bool ledgeJustGrabbed;
 
     [Header("Vault Components")]
@@ -29,36 +29,19 @@ public class LedgeGrab : MonoBehaviour
     private bool vaultBuffered = false;
     private Coroutine vaultBufferCoroutine;
 
-    [Header("Swing Settings")]
-    [SerializeField] private float swingSpeed = 30f;
-    private bool isSwinging = false;
-    private Vector3 swingPoint;
-
     void Awake()
     {
         playerController = GetComponent<PlayerControllerV2>();
         originalGrav = playerController.gravity;
     }
 
-    void Update()
+    /*void Update()
     {
         GetInput();
 
         if (CheckForVault() && vaultBuffered)
         {
             LedgeJump();
-        }
-        else if(CheckForSwingPole())
-        {
-            if(!isSwinging)
-            {
-                StartSwing();
-            }
-            else if(grabInput)
-            {
-                HandleSwing();
-            }    
-
         }
         else if (!ledgeJustGrabbed && CheckForLedge(grabRange, Vector3.down, Vector3.up, false))
         {
@@ -75,7 +58,7 @@ public class LedgeGrab : MonoBehaviour
         {
             Detach();
         }
-    }
+    }*/
 
     Vector3 ledgePoint;
     RaycastHit leftHit, rightHit;
@@ -107,13 +90,31 @@ public class LedgeGrab : MonoBehaviour
         return CheckForLedge(vaultDetectRange, angledDown, angledUp, true);
     }
 
-    bool CheckForSwingPole()
+    public bool CanStartLedgeGrab()
     {
-        return Physics.SphereCast(leftHandCheck.position, handCheckRadius, transform.forward, out leftHit, handCheckRadius)
-            || Physics.SphereCast(rightHandCheck.position, handCheckRadius, transform.forward, out rightHit, handCheckRadius);
+        return Input.GetKey(KeyCode.Space) && !ledgeJustGrabbed && !isGrabbingLedge && CheckForLedge(grabRange, Vector3.down, Vector3.up, false);
     }
 
-    void GetInput()
+    public bool CanVault()
+    {
+        return CheckForVault() && vaultBuffered;
+    }
+
+    public void UpdateVaultBuffer()
+    {
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            vaultBuffered = true;
+            if (vaultBufferCoroutine != null)
+            {
+                StopCoroutine(vaultBufferCoroutine);
+            }
+
+            vaultBufferCoroutine = StartCoroutine(VaultBuffer());
+        }
+    }
+
+    /* void GetInput()
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
@@ -135,7 +136,7 @@ public class LedgeGrab : MonoBehaviour
         {
             ledgeJustGrabbed = false;
         }
-    }
+    } */
 
     private IEnumerator VaultBuffer()
     {
@@ -150,7 +151,7 @@ public class LedgeGrab : MonoBehaviour
         ledgeJustGrabbed = false;
     }
 
-    void StartLedgeGrab()
+    public void StartLedgeGrab()
     {
         ledgeHangTimer = 0f;
         canGrab = true;
@@ -162,13 +163,7 @@ public class LedgeGrab : MonoBehaviour
         playerController.enabled = true;
     }
 
-    void StartSwing()
-    {
-        isSwinging = true;
-        swingPoint = (leftHandCheck.position + rightHandCheck.position) / 2f;
-        playerController.gravity = 0f;
-    }
-    void HandleLedgeHang()
+    public void HandleLedgeHang()
     {
         playerController.gravity = 0;
         playerController.playerVelocity = Vector3.zero;
@@ -181,29 +176,7 @@ public class LedgeGrab : MonoBehaviour
         }
     }
 
-    void HandleSwing()
-    {
-        if (swingPoint == Vector3.zero)
-        {
-            Detach();
-            return;
-        }
-
-        Vector3 dirToGrapple = swingPoint - transform.position;
-        float distance = dirToGrapple.magnitude;
-
-        float period = Mathf.PI * 2 * Mathf.Sqrt(distance / originalGrav);
-        float angularVelocity = 2 * Mathf.PI / period;
-
-        Vector3 tangential = Vector3.Cross(dirToGrapple, -transform.right).normalized;
-        float tangentialVelocity = angularVelocity * distance;
-
-        playerController.playerVelocity += tangential * tangentialVelocity * Time.deltaTime;
-        playerController.gravity = originalGrav / 2f;
-        playerController.playerVelocity += dirToGrapple.normalized * swingSpeed * Time.deltaTime;
-    }
-
-    void LedgeJump()
+    public void LedgeJump()
     {
         Vector3 jumpDir = Vector3.up * ledgeJumpHeight;
 
@@ -217,11 +190,9 @@ public class LedgeGrab : MonoBehaviour
         Detach();
     }
 
-    void Detach()
+    public void Detach()
     {
         isGrabbingLedge = false;
-        isSwinging = false;
-        swingPoint = Vector3.zero;
         playerController.gravity = originalGrav;
         ledgeJustGrabbed = true;
 
