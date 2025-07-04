@@ -128,9 +128,11 @@ public class Throw : MonoBehaviour
     public void HandleThrowPower()
     {
         isAiming = true;
-        desiredFOV = 60f;
+        //desiredFOV = 60f;
+        desiredFOV = 90f;
         currentZoomSpeed = zoomSpeed * Time.deltaTime;
-        throwPower = (startingFOV - cam.fieldOfView) * 2f;
+        //throwPower = (startingFOV - cam.fieldOfView) * zoomSpeed;
+        throwPower = 30f;
         AimIndicator(throwPower);
         playerController.gravity = originalGrav / 2;
     }
@@ -272,7 +274,7 @@ public class Throw : MonoBehaviour
 
     public void ChooseShurikenType()
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < shurikenManager.shurikenCounts.Length; i++)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1 + i))
             {

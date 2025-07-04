@@ -18,7 +18,6 @@ public class LedgeGrab : MonoBehaviour
     [SerializeField] private float handCheckRadius = 0.3f;
     private float ledgeHangTimer;
     private float grabCooldown = 0.1f;
-    private bool canGrab;
     private bool grabInput;
     public bool isGrabbingLedge;
     private bool ledgeJustGrabbed;
@@ -154,7 +153,6 @@ public class LedgeGrab : MonoBehaviour
     public void StartLedgeGrab()
     {
         ledgeHangTimer = 0f;
-        canGrab = true;
         isGrabbingLedge = true;
 
         playerController.enabled = false;

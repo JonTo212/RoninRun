@@ -64,14 +64,14 @@ public class SlowMotionDash : MonoBehaviour
     {
         pointSelectTimer += Time.unscaledDeltaTime; // Important: unscaled because time is slowed
 
-        if (Input.GetMouseButtonDown(0) && dashPoints.Count < maxPoints)
+        if (Input.GetMouseButtonDown(1) && dashPoints.Count < maxPoints)
         {
             Vector3 targetPos = GetTargetPoint();
             dashPoints.Add(targetPos);
         }
 
         // Auto-end if enough points or timeout
-        if (dashPoints.Count >= maxPoints || pointSelectTimer >= pointSelectTimeout || Input.GetMouseButtonDown(1))
+        if (dashPoints.Count >= maxPoints || pointSelectTimer >= pointSelectTimeout)
         {
             EndPointSelection();
         }

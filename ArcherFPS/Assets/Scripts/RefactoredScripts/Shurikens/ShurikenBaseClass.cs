@@ -9,6 +9,7 @@ public abstract class ShurikenBaseClass : MonoBehaviour
     [SerializeField] protected float spinRate;
     protected float additionalSpin;
     public Vector3 finalPos;
+    protected Vector3 hitNormal;
 
     protected virtual void Awake()
     {
@@ -49,13 +50,14 @@ public abstract class ShurikenBaseClass : MonoBehaviour
         rb.angularVelocity = Vector3.zero;
         rb.isKinematic = true;
         boxCol.enabled = false;
+        hitNormal = collision.contacts[0].normal;
 
         //finalPos is passed through from the aim indicator so the landing position lines up
         if (finalPos != Vector3.zero)
             transform.position = finalPos; 
 
         //attach perpendicular to collision point, the 45 is because of the model
-        Quaternion contactRotation = Quaternion.LookRotation(-collision.contacts[0].normal);
+        Quaternion contactRotation = Quaternion.LookRotation(-hitNormal);
         transform.rotation = contactRotation * Quaternion.Euler(90, 0, 45);
     }
 }

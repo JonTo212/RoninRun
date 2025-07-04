@@ -38,6 +38,7 @@ public class ShurikenPickup : MonoBehaviour
         int grappleCount = 0;
         int slingshotCount = 0;
         int platformCount = 0;
+        int explosiveCount = 0;
 
         // Loop through the colliders to find any Shuriken objects
         foreach (Collider collider in colliders)
@@ -64,6 +65,10 @@ public class ShurikenPickup : MonoBehaviour
                 {
                     platformCount++;
                 }
+                else if(shuriken is ExplosiveShuriken)
+                {
+                    explosiveCount++;
+                }
             }
         }
 
@@ -81,6 +86,8 @@ public class ShurikenPickup : MonoBehaviour
                 pickupMessage += $"{slingshotCount} Slingshot Shuriken\n";
             if (platformCount > 0)
                 pickupMessage += $"{platformCount} Platform Shuriken\n";
+            if (explosiveCount > 0)
+                pickupMessage += $"{explosiveCount} Explosive Shuriken\n";
 
             pickupText.text = pickupMessage;
 
@@ -115,6 +122,10 @@ public class ShurikenPickup : MonoBehaviour
             else if(shuriken is SlingshotShuriken)
             {
                 manager.AddShuriken(4, 1);
+            }
+            else if(shuriken is ExplosiveShuriken)
+            {
+                manager.AddShuriken(5, 1);
             }
 
             // Destroy the picked-up shuriken

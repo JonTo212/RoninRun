@@ -374,7 +374,6 @@ MonoBehaviour:
   spinRate: 0
   finalPos: {x: 0, y: 0, z: 0}
   grapplePoint: {fileID: 8874722642090218382}
-  swingRadius: 5
 --- !u!1 &9006615710934978968
 GameObject:
   m_ObjectHideFlags: 0

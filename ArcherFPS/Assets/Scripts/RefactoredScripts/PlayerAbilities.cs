@@ -80,15 +80,15 @@ public class PlayerAbilities : MonoBehaviour
 
     IEnumerator Dash()
     {
-        float dashDuration = 0.4f;
+        float dashDuration = 0.2f; //0.4f;
         float elapsedTime = 0f;
 
-        dashDir = (playerController.wishdir == Vector3.zero ? transform.forward : playerController.wishdir).normalized;
+        dashDir = playerController.playerView.forward; // (playerController.wishdir == Vector3.zero ? transform.forward : playerController.wishdir).normalized;
         playerController.playerVelocity = dashDir.normalized * dashPower;
 
         while (elapsedTime <= dashDuration)
         {
-            if (dashDir == Vector3.zero)
+            /*if (dashDir == Vector3.zero)
             {
                 //Dash forward when 0 input
                 //playerController.playerVelocity = transform.forward * dashPower;
@@ -98,7 +98,9 @@ public class PlayerAbilities : MonoBehaviour
             {
                 //playerController.playerVelocity = playerController.wishdir * dashPower;
                 characterController.Move(dashDir * dashPower * Time.deltaTime);
-            }
+            }*/
+
+            characterController.Move(dashDir * dashPower * Time.deltaTime);
 
             elapsedTime += Time.deltaTime;
 

@@ -114,7 +114,7 @@ public class PlayerStateMachine : MonoBehaviour
 
     private void HandleWallRunningState()
     {
-        if(wallRun.canWallBounce && Input.GetKeyUp(KeyCode.Space))
+        if(wallRun.canWallBounce && Input.GetKeyDown(KeyCode.Space))
         {
             wallRun.WallJump();
             currentState = PlayerState.Default;

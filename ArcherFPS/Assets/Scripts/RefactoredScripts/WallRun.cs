@@ -23,7 +23,7 @@ public class WallRun : MonoBehaviour
 
     public float camTilt = 15f;
     private float desiredTilt = 0;
-    private float tiltSpeed = 25f;
+    private float tiltSpeed = 2f;
     [HideInInspector] public float currentTilt;
     public LayerMask wallMask;
     [SerializeField] private float autoRunForce;
@@ -82,12 +82,12 @@ public class WallRun : MonoBehaviour
 
     public void ApplyCameraTilt()
     {
-        currentTilt = Mathf.MoveTowards(currentTilt, desiredTilt, tiltSpeed * Time.deltaTime);
+        currentTilt = Mathf.Lerp(currentTilt, desiredTilt, tiltSpeed * Time.deltaTime);
     }
 
     bool CanWallRun() //Can wall run if you're above the minimum jump height
     {
-        return !Physics.Raycast(transform.position, Vector3.down, minimumJumpHeight) && Input.GetKey(KeyCode.Space); //&& playerController.canWallRun; //for spacebar hold wallrunning
+        return !Physics.Raycast(transform.position, Vector3.down, minimumJumpHeight); // && Input.GetKey(KeyCode.Space); //&& playerController.canWallRun; //for spacebar hold wallrunning
     }
 
     bool CheckWall()
@@ -135,8 +135,10 @@ public class WallRun : MonoBehaviour
         //apply friction if there's no movement input
         if (playerController.wishdir == Vector3.zero)
         {
-            playerController.ApplyFriction(0.5f);
+            playerController.ApplyFriction(0.1f);
         }
+
+        HandleWallAutoMovement();
 
         canWallBounce = true;
     }
@@ -166,20 +168,15 @@ public class WallRun : MonoBehaviour
         }
     }
 
-    /*void HandleWallAutoMovement()
+    void HandleWallAutoMovement()
     {
         //use dot product to determine if closest wall is left or right
         float dotLeft = Vector3.Dot(wallNormal, -transform.right);
         float dotRight = Vector3.Dot(wallNormal, transform.right);
 
-        float forwardDir = dotLeft > dotRight ? 1f : -1f;
+        float forwardDir = dotLeft > dotRight ? -1f : 1f;
         playerController.playerVelocity += forwardDir * wallForward * autoRunForce * Time.deltaTime;
-
-
-        //Apply small force so you don't detach from wall
-        Vector3 wallStick = wallNormal * 5f * Time.deltaTime;
-        playerController.playerVelocity -= wallStick;
-    }*/
+    }
 
 
     public void WallJump()
@@ -193,7 +190,7 @@ public class WallRun : MonoBehaviour
         {
             force *= backWallJumpMultiplier;
         }
-        else if (!(Vector3.Dot(wallNormal, -transform.forward) > 0.5f)) //project your velocity onto the wall unless 
+        else if (!(Vector3.Dot(wallNormal, -transform.forward) > 0.5f)) //project your velocity onto the wall
         {
             newVel = Vector3.ProjectOnPlane(new Vector3(playerController.playerVelocity.x, 0, playerController.playerVelocity.z), wallNormal);
         }

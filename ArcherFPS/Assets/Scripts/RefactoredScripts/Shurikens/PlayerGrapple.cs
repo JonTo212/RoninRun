@@ -26,11 +26,6 @@ public class PlayerGrapple : MonoBehaviour
         originalGravity = playerController.gravity;
     }
 
-    private void Update()
-    {
-        print(isGrappling);
-    }
-
     /*private void Update()
     {
         if (Input.GetMouseButtonDown(1) && !isGrappling && !playerController.isGrounded)
@@ -105,6 +100,10 @@ public class PlayerGrapple : MonoBehaviour
         if (activeShuriken is SlingshotShuriken slingshot)
         {
             slingshot.ApplyPull(playerController, slingshotHookSpeed, originalGravity);
+        }
+        else if (activeShuriken is GrappleShuriken grapple)
+        {
+            grapple.ApplySwing(playerController, swingHookSpeed, originalGravity);
         }
 
         UpdateLine();

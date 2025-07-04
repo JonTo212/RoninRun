@@ -7,6 +7,7 @@ public class PlayerControllerV2 : MonoBehaviour
     [Header("Movement Variables")]
     [SerializeField] private float moveSpeed = 10.0f;              //Ground move speed
     [SerializeField] private float maxVelocity = 15.0f;
+    [SerializeField] private float maxBlastVelocity = 30.0f;
     [SerializeField] private float runAcceleration = 7.5f;         //Ground accel
     [SerializeField] private float runDeceleration = 5f;         //Ground decel
     [SerializeField] private float airAcceleration = 2.5f;         //Air accel
@@ -16,6 +17,7 @@ public class PlayerControllerV2 : MonoBehaviour
     //[SerializeField] private float jumpSpeed = 10.0f;
     [HideInInspector] public Vector3 inputVector = Vector3.zero; //used for dash, wishdir is local space
     [HideInInspector] public Vector3 wishdir;
+    [HideInInspector] public float currentMaxVel;
 
     [Header("Crouching/Sliding Variables")]
     [SerializeField] private float slideForce = 0.5f;
@@ -50,6 +52,7 @@ public class PlayerControllerV2 : MonoBehaviour
     public Transform playerView; //Camera
     public float xMouseSensitivity = 30.0f;
     public float yMouseSensitivity = 30.0f;
+    public bool blasted;
 
     //Slope variables
     private float groundRayDistance = 1f;
@@ -77,7 +80,7 @@ public class PlayerControllerV2 : MonoBehaviour
     [HideInInspector] public float animXInput;
     [HideInInspector] public float animZInput;
 
-    void Start()
+    void Awake()
     {
         gravity = 2 * apexHeight / Mathf.Pow(apexTime, 2);
         jumpVel = 2 * apexHeight / apexTime;
@@ -86,6 +89,7 @@ public class PlayerControllerV2 : MonoBehaviour
 
         //Hide the cursor
         Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
 
         //Set camera
         if (playerView == null && Camera.main != null)
@@ -130,6 +134,7 @@ public class PlayerControllerV2 : MonoBehaviour
         //Movement
         if (isGrounded)
         {
+            blasted = false;
             GroundMove();
             Jump();
         }
@@ -141,14 +146,15 @@ public class PlayerControllerV2 : MonoBehaviour
 
         KillVelocityIfHitHead();
         Crouch();
+        ClampVelocity();
 
-        clampedVel = Vector3.ClampMagnitude(new Vector3(playerVelocity.x, 0, playerVelocity.z), maxVelocity);
-        clampedVel.y = playerVelocity.y;
+        //clampedVel = Vector3.ClampMagnitude(new Vector3(playerVelocity.x, 0, playerVelocity.z), maxVelocity);
+        //clampedVel.y = playerVelocity.y;
 
-        characterController.Move(clampedVel * Time.deltaTime);
+        characterController.Move(playerVelocity * Time.deltaTime);
 
         /* Calculate top velocity */
-        uiMaxVel = clampedVel;
+        uiMaxVel = playerVelocity;
         uiMaxVel.y = 0.0f;
         playerTopVelocity = Mathf.Max(playerTopVelocity, uiMaxVel.magnitude);
 
@@ -178,11 +184,19 @@ public class PlayerControllerV2 : MonoBehaviour
         return !Physics.CheckSphere(checkPosition, 0.1f, ~shurikenLayer);
     }
 
-    private bool ExtendedGroundCheck()
+    private void ClampVelocity()
     {
-        float checkDistance = 0.1f; // extend as needed
-        Vector3 origin = transform.position + Vector3.up * 0.1f; // small offset to avoid self-hit
-        return Physics.Raycast(origin, Vector3.down, out RaycastHit hit, checkDistance, shurikenLayer);
+        Vector3 horizontalVel = new Vector3(playerVelocity.x, 0, playerVelocity.z);
+        float force = horizontalVel.magnitude;
+        float maxStep = maxVelocity * Time.deltaTime;
+        currentMaxVel = blasted ? maxBlastVelocity : maxVelocity;
+
+        playerVelocity.x = Mathf.MoveTowards(playerVelocity.x, Mathf.Clamp(playerVelocity.x, -currentMaxVel, currentMaxVel), maxStep);
+        playerVelocity.z = Mathf.MoveTowards(playerVelocity.z, Mathf.Clamp(playerVelocity.z, -currentMaxVel, currentMaxVel), maxStep);
+        
+        if(blasted)
+            playerVelocity.y = Mathf.MoveTowards(playerVelocity.y, Mathf.Clamp(playerVelocity.y, -currentMaxVel, currentMaxVel), maxStep);
+
     }
 
     #endregion
@@ -266,8 +280,8 @@ public class PlayerControllerV2 : MonoBehaviour
 
     void SlideJump()
     {
-        playerVelocity.x += playerVelocity.x * slideJumpForce;
-        playerVelocity.z += playerVelocity.z * slideJumpForce;
+        Vector3 horizontalDir = new Vector3(playerVelocity.x, 0f, playerVelocity.z).normalized;
+        playerVelocity += horizontalDir * slideJumpForce;
         canSlideJump = false;
         slide = false;
     }
@@ -278,7 +292,7 @@ public class PlayerControllerV2 : MonoBehaviour
         {
             playerVelocity.y -= gravity * Time.deltaTime;
         }
-        else //don't apply grav when grounded, otherwise it builds up over time
+        else
         {
             playerVelocity.y = -gravity * Time.deltaTime;
         }
@@ -316,8 +330,7 @@ public class PlayerControllerV2 : MonoBehaviour
             }
 
             Vector3 xzVel = new Vector3(playerVelocity.x, 0, playerVelocity.z);
-            bool hasProperSpeed = xzVel.magnitude > 1f && xzVel.magnitude < maxVelocity; //under max velocity & close to default run speed (i.e. not accelerating)
-            bool canSlide = hasProperSpeed && !hasSlid && inputVector.z > 0;
+            bool canSlide = !hasSlid && inputVector.z > 0 && (Mathf.Round(playerVelocity.magnitude * 100) / 100 < currentMaxVel);
 
             if (canSlide)
             {
@@ -343,13 +356,14 @@ public class PlayerControllerV2 : MonoBehaviour
     //Movespeed boost if sliding
     IEnumerator SlideBoost()
     {
-        playerVelocity += clampedVel * slideForce;
+        Vector3 horizontalDir = new Vector3(playerVelocity.x, 0f, playerVelocity.z).normalized;
+        playerVelocity += horizontalDir * slideForce;
         hasSlid = true;
         canSlideJump = true;
         slideQueue = false;
         yield return new WaitForSeconds(slideBoostDuration);
 
-        slide = false;//for animation
+        slide = false; //for animation
     }
 
     void HandleSlope()
@@ -472,7 +486,7 @@ public class PlayerControllerV2 : MonoBehaviour
     void GroundMove()
     {
         //No friction midair, full friction on ground, 10% friction crouched
-        float frictionRate = 0f;
+        float frictionRate = 0;
 
         Vector3 horizontalVel = new Vector3(playerVelocity.x, 0, playerVelocity.z); //Get player's horizontal velocity
         float speed = horizontalVel.magnitude;
